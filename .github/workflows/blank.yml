@@ -47,7 +47,9 @@ jobs:
           RPL="rights=${DQT}read\|write${DQT} pattern=${DQT}PDF${DQT}"
           sudo sed -i "s/$SRC/$RPL/" /etc/ImageMagick-6/policy.xml
       - name: Convert output to svg
-        run: convert skills/graphics/pulse.pdf skills/graphics/pulse.svg
+        run: convert skills/graphics/pulse.pdf -density 900 skills/graphics/pulseim.svg
+      - name: Ghostscript conversion
+        run: gs -dBATCH -dSAFER -dNOPAUSE -sDEVICE=svg -sOutputFile=skills/graphics/pulse.svg skills/graphics/pulsegs.pdf
           
       # Upload artifacts
       - uses: actions/upload-artifact@v3
