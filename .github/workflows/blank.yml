@@ -31,7 +31,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Github Action for LaTeX
-      - uses: xu-cheng/latex-action@v2
+        uses: xu-cheng/latex-action@v2
         with:
           root_file: skills/graphics/pulse.tex
           working_directory: build
