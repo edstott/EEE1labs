@@ -49,7 +49,7 @@ jobs:
       - name: Convert output to svg
         run: convert skills/graphics/pulse.pdf -density 900 skills/graphics/pulseim.svg
       - name: Ghostscript conversion
-        run: gs -dBATCH -dSAFER -dNOPAUSE -sDEVICE=png16m -sOutputFile=skills/graphics/pulse.svg skills/graphics/pulsegs.pdf
+        run: gs -dBATCH -dSAFER -dNOPAUSE -sDEVICE=png16m -sOutputFile=skills/graphics/pulsegs.png skills/graphics/pulse.pdf
           
       # Upload artifacts
       - uses: actions/upload-artifact@v3
