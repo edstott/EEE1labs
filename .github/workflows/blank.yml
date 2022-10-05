@@ -38,6 +38,12 @@ jobs:
           latexmk_shell_escape: true
           
       #Convert pdf to svg
+      - name: Change ImageMagick security policy
+        run: |
+          DQT='"' 
+          SRC="rights=${DQT}none${DQT} pattern=${DQT}PDF${DQT}"
+          RPL="rights=${DQT}read\|write${DQT} pattern=${DQT}PDF${DQT}"
+          sudo sed -i "s/$SRC/$RPL/" /etc/ImageMagick-6/policy.xml
       - name: Convert output to svg
         run: convert skills/graphics/pulse.pdf skills/graphics/pulse.svg
           
