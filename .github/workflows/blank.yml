@@ -35,6 +35,7 @@ jobs:
         with:
           root_file: pulse.tex
           working_directory: skills/graphics
+          latexmk_shell_escape: true
           
       # Upload artifacts
       - uses: actions/upload-artifact@v3
