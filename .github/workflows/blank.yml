@@ -38,6 +38,8 @@ jobs:
           latexmk_shell_escape: true
           
       #Convert pdf to svg
+      - name: Install ghostscript
+        run: sudo apt install ghostscript
       - name: Change ImageMagick security policy
         run: |
           DQT='"' 
