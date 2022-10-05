@@ -37,6 +37,10 @@ jobs:
           working_directory: skills/graphics
           latexmk_shell_escape: true
           
+      #Convert pdf to svg
+      - name: Convert output to svg
+        run: magick pulse.pdf pulse.svg
+          
       # Upload artifacts
       - uses: actions/upload-artifact@v3
         with:
