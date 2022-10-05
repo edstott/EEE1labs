@@ -33,13 +33,13 @@ jobs:
       - name: Github Action for LaTeX
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: skills/graphics/pulse.tex
-          working_directory: build
+          root_file: $GITHUB_WORKSPACE/EEE1labs/EEE1labs/skills/graphics/pulse.tex
+          working_directory: $RUNNER_TEMP
           
       # Upload artifacts
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
-          path: build/*
+          path: $RUNNER_TEMP/*
           
 
