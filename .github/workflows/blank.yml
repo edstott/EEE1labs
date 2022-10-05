@@ -39,7 +39,7 @@ jobs:
           
       #Convert pdf to svg
       - name: Convert output to svg
-        run: convert pulse.pdf pulse.svg
+        run: convert skills/graphics/pulse.pdf skills/graphics/pulse.svg
           
       # Upload artifacts
       - uses: actions/upload-artifact@v3
