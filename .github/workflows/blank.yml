@@ -47,6 +47,7 @@ jobs:
 
       # Build /tex files with latex
       - name: Github Action for LaTeX
+        if: steps.changed-files.any_changed == 'true'
         uses: xu-cheng/latex-action@v2
         with:
           root_file: ${{ steps.changed-files.outputs.all_changed_files }}
@@ -54,10 +55,10 @@ jobs:
           latexmk_shell_escape: true
           
       #Convert pdf to png
-      - name: Install ghostscript
-        run: sudo apt install ghostscript
       - name: Ghostscript conversion
+        if: steps.changed-files.any_changed == 'true'
         run: |
+          sudo apt install ghostscript
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "Converting ${file%.tex}.pdf to ${file%.tex}.png"
             gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=images/${file%.tex}.png ${file%.tex}.pdf
@@ -66,11 +67,13 @@ jobs:
       
       # Commit png to repo
       - name: Commit files
+        if: steps.changed-files.any_changed == 'true'
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -m "Update images"
       - name: Push changes
+        if: steps.changed-files.any_changed == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
