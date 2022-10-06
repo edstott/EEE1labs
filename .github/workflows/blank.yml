@@ -28,17 +28,29 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # Find changed .tex files
+      - name: Find changed .tex files
+        id: changed-files
+        uses: tj-actions/changed-files@v32
+        with:
+          files: |
+            **/*.tex
+            
+      - name: List changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
 
-      # Runs a set of commands using the runners shell
+      # Build /tex files with latex
       - name: Github Action for LaTeX
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: pulse.tex
-          working_directory: skills/graphics
+          root_file: ${{ steps.changed-files.outputs.all_changed_files }}
+          work_in_root_file_dir: true
           latexmk_shell_escape: true
           
       #Convert pdf to png
@@ -46,8 +58,11 @@ jobs:
         run: sudo apt install ghostscript
       - name: Ghostscript conversion
         run: |
-          gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=images/pulse.png skills/graphics/pulse.pdf
-          git add images/pulse.png
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Converting $file"
+            gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=images/pulse.png skills/graphics/pulse.pdf
+            git add images/pulse.png
+          done
       
       # Commit png to repo
       - name: Commit files
