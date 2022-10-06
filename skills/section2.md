@@ -22,7 +22,7 @@ You'll need these items for this section:
 | **Wires and cables** |
 | USB Cable | 1 |
 | **Software** |
-| Arduino IDE |
+| [Arduino IDE](https://www.arduino.cc/en/software) |
 | Fritzing |
 | **Downloads** |
 | `servo.fz` Fritzing project |
@@ -30,8 +30,8 @@ You'll need these items for this section:
 | `servo.ino` Arduino Sketch |
 
 ### Before the lab
-Install (Arduino IDE)[https://www.arduino.cc/en/software] on your computer.
-(Watch this video about using the PicoScope oscilloscope)[https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=08772fd6-0eab-4e4a-a5b3-ac5600dde606]
+Install [Arduino IDE](https://www.arduino.cc/en/software) on your computer.
+[Watch this video about using the oscilloscope](https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=9507f2f9-77a8-4b19-80d2-aada00cc383d)
 	
 ### Test the servo motors
 	
@@ -77,7 +77,7 @@ The servo motor signal has pulses at a regular interval of 50 per second (50 Hz)
 		\end{tikzpicture}}
 	
 The oscilloscope normally shows a graph of voltage on the y axis and time on the x axis.
-The x origin of the graph (where time =0) is synchronised to an event called the *trigger*.
+The x origin of the graph (where time = 0) is synchronised to an event called the *trigger*.
 Every time a trigger occurs, the graph is updated and if the trigger happens very frequently you will see waveform following any changes to the signal in real time.
 		
 The oscilloscope measures voltage with a *probe* that is connected to the signal that you wish to measure.
@@ -95,16 +95,21 @@ Connect the ground lead to the GND pin with a separate piece of wire.
 	    \footnotesize\centering
 	    \emph{Connection of the oscilloscope probe to an Orangepip pin}
 	    }
-		
-Start the PicoScope 6 software and open the settings file `servo.pssettings`.
+
+Set up the oscilloscope as follows:
+1. Load the default settings by pressing `SAVE/RECALL`, then choosing `DEVICE SETTINGS`, `LOAD` and selecting `EELAB.SCP` with the select knob.
+2. Set up the oscilloscope probes. Usually they are used in ×10 mode, so set the switch on the probe to the correct position and tell the oscilloscope they are in this mode by pressing `MENU`, selecting page 2, choosing `PROBE` and selecting the ×10 option.
+3. The signal has a voltage range of 0--5V. The oscilloscope screen has 10 vertical divisions so choosing 1 volt per division will fit the signal on the screen nicely. Adjust the vertical sensitivity until the correct value is shown.
+4. The minimum voltage of the signal is 0V so change the vertical position to move the y axis origin (GND arrow) to near the bottom of the screen. The y origin is temporarily displayed as you change the setting.
+5. The signal has a frequency of 50Hz: a period of 20ms. The oscilloscope has 12 horizontal divisions so a horizontal resolution (called the *timebase*) of 5ms per division will let us see at least 2 repetitions of the signal on the screen. Adjust the timebase control until the correct value is shown.
+6. The trigger should be set up to detect the rising edge of the pulses. That way, each pulse that is captured will be displayed in the same position on the screen. Set the trigger threshold voltage to 2.5V with the trigger level control so that the threshold is crossed when the signal transitions from 0V to 5V.
+
 You should see a graph showing the pulses of the waveform.
+Use the gridlines on the oscilloscope screen in conjunction with the displayed vertical sensitivity and timebase to read the voltage and period (repetition time) of the signal.
+Decrease the timebase to 0.5ms per division to `zoom in' on the pulse and measure its width more accurately. 
+
 Adjust the potentiometer on your breadboard to see how the signal changes as the servo is commanded to move to different angles.
 This system of representing information in the width of a pulse is called *pulse width modulation* (PWM).
-Use the axis scales on the oscilloscope screen to read the voltage and period (repetition time) of the signal.
-		
-It's hard to read the width of the pulses on the display at the moment so we need to zoom in on the horizontal (time) axis.
-Do this by clicking the left-hand arrow next to the timebase setting, where it currently displays 10ms/div.
-You'll see the pulse grow in width and the x axis labels change as the graph is scaled.
 		
 	    {\centering
 	    \includegraphics[height=1cm]{graphics/pico-timebase}
@@ -113,12 +118,7 @@ You'll see the pulse grow in width and the x axis labels change as the graph is 
 	    \emph{Timebase (x-axis scale) control in PicoScope software}
 	    }
 		
-You'll see the origin of the horizontal axis remains in the centre of the screen.
-This is the trigger point, where the oscilloscope has detected the start of the pulse.
-The trigger is represented by a yellow diamond on the screen.
-Drag it to the left and decrease the timebase further so that the pulse fills the display.
-Now you can make a more accurate measurement of the width of the pulse.
-		
+	
 		
 	    {\centering
 	    \includegraphics[height=8cm]{graphics/pico-pulse}
@@ -128,22 +128,16 @@ Now you can make a more accurate measurement of the width of the pulse.
 	    }
 	
 - [ ]	Use the oscilloscope to display the servo motor control signal. Make measurements of the period, pulse width and voltage of the signal using the oscilloscope display gridlines. Suggested logbook entry: a screen capture of the oscilloscope showing pulses.
-		\end{task}
 	
 ### Cursors
 	
 Using the gridlines to make precise measurements can be labourious so *cursors* are provided make it easier.
 Change the timebase back to 10ms so that multiple pulses are visible on the screen.
-Drag the two time-axis cursors onto the graph from their parked position as a small white square in the bottom left hand corner of the plot area.
-A box at the top of the plot shows you information about the cursors, including the time axis position of each cursor and the time difference (Δ) between them.
-Another box in the bottom right of box shows you the calculation 1/Δ.
-		
+Turn on x axis cursors by pressing `CURSOR MEASURE`, selecting `TIME` and pushing the knob twice.
+Then, move each cursor on the screen by turning the knob. Pressing the knob selects a different cursor to adjust — the active cursor or cursors are shown with a solid line.
+
 Move the cursors so they align with the rising edges of two consecutive pulses.
-Now you can read the time difference between the pulses (the period of the signal) as the Δ value.
-The reciprocal of period is frequency, so the 1/Δ box is now displaying the frequency of the signal in Hertz.
-Make a more accurate measurement of the period of the signal, then zoom in again to measure the pulse width with the cursors.
-Use your multimeter to measure the potentiometer output voltage and find the relationship between voltage and pulse width.
-		
+Now you can read the time difference between the pulses (and hence the period of the signal) as the Δt value shown on the screen. The equivalent frequency 1/Δt is also given. Zoom in on a single pulse and set the cursors to the rising and falling edges to find the width of the pulse and the relationship between potentiometer output voltage and pulse width.
 
 	    {\centering
 	    \includegraphics[height=8cm]{graphics/pico-curs}
@@ -153,8 +147,8 @@ Use your multimeter to measure the potentiometer output voltage and find the rel
 	    }
 
 Cursors can also be used to measure voltage.
-The voltage axis cursors are parked at the top of the voltage axis as a blue square.
-When you add a second probe and trace (the `B' channel) to the oscilloscope in the next section, you'll find the B channel has a separate voltage axis and its own pair of cursors on the right hand side of the plot.
+Change the cursor mode to y axis by repeating the cursor set-up process and selecting `VOLTAGE` instead of `TIME`.
+Check the difference between the high and low voltages of the signal.
 
 - [ ]	Use the cursors to make more accurate measurements of the control signal characteristics. Find the relationship between the potentiometer voltage and the pulse width. Suggested logbook entry: a table of voltages and pulse widths.
 
