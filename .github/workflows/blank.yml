@@ -41,13 +41,14 @@ jobs:
             
       - name: List changed files
         run: |
+          echo "Result of find changes: ${{ steps.changed-files.any_changed }}"
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
 
       # Build /tex files with latex
       - name: Github Action for LaTeX
-        if: steps.changed-files.any_changed == 'true'
+        if: steps.changed-files.any_changed
         uses: xu-cheng/latex-action@v2
         with:
           root_file: ${{ steps.changed-files.outputs.all_changed_files }}
