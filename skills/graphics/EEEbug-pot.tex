@@ -1,0 +1,28 @@
+\documentclass[tikz]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage[europeanresistors]{circuitikz}
+
+\begin{document}
+
+\begin{circuitikz}[american voltages]
+	\footnotesize
+	\draw
+		(0,0) to [vsource,l_=5V] ++(0,-4) node (origin) {}
+		to ++(2,0) coordinate (bottom) {}
+		to [R,l=1kΩ] ++(0,2) coordinate (middle) {}
+		to [R,l=1kΩ] ++(0,2)
+		to (0,0);
+		
+	\draw 
+	    (middle)
+	    to ++(1,0)
+	    to ++(0,-0.5)
+	    ++(0,-0.5) node {2.5V};
+    \draw
+        (bottom) to ++(1,0)
+        to ++(0,0.5);
+	
+\end{circuitikz}
+
+\end{document}
