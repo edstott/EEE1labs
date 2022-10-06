@@ -61,8 +61,9 @@ jobs:
         run: |
           sudo apt install ghostscript
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "Converting ${file%.tex}.pdf to ${file%.tex}.png"
-            gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=images/${file%.tex}.png ${file%.tex}.pdf
+            fname=&{file##*/}
+            echo "Converting ${file%.tex}.pdf to ${fname%.tex}.png"
+            gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=images/${fname%.tex}.png ${file%.tex}.pdf
             git add images/${file%.tex}.png
           done
       
