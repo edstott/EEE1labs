@@ -5,10 +5,10 @@ name: makeGraphics
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  #push:
+  #  branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -37,20 +37,27 @@ jobs:
           working_directory: skills/graphics
           latexmk_shell_escape: true
           
-      #Convert pdf to svg
+      #Convert pdf to png
       - name: Install ghostscript
         run: sudo apt install ghostscript
-      - name: Change ImageMagick security policy
-        run: |
-          DQT='"' 
-          SRC="rights=${DQT}none${DQT} pattern=${DQT}PDF${DQT}"
-          RPL="rights=${DQT}read\|write${DQT} pattern=${DQT}PDF${DQT}"
-          sudo sed -i "s/$SRC/$RPL/" /etc/ImageMagick-6/policy.xml
-      - name: Convert output to svg
-        run: convert skills/graphics/pulse.pdf -density 900 skills/graphics/pulseim.svg
       - name: Ghostscript conversion
-        run: gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=skills/graphics/pulsegs.png skills/graphics/pulse.pdf
-          
+        run: |
+          gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=images/pulse.png skills/graphics/pulse.pdf
+          git add images/pulse.png
+      
+      # Commit png to repo
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Update images"
+          git push
+   #   - name: Push changes
+    #    uses: ad-m/github-push-action@master
+     #   with:
+      #    github_token: ${{ secrets.GITHUB_TOKEN }}
+       #   branch: ${{ github.ref }}
+      
       # Upload artifacts
       - uses: actions/upload-artifact@v3
         with:
