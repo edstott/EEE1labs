@@ -59,9 +59,9 @@ jobs:
       - name: Ghostscript conversion
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "Converting $file"
-            gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=images/pulse.png skills/graphics/pulse.pdf
-            git add images/pulse.png
+            echo "Converting ${file%.tex}.pdf to ${file%.tex}.png"
+            gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=images/${file%.tex}.png ${file%.tex}.pdf
+            git add images/${file%.tex}.png
           done
       
       # Commit png to repo
