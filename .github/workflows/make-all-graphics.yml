@@ -1,0 +1,62 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Make all graphics
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Build /tex files with latex
+      - name: Find .tex files
+        id: find-files
+        run: |
+          shopt -s globstar
+          echo ls **/*.tex
+          echo "::set-output name=FILES::$(ls **/*.tex)"
+      - name: Github Action for LaTeX
+        if: steps.find-files.outputs.FILES != ''
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: ${{ steps.find-files.outputs.FILES }}
+          work_in_root_file_dir: true
+          latexmk_use_xelatex: true
+          
+      #Convert pdf to png
+      - name: Ghostscript conversion
+        if: steps.find-files.outputs.FILES != ''
+        run: |
+          sudo apt install ghostscript
+          for file in ${{ steps.find-files.outputs.FILES }}; do
+            echo "Converting ${file%.tex}.pdf to ${file%.tex}.png"
+            gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=${file%.tex}.png ${file%.tex}.pdf
+            git add ${file%.tex}.png
+          done
+      
+      # Commit png to repo
+      - name: Commit files
+        if: steps.find-files.outputs.FILES != ''
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Update images"
+      - name: Push changes
+        if: steps.find-files.outputs.FILES != ''
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          
