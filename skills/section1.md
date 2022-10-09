@@ -84,7 +84,7 @@ The multimeter display should show a value of around 5V - a tolerance of ±5% is
 		
 Disconnect the 7.5V power supply when you have finished so the Orangepip is not powered while you make changes to the circuit.
 		
-![Measuring Orangepip voltage source with a multimeter](graphics/V-meas.png)
+![Measuring Orangepip voltage source with a multimeter](graphics/V-meas.jpg)
 
 - [ ]	*Check that the 5V voltage source in the Orangepip module is functioning correctly. Suggested logbook entry: photo of voltage measurement.*
 
@@ -111,7 +111,7 @@ Since `$R_1=R_2=1\text{k}\Omega$` and `$V_\text{in} = 5\text{V}$`, `$V_\text{out
 Power up the circuit by reconnecting the 7.5V power supply.
 Using DC Voltage mode once more, hold the multimeter probes to the yellow and black wires that protrude from your circuit to measure the output voltage.
 	
-![Assembled potential divider on a breadboard](graphics/rdiv-photo.png)
+![Assembled potential divider on a breadboard](graphics/rdiv-photo.jpg)
 		
  - [ ] Build the potential divider circuit and test it with the multimeter. Suggested logbook entry: Calculation of theoretical output voltage and recording of measured output voltage.
 		
