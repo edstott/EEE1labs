@@ -26,7 +26,7 @@ jobs:
         run: |
           shopt -s globstar
           echo ls **/*.tex
-          echo "::set-output name=FILES::$(ls **/*.tex)"
+          echo "::set-output name=FILES::"\""$(ls **/*.tex)"\"
       - name: Github Action for LaTeX
         if: steps.find-files.outputs.FILES != ''
         uses: xu-cheng/latex-action@v2
