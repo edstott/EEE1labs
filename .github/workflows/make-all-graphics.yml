@@ -42,7 +42,7 @@ jobs:
       - name: Ghostscript conversion
         if: steps.find-files.outputs.FILES != ''
         run: |
-          filelist=${{ steps.find-files.outputs.FILES }}
+          filelist="${{ steps.find-files.outputs.FILES }}"
           echo $filelist
           sudo apt install ghostscript
           for file in $filelist; do
