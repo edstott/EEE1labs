@@ -33,10 +33,12 @@ You have a kit of mechanical and electronic parts to build your EEEbug. You'll n
 | Other colour insulated solid-core wire | 1m |
 | **Software** |
 | Fritzing ([Windows](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EYMSuKU6nKdAtQDBqZ-yAmMBb-T4JyRNwS-hO_WeYL_piw?e=5aDJaS), [macOS](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EWyf1x87xQ9Hp-aI3YnMoEkBMoU5QXcG53RMPQRNkjm4cw?e=ZKbIkh), [Linux](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EacyJjYan05PuMJQt34p5RQBWNtDkKRTS75Gl9E8ZVk-rw?e=Bm9uFJ))|
-| `rdiv.fz` Fritzing project |
-| `potdiv.fz` Fritzing project |
+| [rdiv.fz](downloads/rdiv.fz) Fritzing project‡ |
+| [potdiv.fz](downloads/potdiv.fz) Fritzing project‡ |
 
 *†Collect from lab component drawers*
+
+*‡Links will display the file. The easiest way to download files from GitHub is to get a copy of the entire lab note repository from [here](https://github.com/edstott/EEE1labs/archive/refs/heads/main.zip). The files are in EEE1labs/skills/downloads.*
 
 - [ ] *Identify all the items required for this section. Suggested logbook entry: a copy of the parts list and an explanation of any discrepancy, plus photos of parts that you don't recognise*
 
@@ -46,7 +48,7 @@ You have a kit of mechanical and electronic parts to build your EEEbug. You'll n
 		
 ### Assemble the chassis
 	
-The chassis should be assembled according to the assembly drawing.
+The chassis should be assembled according to the [assembly drawing](graphics/EEEBug-assembly-part1.pdf).
 Follow it carefully, noting the orientation of components and the ordering of the fastener parts (screw, nuts, and washers).
 Insert a photo of it in your logbook and annotate it with anything you might find useful in future, such as areas that are liable to be assembled incorrectly.
 It should look like this when it's complete:
@@ -71,16 +73,16 @@ The flashing LEDs aren't important now.
 		
 You can make connections to the Orangepip by pushing wires into the holes (terminals) in black connector strips on the sides of the module.
 Cut 30mm lengths of red and black wire and remove approximately 6mm of insulation from each end using the wire stripping tool.
-Look for terminals labelled '5V' and 'GND' --- these are the terminals of the built-in 5V voltage source.
+Look for terminals labelled '5V' and 'GND' — these are the terminals of the built-in 5V voltage source.
 Push a red wire into the 5V terminal and a black wire into one of the GND terminals.
 		
 It's always a good idea to check a power supply or voltage source is working correctly before using it each time.
 It is surprisingly common to find a non-functioning circuit caused by a lack of power.
 You can check by using your multimeter.
 		
-As shown in the multimeter video, turn the selector switch to the DC voltage position `(V \textdirectcurrent{})` and plug in the test leads to the sockets marked VΩmAμA (red) and COM (black).
+As shown in the multimeter video, turn the selector switch to the DC voltage position (V⎓) and plug in the test leads to the sockets marked VΩmAμA (red) and COM (black).
 Hold the red test probe to the red wire (5V terminal) and the black test probe to the black wire (GND terminal).
-The multimeter display should show a value of around 5V - a tolerance of ±5% is acceptable since both the voltage source and the multimeter might be slightly inaccurate.
+The multimeter display should show a value of around 5V — a tolerance of ±5% is acceptable since both the voltage source and the multimeter might be slightly inaccurate.
 		
 Disconnect the 7.5V power supply when you have finished so the Orangepip is not powered while you make changes to the circuit.
 		
@@ -91,7 +93,7 @@ Disconnect the 7.5V power supply when you have finished so the Orangepip is not 
 You'll be creating your own circuits on the breadboard and we'll start with the potential divider.
 The circuit is very simple but we'll use the opportunity to introduce the Fritzing software, which allows you to draw circuit diagrams and produce designs for building them on a breadboard or printed circuit board.
 Download Fritzing ([Windows](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EYMSuKU6nKdAtQDBqZ-yAmMBb-T4JyRNwS-hO_WeYL_piw?e=5aDJaS), [macOS](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EWyf1x87xQ9Hp-aI3YnMoEkBMoU5QXcG53RMPQRNkjm4cw?e=ZKbIkh), [Linux](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EacyJjYan05PuMJQt34p5RQBWNtDkKRTS75Gl9E8ZVk-rw?e=Bm9uFJ)).
-Load the `rdiv.fz` project and switch between schematic and breadboard views to see how and idealised circuit diagram can be turned into a plan for a physical circuit.
+Load the [rdiv.fz](downloads/rdiv.fz) project and switch between schematic and breadboard views to see how and idealised circuit diagram can be turned into a plan for a physical circuit.
 		
 ![Schematic view of a potential divider in Fritzing](graphics/rdiv-sch-fz.png)
 	    
@@ -101,13 +103,13 @@ The circuit uses two 1kΩ resistors.
 Find these in the lab components drawers.
 Then build the circuit as shown in the breadboard view by inserting the resistors into the breadboard at the locations shown.
 Refer to the diagram to push the ends of the wires into the correct holes in the breadboard and Orangepip module (the Orangepip is depicted using the compatible Arduino Uno in Fritzing).
-Two lengths of wire are only connected at one end --- you'll use these to make measurements of the output.
+Two lengths of wire are only connected at one end — you'll use these to make measurements of the output.
 		
 The potential divider reduces the 5V input voltage by a fixed proportion:
 		
 ![Potential divider equation](graphics/potdiv_equation.png)
 		
-Since `$R_1=R_2=1\text{k}\Omega$` and `$V_\text{in} = 5\text{V}$`, `$V_\text{out} = 2.5\text{V}$` in this example.
+Since R<sub>1</sub> = R<sub>2</sub> = 1kΩ and V<sub>in</sub> = 5V, V<sub>out</sub> = 2.5V in this example.
 Power up the circuit by reconnecting the 7.5V power supply.
 Using DC Voltage mode once more, hold the multimeter probes to the yellow and black wires that protrude from your circuit to measure the output voltage.
 	
@@ -118,10 +120,10 @@ Using DC Voltage mode once more, hold the multimeter probes to the yellow and bl
 A variable potential divider can be made using a potentiometer.
 A potentiometer is built by stretching out a fixed resistor, 10kΩ in your case, into a thin layer over a surface.
 Then, a third terminal makes contact with a point on the resistive layer and, by turning the shaft, the contact point can be wiped to any point along the fixed resistor.
-If the resistance between the wiper terminal and an end terminal is `$R_1$`, then the resistance between the wiper and the other end terminal is `$10\text{k}\Omega-R_1$`.
+If the resistance between the wiper terminal and an end terminal is R<sub>1</sub>, then the resistance between the wiper and the other end terminal is 10kΩ − R<sub>1</sub>.
 		
 If the end terminals of a potentiometer are connected to a voltage source then it becomes a variable potential divider and the voltage measured between the wiper terminal and the reference point varies between zero and the source voltage (5V) depending on the rotation position of the shaft.
-Load the Fritzing project `potdiv.fz` and build the circuit shown.
+Load the Fritzing project [potdiv.fz](downloads/potdiv.fz) and build the circuit shown.
 As before, power up the Orangepip and use the multimeter to measure the output voltage between the yellow and black wires.
 Find how the output voltage varies as you turn the potentiometer shaft.	
 	    
