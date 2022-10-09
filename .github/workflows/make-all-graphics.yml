@@ -42,7 +42,8 @@ jobs:
       - name: Ghostscript conversion
         if: steps.find-files.outputs.FILES != ''
         run: |
-          echo "filelist=${{ steps.find-files.outputs.FILES }}
+          filelist=${{ steps.find-files.outputs.FILES }}
+          echo $filelist
           sudo apt install ghostscript
           for file in $filelist; do
             echo "Converting ${file%.tex}.pdf to ${file%.tex}.png"
