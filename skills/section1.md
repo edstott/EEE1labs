@@ -32,7 +32,7 @@ You have a kit of mechanical and electronic parts to build your EEEbug. You'll n
 | Black insulated solid-core wire | 1m |
 | Other colour insulated solid-core wire | 1m |
 | **Software** |
-| Fritzing |
+| Fritzing ([Windows](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EYMSuKU6nKdAtQDBqZ-yAmMBb-T4JyRNwS-hO_WeYL_piw?e=5aDJaS), [macOS](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EWyf1x87xQ9Hp-aI3YnMoEkBMoU5QXcG53RMPQRNkjm4cw?e=ZKbIkh), [Linux](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EacyJjYan05PuMJQt34p5RQBWNtDkKRTS75Gl9E8ZVk-rw?e=Bm9uFJ))|
 | `rdiv.fz` Fritzing project |
 | `potdiv.fz` Fritzing project |
 
@@ -90,7 +90,7 @@ Disconnect the 7.5V power supply when you have finished so the Orangepip is not 
 
 You'll be creating your own circuits on the breadboard and we'll start with the potential divider.
 The circuit is very simple but we'll use the opportunity to introduce the Fritzing software, which allows you to draw circuit diagrams and produce designs for building them on a breadboard or printed circuit board.
-Download Fritzing from the [ELEC40002 resources section on ed Discussion](https://edstem.org/us/courses/15387/resources).
+Download Fritzing ([Windows](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EYMSuKU6nKdAtQDBqZ-yAmMBb-T4JyRNwS-hO_WeYL_piw?e=5aDJaS), [macOS](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EWyf1x87xQ9Hp-aI3YnMoEkBMoU5QXcG53RMPQRNkjm4cw?e=ZKbIkh), [Linux](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EacyJjYan05PuMJQt34p5RQBWNtDkKRTS75Gl9E8ZVk-rw?e=Bm9uFJ)).
 Load the `rdiv.fz` project and switch between schematic and breadboard views to see how and idealised circuit diagram can be turned into a plan for a physical circuit.
 		
 ![Schematic view of a potential divider in Fritzing](graphics/rdiv-sch-fz.png)
