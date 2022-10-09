@@ -42,8 +42,9 @@ jobs:
       - name: Ghostscript conversion
         if: steps.find-files.outputs.FILES != ''
         run: |
+          echo "filelist=${{ steps.find-files.outputs.FILES }}
           sudo apt install ghostscript
-          for file in "${{ steps.find-files.outputs.FILES }}"; do
+          for file in $filelist; do
             echo "Converting ${file%.tex}.pdf to ${file%.tex}.png"
             gs -dBATCH -dNOPAUSE -sDEVICE=pngalpha -r300 -sOutputFile=${file%.tex}.png ${file%.tex}.pdf
             git add ${file%.tex}.png
