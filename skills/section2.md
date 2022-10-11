@@ -23,11 +23,13 @@ You'll need these items for this section:
 | USB Cable | 1 |
 | **Software** |
 | [Arduino IDE](https://www.arduino.cc/en/software) |
-| Fritzing |
+| Fritzing ([Windows](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EYMSuKU6nKdAtQDBqZ-yAmMBb-T4JyRNwS-hO_WeYL_piw?e=5aDJaS), [macOS](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EWyf1x87xQ9Hp-aI3YnMoEkBMoU5QXcG53RMPQRNkjm4cw?e=ZKbIkh), [Linux](https://imperiallondon-my.sharepoint.com/:u:/g/personal/estott_ic_ac_uk/EacyJjYan05PuMJQt34p5RQBWNtDkKRTS75Gl9E8ZVk-rw?e=Bm9uFJ))|
 | **Downloads** |
-| `servo.fz` Fritzing project |
-| `twoservo.fz` Fritzing project |
-| `servo.ino` Arduino Sketch |
+| `servo.fz` Fritzing project‡ |
+| `twoservo.fz` Fritzing project‡ |
+| `servo.ino` Arduino Sketch‡ |
+
+*‡The easiest way to download source files from GitHub is to get a copy of the entire lab note repository from [here](https://github.com/edstott/EEE1labs/archive/refs/heads/main.zip). The files are in EEE1labs/skills/downloads.*
 
 ### Before the lab
 Install [Arduino IDE](https://www.arduino.cc/en/software) on your computer.
@@ -35,7 +37,7 @@ Install [Arduino IDE](https://www.arduino.cc/en/software) on your computer.
 	
 ### Test the servo motors
 	
-Connect a servo motor to the breadboard and the Orangepip as shown in the Fritzing project `servopot`.
+Connect a servo motor to the breadboard and the Orangepip as shown in the Fritzing project `servo.fz`.
 The servo cable connects via a 3-pin header, which may already be inserted into the connector at the end of the servo motor cable.
 Be certain that you have connected the servo motor wires correctly according to colour — it is possible to damage the servo motor if it is connected incorrectly.
 A potentiometer is also included and, like before, it is used as a potential divider to generate a variable voltage.
@@ -45,12 +47,7 @@ Connect the Orangepip to your computer with the USB cable.
 Run Arduino IDE, open the `servo.ino` file and connect to the Orangepip by clicking Tools→Port and selecting the item which says `Arduino Uno'.
 Click the upload button, which will start the compilation process and program the Orangepip.
 		
-	    {\centering
-	    \includegraphics[height=5cm]{graphics/servo-photo}
-	    
-	    \footnotesize\centering
-	    \emph{Servo motor connected to Orangepip with potentiometer input}
-	    }
+![Servo motor connected to Orangepip with potentiometer input](graphics/servo-photo)
 		
 Now when you power up the circuit you should see some initial movement of the servo motor.
 Try turning the potentiometer and you should see the servo motor change position.
@@ -60,7 +57,7 @@ Try turning the potentiometer and you should see the servo motor change position
 ### Oscilloscope
 	
 The servo motor is controlled by a digital pulse signal.
-A digital signal is a voltage that switches between two discrete levels and a pulse means that the waveform is asymmetric — the signal is `on' for less time than it is `off'.
+A digital signal is a voltage that switches between two discrete levels and a pulse means that the waveform is asymmetric — the signal is on for less time than it is off.
 The servo motor signal has pulses at a regular interval of 50 per second (50 Hz) and the *width* (on time) of each pulse is in the range 0.5–1.5ms.
 		
 		{\centering
@@ -89,12 +86,7 @@ Disconnect the servo motor control wire from pin 9 of the Orangepip and connect 
 Since voltage is a relative measurement, not absolute, a ground lead is also attached to a reference point on the circuit — usually the 0V or GND node of the circuit.
 Connect the ground lead to the GND pin with a separate piece of wire.
 		
-	    {\centering
-	    \includegraphics[width=10cm]{graphics/orange-probe}
-	    
-	    \footnotesize\centering
-	    \emph{Connection of the oscilloscope probe to an Orangepip pin}
-	    }
+![Connection of the oscilloscope probe to an Orangepip pin](graphics/orange-probe)
 
 Set up the oscilloscope as follows:
 1. Load the default settings by pressing `SAVE/RECALL`, then choosing `DEVICE SETTINGS`, `LOAD` and selecting `EELAB.SCP` with the select knob.
