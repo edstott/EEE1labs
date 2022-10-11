@@ -64,7 +64,7 @@ Build the circuit on the breadboard and connect the phase shifter output to the 
 		
 Set up channel 1 to display the input sine signal as before and then add the second oscilloscope channel by pressing `CH2` and setting all the y-axis settings the same as channel 1. You should now see two sinusoids on the oscilloscope screen with a time lag between them.
 		
-![Two sine waves with different phase](graphics/graphics/scope-phase.PNG)
+![Two sine waves with different phase](graphics/scope-phase.PNG)
 		
 Use the time axis cursors to measure the time difference between the signals.
 From this calculate the phase difference in radians according to the formula φ = 2𝜋t/T, where t is the time difference and T is the period of the signal.
