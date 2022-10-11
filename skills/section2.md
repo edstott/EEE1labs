@@ -47,7 +47,7 @@ Connect the Orangepip to your computer with the USB cable.
 Run Arduino IDE, open the `servo.ino` file and connect to the Orangepip by clicking Tools→Port and selecting the item which says `Arduino Uno'.
 Click the upload button, which will start the compilation process and program the Orangepip.
 		
-![Servo motor connected to Orangepip with potentiometer input](graphics/servo-photo)
+![Servo motor connected to Orangepip with potentiometer input](graphics/servo-photo.jpg)
 		
 Now when you power up the circuit you should see some initial movement of the servo motor.
 Try turning the potentiometer and you should see the servo motor change position.
@@ -60,18 +60,7 @@ The servo motor is controlled by a digital pulse signal.
 A digital signal is a voltage that switches between two discrete levels and a pulse means that the waveform is asymmetric — the signal is on for less time than it is off.
 The servo motor signal has pulses at a regular interval of 50 per second (50 Hz) and the *width* (on time) of each pulse is in the range 0.5–1.5ms.
 		
-		{\centering
-		\begin{tikzpicture}
-		    \draw[->] (0,0) to node[below] {time} (12,0) ;
-		    \draw[->] (0,0) to node[above,rotate=90] {voltage} (0,5) ;
-		    \draw (0.5,0.5) coordinate (x);
-		    \foreach \i in {0,..3}
-		        \draw (x) -- ++(1,0) -- ++(0,4) -- ++(1.2,0) -- ++(0,-4) -- ++ (2.8,0) coordinate (x);
-		    \draw (0,0.5) node [left] {0};
-		    \draw (0,4.5) node [left] {5};
-		    \draw [blue,->] (1.5,3) -- (2.7,3) node [right] {0.5--1.5ms};
-		    \draw [blue,->] (1.5,2) -- (6.5,2) node [right] {20ms};
-		\end{tikzpicture}}
+![Diagram of a pulse signal](graphics/pulse.png)
 	
 The oscilloscope normally shows a graph of voltage on the y axis and time on the x axis.
 The x origin of the graph (where time = 0) is synchronised to an event called the *trigger*.
@@ -86,15 +75,15 @@ Disconnect the servo motor control wire from pin 9 of the Orangepip and connect 
 Since voltage is a relative measurement, not absolute, a ground lead is also attached to a reference point on the circuit — usually the 0V or GND node of the circuit.
 Connect the ground lead to the GND pin with a separate piece of wire.
 		
-![Connection of the oscilloscope probe to an Orangepip pin](graphics/orange-probe)
+![Connection of the oscilloscope probe to an Orangepip pin](graphics/orange-probe.jpg)
 
 Set up the oscilloscope as follows:
-1. Load the default settings by pressing `SAVE/RECALL`, then choosing `DEVICE SETTINGS`, `LOAD` and selecting `EELAB.SCP` with the select knob.
+1. Load the default settings by pressing `SAVE/RECALL`, then choosing `DEVICE SETTINGS`, `LOAD` and selecting `EELAB.SCP` with the `SELECT` knob.
 2. Set up the oscilloscope probes. Usually they are used in ×10 mode, so set the switch on the probe to the correct position and tell the oscilloscope they are in this mode by pressing `MENU`, selecting page 2, choosing `PROBE` and selecting the ×10 option.
-3. The signal has a voltage range of 0--5V. The oscilloscope screen has 10 vertical divisions so choosing 1 volt per division will fit the signal on the screen nicely. Adjust the vertical sensitivity until the correct value is shown.
-4. The minimum voltage of the signal is 0V so change the vertical position to move the y axis origin (GND arrow) to near the bottom of the screen. The y origin is temporarily displayed as you change the setting.
-5. The signal has a frequency of 50Hz: a period of 20ms. The oscilloscope has 12 horizontal divisions so a horizontal resolution (called the *timebase*) of 5ms per division will let us see at least 2 repetitions of the signal on the screen. Adjust the timebase control until the correct value is shown.
-6. The trigger should be set up to detect the rising edge of the pulses. That way, each pulse that is captured will be displayed in the same position on the screen. Set the trigger threshold voltage to 2.5V with the trigger level control so that the threshold is crossed when the signal transitions from 0V to 5V.
+3. The signal has a voltage range of 0--5V. The oscilloscope screen has 10 vertical divisions so choosing 1 volt per division will fit the signal on the screen nicely. Adjust the vertical sensitivity `VOLTS/DIV` until 'CH1: 1V` is shown in the bottom left of the screen.
+4. The minimum voltage of the signal is 0V so change the vertical position to move the y axis origin to near the bottom of the screen with the `POSITION` control. The y origin is temporarily displayed as a line as you change the setting, then it reverts to an arrow with the channel number (1) on the left of the screen.
+5. The signal has a frequency of 50Hz: a period of 20ms. The oscilloscope has 12 horizontal divisions so a horizontal resolution (called the *timebase*) of 5ms per division will let us see at least 2 repetitions of the signal on the screen. Adjust the timebase control `TIME/DIV` until 'TB: 5ms' is shown in the top left of the screen.
+6. The trigger should be set up to detect the rising edge of the pulses. That way, each pulse that is captured will be displayed in the same position on the screen. Set the trigger threshold voltage to 2.5V with the trigger `LEVEL` control so that the threshold is crossed when the signal transitions from 0V to 5V.
 
 You should see a graph showing the pulses of the waveform.
 Use the gridlines on the oscilloscope screen in conjunction with the displayed vertical sensitivity and timebase to read the voltage and period (repetition time) of the signal.
@@ -103,22 +92,8 @@ Decrease the timebase to 0.5ms per division to `zoom in' on the pulse and measur
 Adjust the potentiometer on your breadboard to see how the signal changes as the servo is commanded to move to different angles.
 This system of representing information in the width of a pulse is called *pulse width modulation* (PWM).
 		
-	    {\centering
-	    \includegraphics[height=1cm]{graphics/pico-timebase}
-	    
-	    \footnotesize\centering
-	    \emph{Timebase (x-axis scale) control in PicoScope software}
-	    }
-		
-	
-		
-	    {\centering
-	    \includegraphics[height=8cm]{graphics/pico-pulse}
-	    
-	    \footnotesize\centering
-	    \emph{Pulse signal observed with a PicoScope}
-	    }
-	
+![A single pulse of the servo control signal](graphics/pulse-zoom.PNG)
+	    	
 - [ ]	Use the oscilloscope to display the servo motor control signal. Make measurements of the period, pulse width and voltage of the signal using the oscilloscope display gridlines. Suggested logbook entry: a screen capture of the oscilloscope showing pulses.
 	
 ### Cursors
@@ -131,12 +106,7 @@ Then, move each cursor on the screen by turning the knob. Pressing the knob sele
 Move the cursors so they align with the rising edges of two consecutive pulses.
 Now you can read the time difference between the pulses (and hence the period of the signal) as the Δt value shown on the screen. The equivalent frequency 1/Δt is also given. Zoom in on a single pulse and set the cursors to the rising and falling edges to find the width of the pulse and the relationship between potentiometer output voltage and pulse width.
 
-	    {\centering
-	    \includegraphics[height=8cm]{graphics/pico-curs}
-	    
-	    \footnotesize\centering
-	    \emph{Measuring pulse width with cursors}
-	    }
+![Using cursors to measure the period of the signal](graphics/cursor.PNG)
 
 Cursors can also be used to measure voltage.
 Change the cursor mode to y axis by repeating the cursor set-up process and selecting `VOLTAGE` instead of `TIME`.
