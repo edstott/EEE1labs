@@ -47,7 +47,7 @@ jobs:
           sudo apt install ghostscript
           for file in $filelist; do
             echo "Converting ${file%.tex}.pdf to ${file%.tex}.png"
-            gs -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -sOutputFile=${file%.tex}.png ${file%.tex}.pdf
+            gs -dBATCH -dNOPAUSE -sDEVICE=png16m -r600 -dDownScaleFactor=3 -sOutputFile=${file%.tex}.png ${file%.tex}.pdf
             git add ${file%.tex}.png
           done
       
