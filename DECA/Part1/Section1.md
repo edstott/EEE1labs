@@ -140,91 +140,105 @@ Each component can be instantiated more than once within any other sheet, meanin
 			
 Using hierarchical design, we can use three instances of a two-input multiplexer to make a four-input multiplexer:
 			
-The boolean expression for the multiplexer is Y = AS̅<sub>0</sub>S̅<sub>1</sub> + BSS<sub>0</sub>S̅<sub>1</sub> + CS̅<sub>0</sub>S<sub>1</sub> + DS<sub>0</sub>S<sub>1</sub> + 
-$Y=A\overline{S_0}~\overline{S_1}+BS_0\overline{S_1}+C\overline{S_0}S_1+DS_0S_1$. It means that the output Y is the same as one of the inputs A,B,C or D.
-			
-			\noindent\begin{tabu}{cc|c}
-				$S_1$&$S_0$&$Y$\\
-				\hline
-				0&0&$A$\\
-				0&1&$B$\\
-				1&0&$C$\\
-				1&1&$D$\\
-			\end{tabu}
-			
-			\subsubsection{Building and testing the 4-input multiplexer}
-			\label{sec:mux4}
-        	% Should have mux2 by this point, need to import it to main sheet.
-			    Create a new sheet called \texttt{mux4} and use your existing \texttt{mux2} component to construct a 4-input multiplexer as show in the diagram. If you have saved the \texttt{mux2} sheet and it does not contain errors, then you will be able to find the \texttt{mux2} component in the Catalogue, under `This Project'. \textbf{Do not try to implement the 4-input multiplexer from gates on a single sheet} - use three instances of the tested 2-input multiplexer you built earlier, as shown in the diagram above.
+The boolean expression for the multiplexer is
+$$Y=A\overline{S_0}~\overline{S_1}+BS_0\overline{S_1}+C\overline{S_0}S_1+DS_0S_1$$
+It means that the output Y is the same as one of the inputs A,B,C or D.
+
+| $S_1$ | $S_0$ | $Y$ |
+| ----- | ----- | --- |
+| 0     | 0     | A   |
+| 0     | 1     | B   |
+| 1     | 0     | C   |
+| 1     | 1     | D   |
+
+### Building and testing the 4-input multiplexer
+
+Create a new sheet called `mux4` and use your existing `mux2` component to construct a 4-input multiplexer as show in the diagram.
+If you have saved the `mux2` sheet and it does not contain errors, then you will be able to find the `mux2` component in the Catalogue, under 'This Project'.
+**Do not try to implement the 4-input multiplexer from gates on a single sheet** — use three instances of the tested 2-input multiplexer you built earlier, as shown in the diagram above.
 			    
 			    \noindent\includegraphics[width=\textwidth]{graphics/DECA-iMUX4.png}
 			    
-			    Add I/O ports and test your design by running a simulation with the \texttt{mux4} sheet open. The testing process is now more complex because you have more inputs. For an exhaustive simulation you will need to test $2^6=64$ input combinations.
+Add I/O ports and test your design by running a simulation with the `mux4` sheet open. The testing process is now more complex because you have more inputs. For an exhaustive simulation you will need to test $2^6=64$ input combinations.
 			
-				\begin{task}
-					Create and simulate a 4-channel multiplexer from a tree of three 2-channel multiplexers.
-				\end{task}
-			
-		\subsection{Busses}
-				A single digital signal can represent a one or zero, which is not very useful on its own. Larger numbers are represented using \emph{busses} of digital wires. Each wire within the bus is known as a \emph{bit}. In \emph{unsigned, twos complement} encoding, each bit represents the number $2^n$, where $n$ is the \emph{index} of the bit. For example, a 4-bit bus would contain bits indexed 0--3 and would represent numbers between zero and $2^0+2^1+2^2+2^3=15$. We will expand the 1-bit multiplexers \texttt{mux2} and \texttt{mux4} to 4-bit versions so that they switch 4-bit busses instead of individual bits.
+- [] Create and simulate a 4-channel multiplexer from a tree of three 2-channel multiplexers.
+
+## Busses
+
+A single digital signal can represent a one or zero, which is not very useful on its own.
+Larger numbers are represented using *busses* of digital wires.
+Each wire within the bus is known as a *bit*.
+In *unsigned*, *twos complement* encoding, each bit represents the number $2^n$, where $n$ is the *index* of the bit.
+For example, a 4-bit bus would contain bits indexed 0–3 and would represent numbers between zero and $2^0+2^1+2^2+2^3=15$.
+We will expand the 1-bit multiplexers `mux2` and `mux4` to 4-bit versions so that they switch 4-bit busses instead of individual bits.
 				
 				\noindent\input{graphics/DECA-mux2x4}
 				
-				The symbol above is not strictly a circuit diagram symbol because individual lines and ports represent more than one wire. Instead, it is a \emph{block diagram} symbol, where lines show the flow of information instead of every physical wire. It is easier to design digital systems with block diagrams because there are fewer lines, but take care that connected blocks are compatible, e.g.~their bus ports have the same number of bits. Block diagrams are used in the rest of these instructions, where busses are drawn with thick lines and the \begin{tikz}[baseline=(char.base)]\draw (0,0)--(0.2,0.2)node[midway,right=0](char){$n$};\end{tikz} notation indicates the number of bits in the bus.
+The symbol above is not strictly a circuit diagram symbol because individual lines and ports represent more than one wire.
+Instead, it is a *block diagram* symbol, where lines show the flow of information instead of every physical wire.
+It is easier to design digital systems with block diagrams because there are fewer lines, but take care that connected blocks are compatible, e.g. their bus ports have the same number of bits.
+Block diagrams are used in the rest of these instructions, where busses are drawn with thick lines and the notation below the number of bits in the bus.
+			\begin{tikz}[baseline=(char.base)]\draw (0,0)--(0.2,0.2)node[midway,right=0](char){$n$};\end{tikz} 
 		
-			\subsubsection{Bus ports}
-				Create a new sheet, called \texttt{mux2x4}. On this sheet, add four of the \texttt{mux2} components you made earlier - each one of these will be responsible for handling one bit of each input and output busses. When you add the ports, make sure that the \texttt{S} port is one bit wide, and the \texttt{A}, \texttt{B} and \texttt{Y} ports are four bits wide. Wire up the \texttt{S} port so it controls all four multiplexers together, but leave the other ports for now. 
+### Bus ports
+
+Create a new sheet, called `mux2x4`.
+On this sheet, add four of the `mux2` components you made earlier — each one of these will be responsible for handling one bit of each input and output busses.
+When you add the ports, make sure that the `S` port is one bit wide, and the `A`, `B` and `Y` ports are four bits wide.
+Wire up the `S` port so it controls all four multiplexers together, but leave the other ports for now. 
 				
-				You will notice that the bus ports are labeled with numbers next to them, e.g. \texttt{A(3:0)}. In this example, this means that the port is called \texttt{A}, and it has bits indexed between 3 (the most significant bit) and 0 (the least significant bit).
+You will notice that the bus ports are labeled with numbers next to them, e.g. `A(3:0)`.
+In this example, this means that the port is called `A`, and it has bits indexed between 3 (the most significant bit) and 0 (the least significant bit).
 				
 				\noindent\includegraphics[width=\textwidth]{graphics/DECA-i4bitbusmux2-unwired.png}
 				
-				\subsubsection{Bus wiring}
-				% Busses can be wired using the Orthogonal Bus Tool. Use the Orthogonal Bus Tool to draw thick bus wires from the bus input and output ports to lines going near, but not touching the ports of the \texttt{mux2} symbols. Then, join the \texttt{mux2} ports to the busses with wires from the Orthogonal Node Tool, joining the \texttt{A} ports to the \texttt{A} bus, and so on. Connect all the \texttt{S} ports of the mux2s directly to the \texttt{S} input port with the Orthogonal Node Tool.
-				You cannot simply connect a 4-bit port to the 1-bit terminals of one of your \texttt{mux2} multiplexers, as the software doesn't know which of those four bits to use. There is also a problem at the output; you will have to join the four 1-bit outputs coming from the four mux2 components into the single 4-bit \texttt{Y} port. If you directly join together any ports with incompatible bit widths, Issie will produce an error.
+### Bus wiring
+			
+You cannot simply connect a 4-bit port to the 1-bit terminals of one of your 'mux2' multiplexers, as the software doesn't know which of those four bits to use. 
+There is also a problem at the output; you will have to join the four 1-bit outputs coming from the four mux2 components into the single 4-bit `Y` port.
+If you directly join together any ports with incompatible bit widths, Issie will produce an error.
 				
-				To connect ports with different widths, use the `Buses' tools in the Catalogue. There are two tools for splitting a bus input into smaller busses or individual bits: `Bus Select' and `SplitWire'.
+To connect ports with different widths, use the 'Buses' tools in the Catalogue.
+There are two tools for splitting a bus input into smaller busses or individual bits: 'Bus Select' and 'SplitWire'.
 				
-				The `Bus Select' component allows you to choose a sub-set of bits from a bus. In this case, we want to select a single bit from the input bus \texttt{A} to connect to the first \texttt{mux2} component. Place a Bus Select and configure it to have an output width of 1 bit and an input bit of 0. Connect the input of the bus select to port A and the output to input A of the first \texttt{mux2}. Repeat this for all four instances of \texttt{mux2} so that each \texttt{mux2} is connected to a different bit (0--3) of port A. The Bus Select shown below is selecting bit 2 from the input bus, for example.
+The 'Bus Select' component allows you to choose a sub-set of bits from a bus.
+In this case, we want to select a single bit from the input bus `A` to connect to the first `mux2` component. Place a Bus Select and configure it to have an output width of 1 bit and an input bit of 0. Connect the input of the bus select to port A and the output to input A of the first `mux2`. Repeat this for all four instances of `mux2` so that each `mux2` is connected to a different bit (0–3) of port A. The Bus Select shown below is selecting bit 2 from the input bus, for example.
 				
 				\noindent\includegraphics[width=0.3\textwidth]{graphics/DECA-iBusSelect.png}
 				
-				The `SplitWire' component splits a bus into two parts. The least significant $n$ bits of your input bus will go to the top output of the SplitWire, and the other bits will go to the bottom output. We can use it by splitting off one bit of the input bus and connecting it to the first \texttt{mux2}. Then, the remaining three bits are passed to another SplitWire to split off the next bit for the next\texttt{mux2}, and so on. The SplitWire in the figure below is splitting a 4-bit input bus into one bit on the top output, and three bits on the bottom output.
-				
-				\noindent\includegraphics[width=0.3\textwidth]{graphics/DECA-iSplitWire.png}
-				
-				Use both methods to connect the input ports of your \texttt{mux2x4} to the \texttt{mux2} components. In the figure below, Bus Select components are used to connect the bits of Port \texttt{A} to the instances of \texttt{mux2}, and SplitWire components are used to connect the bits of Port \texttt{B}. Make sure that each \texttt{mux2} gets the same bit index from each input bus.
+Connect both input ports of your `mux2x4` to the `mux2` components. 
+Make sure that each `mux2` gets the same bit index from each input bus.
 				
 				\noindent\includegraphics[width=\textwidth]{graphics/DECA-i4bitbusmux2-wired.png}
 				
-				For the output port, use the `MergeWires' component, which works like the opposite of a SplitWire: it connects two busses or wires together to make a wider output bus. The top input of a MergeWires is connected to the least significant bits of the output and the bottom input is connected to the most significant.
-				
-				That means you can use a simple tree structure of three MergeWires components to join the outputs of all four \texttt{mux2} instances to the port \texttt{Y}, as shown above. A MergeWires doesn't need any configuration because it automatically sizes the output to be the sum of the widths of both inputs. For example, the MergeWires below combines two 2-bit busses to make a 4-bit bus.
+For the output port, use the 'MergeWires' component, which connects two busses or wires together to make a wider output bus.
+The top input of a MergeWires is connected to the least significant bits of the output and the bottom input is connected to the most significant.
+That means you can use a simple tree structure of three MergeWires components to join the outputs of all four `mux2` instances to the port `Y`, as shown above.
+A MergeWires doesn't need any configuration because it automatically sizes the output to be the sum of the widths of both inputs.
+For example, the MergeWires below combines two 2-bit busses to make a 4-bit bus.
 				
 				\noindent\includegraphics[width=0.3\textwidth]{graphics/DECA-iMergeWires.png}
 			
-				\begin{task}
-					Create a 4-bit multiplexer from four 1-bit multiplexers.
-				\end{task}
+ - [] Create a 4-bit multiplexer from four 1-bit multiplexers.
 			
-			\subsubsection{Testing the 4-bit bus multiplexer}
-				% Test strategy
-				An exhaustive test of this design is not practical for manual inspection of the results because there are now $2^{9}=512$ combinations. However, we already know that the underlying \texttt{mux2} blocks work correctly from the earlier test, so we just need to check the bus wiring in the \texttt{mux2x4} sheet. That can be done with a sample of inputs that check each bit is correctly connected:
+### Testing the 4-bit bus multiplexer
+
+An exhaustive test of this design is not practical for manual inspection of the results because there are now $2^{9}=512$ combinations.
+However, we already know that the underlying `mux2` blocks work correctly from the earlier test, so we just need to check the bus wiring in the `mux2x4` sheet.
+That can be done with a reduced set of inputs that exercises each bit of `A` and `B`, but doesn't test every possible combination:
+
+| `A`  | `B`  | `S` | `Y` |
+| ---- | ---- | --- | --- |
+| 0001 | 1110 | 0   |     |
+| 0001 | 1110 | 1   |     |
+| 0010 | 1101 | 0   |     |
+| 0010 | 1101 | 1   |     |
+| 0100 | 1011 | 0   |     |
+| 0100 | 1011 | 1   |     |
+| 1000 | 0111 | 0   |     |
+| 1000 | 0111 | 1   |     |
 				
-				\noindent\begin{tabu}{ccc|c}
-				    \texttt{A}& \texttt{B}& \texttt{S}& \texttt{Y}\\
-				    \hline
-				    0001& 1110& 0&\\
-				    0001& 1110& 1&\\
-				    0010& 1101& 0&\\
-				    0010& 1101& 1&\\
-				    0100& 1011& 0&\\
-				    0100& 1011& 1&\\
-				    1000& 0111& 0&\\
-				    1000& 0111& 1&\\
-				\end{tabu}
-				
-				In the Simulation tab you will see that the bus inputs are given text fields, not buttons. You can enter data in three different formats here: binary (prefix with \texttt{0b}, e.g. \texttt{0b1010}), hexadecimal (prefix with \texttt{0x}, e.g. \texttt{0xa}), and decimal (no prefix). You can also change the radix of the output using the provided buttons.
+In the Simulation tab you will see that the bus inputs are given text fields, not buttons. You can enter data in three different formats here: binary (prefix with \texttt{0b}, e.g. \texttt{0b1010}), hexadecimal (prefix with \texttt{0x}, e.g. \texttt{0xa}), and decimal (no prefix). You can also change the radix of the output using the provided buttons.
 				
 				\begin{task}
 					Simulate the 4-bit multiplexer and test to ensure it works as expected.
