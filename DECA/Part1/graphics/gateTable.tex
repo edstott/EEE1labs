@@ -1,0 +1,67 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{circuitikz}
+
+\begin{document}
+			\footnotesize
+			\begin{tabular}{llm{3cm}m{3cm}}
+			\\
+			\textbf{Function}& \textbf{Boolean Operation}& \textbf{Rectangular Shape}& \textbf{Distinctive Shape}\\
+			NOT & $ Y = \overline{A}$ &
+			\begin{circuitikz}
+		        \node[not port](g){};
+			\end{circuitikz}&
+			\begin{circuitikz}[american ports]
+		        \node[not port, scale=0.7](g){};
+			\end{circuitikz}
+			\\
+			AND & $ Y = A \cdot B$ &
+			\begin{circuitikz}
+		        \node[and port](g){};
+			\end{circuitikz}&
+			\begin{circuitikz}[american ports]
+		        \node[and port, scale=0.7](g){};
+			\end{circuitikz}
+			\\
+			NAND & $ Y = \overline{A \cdot B}$ &
+			\begin{circuitikz}
+		        \node[nand port](g){};
+			\end{circuitikz}&
+			\begin{circuitikz}[american ports]
+		        \node[nand port, scale=0.7](g){};
+			\end{circuitikz}
+			\\
+			OR & $ Y = A+B$ &
+			\begin{circuitikz}
+		        \node[or port](g){};
+			\end{circuitikz}&
+			\begin{circuitikz}[american ports]
+		        \node[or port, scale=0.7](g){};
+			\end{circuitikz}
+			\\
+			NOR & $ Y = \overline{A+B}$ &
+			\begin{circuitikz}
+		        \node[nor port](g){};
+			\end{circuitikz}&
+			\begin{circuitikz}[american ports]
+		        \node[nor port, scale=0.7](g){};
+			\end{circuitikz}
+			\\
+			XOR & $ Y = A \oplus B = A \cdot \overline{B} + \overline{A} \cdot B$ &
+			\begin{circuitikz}
+		        \node[xor port](g){};
+			\end{circuitikz}&
+			\begin{circuitikz}[american ports]
+		        \node[xor port, scale=0.7](g){};
+			\end{circuitikz}
+			\\
+			XNOR & $ Y = \overline{A \oplus B} = A \cdot B + \overline{A} \cdot \overline{B}$ &
+			\begin{circuitikz}
+		        \node[xnor port](g){};
+			\end{circuitikz}&
+			\begin{circuitikz}[american ports]
+		        \node[xnor port, scale=0.7](g){};
+			\end{circuitikz}
+			\\
+			\end{tabular}
+ \end{document}
