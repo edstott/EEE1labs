@@ -67,7 +67,7 @@ The names of each port and component will become important as we proceed to test
 			
 Save your work when the design is complete, and continue to save regularly as you progress.
 
-- [] Create an Issie project with a sheet containing inputs, an output and a 2-input AND gate.
+- [ ] Create an Issie project with a sheet containing inputs, an output and a 2-input AND gate.
 
 ### Simulation
 
@@ -93,7 +93,7 @@ To properly confirm the functionality of your circuit, you must be systematic in
 As we are doing exhaustive testing for this circuit, you must make a note of which states you have tried, and you should methodically work through them one by one, noting the output as you go.
 Write out a truth-table like the one below to ensure that you test all cases.
 
-| A  | B  | Y  |
+| $A$  | $B$  | $Y$  |
 | -- | -- | -- |
 | 0  | 0  |    |
 | 0  | 1  |    |
@@ -102,16 +102,16 @@ Write out a truth-table like the one below to ensure that you test all cases.
 
 When you are done, confirm that the AND function is performed correctly, and that `Y` is 1 if and only if both `A` and `B` are 1.
 
-- [] Simulate the 2-input AND gate to verify its functionality.
+- [ ] Simulate the 2-input AND gate to verify its functionality.
 
 ### A 2-input multiplexer
 
 A design usually contains many logic primitives connected together.
 The library already contains a primitive for a 2-input multiplexer, but we'll create one from scratch using gates as an exercise.
             
-In Issie, create a new sheet (in the top-left, select Sheets > New sheet) called `mux2` and input the design for the multiplexer, which has the Boolean function Y = S̅A + SB.
+In Issie, create a new sheet (in the top-left, select Sheets > New sheet) called `mux2` and input the design for the multiplexer, which has the Boolean function $Y = \overline{S}A + SB$.
 A multiplexer in digital logic performs a function similar to a `if...else` statement in C and C++ programming: it allows you to select one of a number of different options.
-Here, if S = 1 then Y = B, else Y = B.
+Here, if $S=1$ then $Y=B$, else $Y=B$.
 			
 As you build your design, you may find that some wires appear to overlap.
 This isn't a problem for circuit function, since wires in Issie are only between components; wires cannot connect to other wires directly.
@@ -161,7 +161,7 @@ If you have saved the `mux2` sheet and it does not contain errors, then you will
 			    
 Add I/O ports and test your design by running a simulation with the `mux4` sheet open. The testing process is now more complex because you have more inputs. For an exhaustive simulation you will need to test $2^6=64$ input combinations.
 			
-- [] Create and simulate a 4-channel multiplexer from a tree of three 2-channel multiplexers.
+- [ ] Create and simulate a 4-channel multiplexer from a tree of three 2-channel multiplexers.
 
 ## Busses
 
@@ -238,41 +238,49 @@ That can be done with a reduced set of inputs that exercises each bit of `A` and
 | 1000 | 0111 | 0   |     |
 | 1000 | 0111 | 1   |     |
 				
-In the Simulation tab you will see that the bus inputs are given text fields, not buttons. You can enter data in three different formats here: binary (prefix with \texttt{0b}, e.g. \texttt{0b1010}), hexadecimal (prefix with \texttt{0x}, e.g. \texttt{0xa}), and decimal (no prefix). You can also change the radix of the output using the provided buttons.
+In the Simulation tab you will see that the bus inputs are given text fields, not buttons.
+You can enter data in three different formats here: binary (prefix with `0b`, e.g. `0b1010`), hexadecimal (prefix with `0x`, e.g. `0xa`), and decimal (no prefix).
+You can also change the radix of the output using the provided buttons.
 				
-				\begin{task}
-					Simulate the 4-bit multiplexer and test to ensure it works as expected.
-				\end{task}
+- [ ] Simulate the 4-bit multiplexer and test to ensure it works as expected.
 				
- 			\subsubsection{Hierarchical design with busses}
-				Splitting and merging the busses was quite laborious but there is a great benefit once you build hierarchical designs with busses. To illustrate, we'll create a 4-input, 4-bit multiplexer, using the 2-input, 4-bit multiplexer we just built. Create a new sheet called \texttt{mux4x4}. The layout will be similar to the \texttt{mux4} component, except most of the wires will now be busses.
+### Hierarchical design with busses
+
+Splitting and merging the busses was quite laborious but there is a great benefit once you build hierarchical designs with busses.
+To illustrate, we'll create a 4-input, 4-bit multiplexer, using the 2-input, 4-bit multiplexer we just built.
+Create a new sheet called `mux4x4`. The layout will be similar to the `mux4` component, except most of the wires will now be busses.
 				
-				Using the diagram from Section~\ref{sec:mux4} as a reference, place 4-bit bus input ports \texttt{A}, \texttt{B}, \texttt{C} and \texttt{D}, and an output port \texttt{Y}. We can also use a bus to combine the two select inputs, so create a 2-bit input port \texttt{S}.	Next, recreate the 4 channel multiplexer with the same tree structure as the \texttt{mux4}, using your \texttt{mux2x4} component instead of \texttt{mux2}. Notice that you can now directly connect the input ports with the \texttt{mux2x4} instances since the widths of both ports match. The \texttt{S} bus will need to be split into two 1-bit wires to control each layers of the multiplexer tree.
+Using the diagram for a [4-input, 1-bit multiplexer as a reference](Section1.md#building-and-testing-the-4-input-multiplexer), place 4-bit bus input ports `A`, `B`, `C` and `D`, and an output port `Y`.
+We can also use a bus to combine the two select inputs, so create a 2-bit input port `S`.
+Next, recreate the 4 channel multiplexer with the same tree structure as the `mux4`, using your `mux2x4` component instead of `mux2`.
+Notice that you can now directly connect the input ports with the `mux2x4` instances since the widths of both ports match.
+The bits of the `S` bus will need selected individually to control each layer of the multiplexer tree.
 				
-				Run the simulation on this new sheet, and test the circuit. You should use a similar testing strategy to the one used to test the \texttt{mux2x4}. Choose test inputs that prove that the output matches the correct input A--D, depending on the state of S.
+Run the simulation on this new sheet, and test the circuit.
+You should use a similar testing strategy to the one used to test the `mux2x4`.
+Choose test inputs that prove that the output matches the correct input `A`–`D`, depending on the state of `S`.
 				
-				\begin{task}
-					Implement and test the 4-input, 4-bit multiplexer.
-				\end{task}
+- [ ] Implement and test the 4-input, 4-bit multiplexer.
 		
-		\begin{mdframed}[backgroundcolor=blue!20] 
-			\subsection{Challenge: a multi-purpose logic gate}
-				\label{sec:multilogic}
-				One application of a multiplexer is to implement instructions inside a CPU. For example, a CPU might have two operands $A$ and $B$ and four different operations:
-				\begin{itemize}[noitemsep]
-				\item Bitwise $\text{ NOT } A$
-				\item Bitwise $A \text{ OR } B$
-				\item Bitwise $A \text{ AND } B$
-				\item Bitwise $A \text{ XOR } B$
-				\end{itemize}
+## Challenge: a multi-purpose logic gate
+
+One application of a multiplexer is to implement instructions inside a CPU.
+For example, a CPU might have two operands $A$ and $B$ and four different operations:
+- Bitwise $\text{ NOT } A$
+- $A \text{ OR } B$
+- $A \text{ AND } B$
+- $A \text{ XOR } B$
 				
-				\emph{Bitwise} operations are performed independently between each bit of one multi-bit operand and the corresponding bit of the other operand. For example, $0111\text{ AND }1101=0101$ as a bitwise operation.
+*Bitwise* operations are performed independently between each bit of one multi-bit operand and the corresponding bit of the other operand.
+For example, $0111\text{ AND }1101=0101$ as a bitwise operation.
 				
-				Separate logic gates calculate each function and an instruction code selects which result is passed to the output. The resulting logic block is the beginnings of a CPU component called an \emph{arithmetic and logic unit} (ALU).
+Separate logic gates calculate each function and an instruction code selects which result is passed to the output.
+The resulting logic block is the beginnings of a CPU component called an *arithmetic and logic unit* (ALU).
 				 
 				 \noindent\input{graphics/DECA-ALU1}
 				 
-				 Create a hierarchical design that implements this functionality with components (sheets) called \texttt{NOT4}, \texttt{AND4}, \texttt{OR4}, \texttt{XOR4} and \texttt{mux4x4}. The inputs \texttt{A} and \texttt{B}, and the result \texttt{Y} should each have 4 bits, while the instruction input \texttt{S} should have 2 bits. Each of the logic gates shown above represent bitwise operations and you will need to create sheets for them that contain four instances of each gate to process all the bits of the input operands.
+Create a hierarchical design that implements this functionality with components (sheets) called `NOT4`, `AND4`, `OR4`, `XOR4` and `mux4x4`.
+The inputs `A` and `B`, and the result `Y` should each have 4 bits, while the instruction input \texttt{S} should have 2 bits. Each of the logic gates shown above represent bitwise operations and you will need to create sheets for them that contain four instances of each gate to process all the bits of the input operands.
 				 
-				 Simulate the design with a similar strategy to before: select several different test values for \texttt{A} and \texttt{B}, and for each of these try the four possible values for the instruction code \texttt{S}. Check that the output matches what you would expect for each bitwise operation.
-		\end{mdframed}
+Simulate the design with a similar strategy to before: select several different test values for `A` and `B`, and for each of these try the four possible values for the instruction code `S`.
+Check that the output matches what you would expect for each bitwise operation.
