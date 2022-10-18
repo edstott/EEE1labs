@@ -1,0 +1,42 @@
+
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[scale=1]
+	\footnotesize
+	\draw
+		(0,0)
+		-- ++(1.2,-0.5) node[midway,below=1.5mm]{\bfseries MUX2}
+		-- ++(0,-2) node[midway](m1Y){}
+		-- ++(-1.2,-0.5) node[midway](m1S){}
+		-- ++(0,1) node(m1B){}
+		-- ++(0,1) node(m1A){}
+		-- ++(0,1)
+		;
+	\node[right=-1mm of m1A]{A};
+	\node[right=-1mm of m1B]{B};
+	\node[left=-1mm of m1Y]{Y};
+	\node[above=0 of m1S]{S};
+
+	\draw[ultra thick]
+		(m1A.center) -- ++(-1,0) node[midway](am){} node[left]{A}
+		(m1B.center) -- ++(-1,0) node[midway](bm){} node[left]{B}
+		(m1Y.center) -- ++(1,0) node[midway](ym){} node[right]{Y}
+		;
+	\draw
+		($(am) + (-0.1,-0.1)$) -- ($(am) + (0.1,0.1)$)
+		node[above=0 of am]{4}
+		($(bm) + (-0.1,-0.1)$) -- ($(bm) + (0.1,0.1)$)
+		node[above=0 of bm]{4}
+		($(ym) + (-0.1,-0.1)$) -- ($(ym) + (0.1,0.1)$)
+		node[above=0 of ym]{4}
+		;
+	\draw
+		(m1S.center) -- ++(0,-0.5) node[below]{S};
+
+	
+\end{circuitikz}
+
+\end{document}
