@@ -1,0 +1,61 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}[scale=1]
+	\footnotesize
+	\draw
+		(8,1) coordinate(m2nw){}
+		-- ++(1.2,-0.5) node[midway,below=1.5mm](mux4){\textbf{MUX4}}
+		-- ++(0,-5) node[midway](m2Y){}
+		-- ++(-1.2,-0.5) node[midway](m2S){}
+		-- (m2nw.center) node[pos=0.2](m2D){}
+		coordinate[pos=0.4](m2C){}
+		coordinate[pos=0.6](m2B){}
+		coordinate[pos=0.8](m2A){}
+		;
+	\node[right=-1mm of m2A]{A};
+	\node[right=-1mm of m2B]{B};
+	\node[right=-1mm of m2C]{C};
+	\node[right=-1mm of m2D]{D};
+	\node[left=-1mm of m2Y]{Y};
+	\node[above=0 of m2S]{S};
+
+	\draw[ultra thick]
+		(m2A) to[short] ++ (-0.5,0) node[not port,anchor=out, thin](not){}
+		(m2B) to[short] ++ (-1.5,0) node[or port,anchor=out, thin](or){}
+		(m2C) to[short] ++ (-0.5,0) node[and port,anchor=out, thin](and){}
+		(m2D) to[short] ++ (-1.5,0) node[xor port,anchor=out, thin](xor){}
+		(xor.in 2) to[short] ++(-1.5,0) to ++(0,5) node[above](Ain){A}
+		(and.in 2) to[short] (and.in 2-|Ain)
+		(or.in 2) to[short] (or.in 2-|Ain)
+		(not.in) to[short] (not.in-|Ain)
+		(xor.in 1) to[short] ++(-1,0) node(x){} to (x|-Ain.south) node[above](Bin){B}
+		(and.in 1) to[short] (and.in 1-|Bin)
+		(or.in 1) to[short] (or.in 1-|Bin)
+		(m2S.center) -- ++(0,-1) node[midway](sm){} node[below]{S}
+		(m2Y.center) -- ++(1,0) node[midway](ym){} node[right]{Y}
+		node[below=0.5 of Ain](am){}
+		node[below=0.5 of Bin](bm){}
+		;
+	\draw[dashed]
+		($(xor.south west)+(0,-0.5)$) rectangle ($(not.north east)+(0,0.5)$) node(x){}
+		($(x)!0.5!(x-|xor.west)$) node[anchor=south,align=center] {Bitwise operations\\on 4-bit busses}
+		;
+
+	\draw
+		($(am) + (-0.1,-0.1)$) -- ($(am) + (0.1,0.1)$)
+		node[left=0 of am]{4}
+		($(bm) + (-0.1,-0.1)$) -- ($(bm) + (0.1,0.1)$)
+		node[right=0 of bm]{4}
+		($(ym) + (-0.1,-0.1)$) -- ($(ym) + (0.1,0.1)$)
+		node[above=0 of ym]{4}
+		($(sm) + (-0.1,-0.1)$) -- ($(sm) + (0.1,0.1)$)
+		node[left=0 of sm]{2}
+	;
+	
+\end{circuitikz}
+\end{document}
