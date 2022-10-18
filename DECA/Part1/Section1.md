@@ -8,7 +8,7 @@ Digital circuits today are usually highly *integrated*, meaning that many functi
 This makes them smaller and faster, since taking digital signals out of an integrated circuit and onto a circuit board imposes significant limitations on the density and switching frequency.
 		
 Large integrated circuits are expensive and time-consuming to fabricate so they are designed and extensively tested in software first.
-Simulation can be considered entirely faithful in terms of circuit function due to the representation of data as discrete high or low voltage levels --- the Boolean equations are solved the same way in software as in hardware.
+Simulation can be considered entirely faithful in terms of circuit function due to the representation of data as discrete high or low voltage levels — the Boolean equations are solved the same way in software as in hardware.
 		
 In this part of the lab experiment for Digital Electronics and Computer Architecture, you will design digital logic systems in software and run simulations to confirm that they behave correctly.
 You will learn how to build up complex systems from simple building blocks and use groups of binary signals to represent and manipulate data.
@@ -21,7 +21,8 @@ To prepare for the lab, follow the instructions on the [Issie project webpage](h
 
 Issie uses the IEC 'retangular shape' standard for logic gate symbols.
 Take time to learn how they correspond to the 'distinctive shape' symbols that you might see elsewhere.
-\input{graphics/gateTable}
+
+![Logic gate symbols](graphics/gateTable.png)
 
 ## Design with Issie
 			
@@ -131,7 +132,7 @@ Each component is defined by one sheet but it can be used multiple times as diff
 In the diagram below there are four sheets that define three components plus the *main* sheet.
 Component 1 is used as two instances in *main*.
 			
-			{\centering\noindent\input{graphics/DECA-hierarchy}}
+![Design hierarchy](graphics/hierarchy.png)
 			
 In each Issie project, you will be treating one of your sheets, usually `main`, as the *top-level component* of your design.
 This will be the sheet that defines the inputs and outputs to the entire system, and it will be the sheet you have open when you wish to simulate the entire system.
@@ -172,13 +173,12 @@ In *unsigned*, *twos complement* encoding, each bit represents the number $2^n$,
 For example, a 4-bit bus would contain bits indexed 0–3 and would represent numbers between zero and $2^0+2^1+2^2+2^3=15$.
 We will expand the 1-bit multiplexers `mux2` and `mux4` to 4-bit versions so that they switch 4-bit busses instead of individual bits.
 				
-				\noindent\input{graphics/DECA-mux2x4}
+![4-bit, 2-input multiplexer](graphics/mux2x4.png)
 				
 The symbol above is not strictly a circuit diagram symbol because individual lines and ports represent more than one wire.
 Instead, it is a *block diagram* symbol, where lines show the flow of information instead of every physical wire.
 It is easier to design digital systems with block diagrams because there are fewer lines, but take care that connected blocks are compatible, e.g. their bus ports have the same number of bits.
-Block diagrams are used in the rest of these instructions, where busses are drawn with thick lines and the notation below the number of bits in the bus.
-			\begin{tikz}[baseline=(char.base)]\draw (0,0)--(0.2,0.2)node[midway,right=0](char){$n$};\end{tikz} 
+Block diagrams are used in the rest of these instructions, where busses are drawn with thick lines and the /n notation to indicate the number of bits.
 		
 ### Bus ports
 
@@ -219,7 +219,7 @@ For example, the MergeWires below combines two 2-bit busses to make a 4-bit bus.
 				
 				\noindent\includegraphics[width=0.3\textwidth]{graphics/DECA-iMergeWires.png}
 			
- - [] Create a 4-bit multiplexer from four 1-bit multiplexers.
+ - [ ] Create a 4-bit multiplexer from four 1-bit multiplexers.
 			
 ### Testing the 4-bit bus multiplexer
 
@@ -277,7 +277,7 @@ For example, $0111\text{ AND }1101=0101$ as a bitwise operation.
 Separate logic gates calculate each function and an instruction code selects which result is passed to the output.
 The resulting logic block is the beginnings of a CPU component called an *arithmetic and logic unit* (ALU).
 				 
-				 \noindent\input{graphics/DECA-ALU1}
+![Boolean ALU](graphics/ALU1.png)
 				 
 Create a hierarchical design that implements this functionality with components (sheets) called `NOT4`, `AND4`, `OR4`, `XOR4` and `mux4x4`.
 The inputs `A` and `B`, and the result `Y` should each have 4 bits, while the instruction input \texttt{S} should have 2 bits. Each of the logic gates shown above represent bitwise operations and you will need to create sheets for them that contain four instances of each gate to process all the bits of the input operands.
