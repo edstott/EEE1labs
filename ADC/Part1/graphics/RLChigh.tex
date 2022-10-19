@@ -1,0 +1,23 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\draw
+		(0,0) node[ground](org){} to[sV,v=$v_\text{in}$] ++(0,20mm) node(in){}
+		to[short] ++(10mm,0) 
+		to[R=$R$] ++(2,0) 
+		to[C,l=$C$] ++(20mm,0) coordinate(out){}
+		to[L=$L$] ++(0,-20mm) node(gnd){}
+		to[short] (org);
+	\draw
+		(out) to[short,-o] ++(10mm,0) node[right]{$v_\text{out}$};
+	\draw
+		($(in)!0.5!(out)$) node[above=10mm]{High-pass};
+	
+\end{circuitikz}
+
+\end{document}

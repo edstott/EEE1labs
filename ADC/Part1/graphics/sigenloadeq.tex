@@ -1,0 +1,29 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}[]
+	\small
+	\draw
+		node[vsourcesinshape,rotate=90](src){}
+		node[above=0mm of src.east]{$V_\text{source}$};
+	\draw
+		(src.north) to[short] ++(-1,0) coordinate (org)  node[right=5mm](in){}
+		(src.south) to[R,l=$R_\text{source}$,n=rsource] ++(20mm,0) node(out){}
+		to[short] ++(5mm,0)
+		to[short] ++ (0,-20mm) node(outlow){}
+		to[R,l_=$R_\text{load}$,v^<=$v_\text{out}$] (outlow -| org) node[ground] (orglow){}
+		to[short] (org);
+
+	\draw[dashed]
+		(in) ++ (0,-8mm)
+		rectangle
+		($(out) + (0,10mm)$)
+		;
+
+\end{circuitikz}
+
+\end{document}

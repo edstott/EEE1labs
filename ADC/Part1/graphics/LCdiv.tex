@@ -1,0 +1,21 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\draw
+		(0,0) node[ground](org){} to[sV,v=$v_\text{in}$] ++(0,60mm)
+		to[short] ++(20mm,0)
+		to[R,v<=$v_1$,l=$R$] ++(0,-20mm)
+		to[L,l=$L$,n=L] ++(0,-20mm)
+		to[C,l=$C$,n=C] ++(0,-20mm)
+		to[short] (org);
+	\draw[dashed]
+		($(C.right)+(-5mm,-5mm)$) rectangle ($(L.left)+(10mm,5mm)$) node[below right]{$Z$};
+	
+\end{circuitikz}
+
+\end{document}

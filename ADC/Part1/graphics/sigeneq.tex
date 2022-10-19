@@ -1,0 +1,26 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}[american voltages]
+	\small
+	\draw
+		node[vsourcesinshape,rotate=90](src){}
+		node[above=0mm of src.east]{$V_\text{source}$};
+	\draw
+		(src.north) to[short,-o] ++(-1,0) node[right=5mm](in){}
+		(src.south) to[R,l=$R_\text{source}$,n=rsource] ++(20mm,0) node(out){}
+		to[short,-o] ++(5mm,0);
+
+	\draw[dashed]
+		(in) ++ (0,-8mm)
+		rectangle
+		($(out) + (0,10mm)$)
+		;
+
+\end{circuitikz}
+
+\end{document}

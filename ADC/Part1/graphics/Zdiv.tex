@@ -1,0 +1,18 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\draw
+		(0,0) node[ground](org){} to[sV,v=$v_\text{in}$] ++(0,40mm)
+		to[short,i=$i$] ++(20mm,0)
+		to[R,v<=$v_\text{R}$,l=$R$] ++(0,-20mm)
+		to[R,v<=$v_\text{Z}$,l=$Z$] ++(0,-20mm)
+		to[short] (org);
+	
+\end{circuitikz}
+
+\end{document}
