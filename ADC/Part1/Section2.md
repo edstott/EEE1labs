@@ -30,7 +30,7 @@ The component $Z$ is drawn as a resistor, but the relationship is true of any pa
 Real-world passive components have parasitic impedances — they behave like combinations of ideal components.
 The most significant parasitic impedance for inductors and capacitors is a series resistance, so the equivalent circuits can be drawn like this:
 			
-![Equivalent circuits of a non-ideal resistor and capacitor](graphics/PN-LCequ.png)
+![Equivalent circuits of a non-ideal resistor and capacitor](graphics/LCeq.png)
 			
 The parasitic resistance comes from the use of ohmic conductors in the components.
 For example, most of the parasitic resistance in an inductor comes from its internal coil of wire.
@@ -88,10 +88,12 @@ If the magnitudes differ a lot, your measurements will become inaccurate.
 If you are not sure if your oscilloscope measurement is accurate, you can also calculate the theoretical value of $\|Z\|$ and choose $R$ to be similar.
 
 Here are some examples of inaccurate oscilloscope measurements that could be fixed by changing $R$:
-		
-![Inaccurate oscilloscope measurement casued by small signal amplitude](graphics/PN-noisypico.png)
-	
-![Innacurate oscilloscope measurement caused by small residual after subtraction](graphics/PN-mathnoisepico.png)
+
+*CHB is small and fuzzy, and the vertical sensitivity is at its limit. Decrease R*
+![Inaccurate oscilloscope measurement casued by small signal amplitude](graphics/PN-noisy.png)
+
+*The math channel is blocky (quantised) and it can't be accurately measured. Increase R*
+![Innacurate oscilloscope measurement caused by small residual after subtraction](graphics/PN-mathnoise.png)
 		
 Make measurements at the same frequency values that you used in your spreadsheet in the preparation task.
 Plot a graph to confirm the reciprocal relationship between impedance and frequency.
