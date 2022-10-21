@@ -1,14 +1,12 @@
 # Analysis and Design of Circuits Lab
 # Part 1: Autumn Term weeks 4--6
 
-## Introduction
-
 The lab exercise for Analysis and Design of Circuits Part 1 concerns passive components: resistors, capacitors and inductors.
 In this section, you'll find out how you can measure impedance.
-Section 2 is about the impedance of capacitors and inductors, both in theory and in practice.
-Finally, in Section 3 you will use passive components to build filters that can shape the frequency content of a signal.
-	
-## Measuring Impedance
+[Section 2](Section2.md) is about the impedance of capacitors and inductors, both in theory and in practice.
+Finally, in [Section 3](Section3.md) you will use passive components to build filters that can shape the frequency content of a signal.
+
+## Section 1: Measuring Impedance
 
 According to Ohm's law, impedance is the relationship between voltage and current, so if we measure the voltage across a component and the current through it we can calculate its impedance $Z$.
 However, the oscilloscope measures voltage not current, so instead we can add a series resistor $R$, which has a known, dependable relationship between voltage and current:
