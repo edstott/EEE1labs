@@ -20,8 +20,12 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
 ## Analysis and Design of Circuits
 - Part 1 (Autumn Term Weeks 4–6)
   - [Section 1: Measuring Impedance](ADC/Part1/Section1.md)
+  - [Section 2: Reactive Components](ADC/Part1/Section2.md)
+  - Section 3
   
 ## Digital Electronics and Computer Architecture
 - Part 1 (Autumn Term Weeks 4–6)
   - [Section 1: Design with Issie](DECA/Part1/Section1.md)
+  - [Section 2: Digital Arithmetic](DECA/Part1/Section2.md)
+  - Section 3
   
