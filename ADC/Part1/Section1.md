@@ -1,14 +1,12 @@
 # Analysis and Design of Circuits Lab
 # Part 1: Autumn Term weeks 4--6
 
-## Introduction
-
 The lab exercise for Analysis and Design of Circuits Part 1 concerns passive components: resistors, capacitors and inductors.
 In this section, you'll find out how you can measure impedance.
-Section 2 is about the impedance of capacitors and inductors, both in theory and in practice.
-Finally, in Section 3 you will use passive components to build filters that can shape the frequency content of a signal.
-	
-## Measuring Impedance
+[Section 2](Section2.md) is about the impedance of capacitors and inductors, both in theory and in practice.
+Finally, in [Section 3](Section3.md) you will use passive components to build filters that can shape the frequency content of a signal.
+
+## Section 1: Measuring Impedance
 
 According to Ohm's law, impedance is the relationship between voltage and current, so if we measure the voltage across a component and the current through it we can calculate its impedance $Z$.
 However, the oscilloscope measures voltage not current, so instead we can add a series resistor $R$, which has a known, dependable relationship between voltage and current:
@@ -27,38 +25,34 @@ The problem can be resolved by measuring $v_\text{A}=v_\text{Z}+v_\text{R}$ and 
 That way, both oscilloscope channels are measuring a voltage referenced to ground.
 Create the circuit on a breadboard with $Z=R=1\text{kΩ}$.
 Connect oscilloscope CHA to measure $v_\text{A}$ (which is also $v_\text{in}$ ) and CHB to $v_\text{Z}$ with the probes.
-Set the switches on both probes to the $\times1$ position and use the channel configuration on the Picoscope software to set the probe as $\times1$.
+Set the switches on both probes to the ×10 position and configure the oscilloscope for a ×10 probe on both channels.
 		
 Generate $v_\text{in}$ from the signal generator with $f=100$Hz, amplitude $v_\text{in}=1V$ and offset 0V.
 The voltage source in the circuit will be a sine function because that will be important when we come to characterise capacitors and inductors.
 Set the sensitivities of both channels to Auto and the timebase to 5ms/div.
 Place the trigger diamond in the centre of the CHA (blue) waveform and set the trigger mode to Auto, Trigger Channel A.
 		
-		\noindent\includegraphics[width=0.9\textwidth]{graphics/PN-breadboard.jpg}
+![Potential divider on a breadboard](graphics/PN-breadboard.jpg)
 		
-Calculate and display $v_\text{R}$ on the oscilloscope by opening the settings in Tools → Math Channels and enabling the option for A - B.
-Click OK and you will see a new waveform on the screen in a purple colour.
-If you are using a Mac, download the file \texttt{math\_ch.pssettings} from the lab downloads and open it with the PicoScope software.
-
-The original CHA ( $v_\text{A}=v_\text{R}+v_\text{Z}$ ) on the blue trace is not needed for viewing any longer, but it still needs to be measured to calculate the math channel.
-Move it out of the way by setting the display scale for channel A to $\times0.1$ in the little blue box in the bottom left hand corner of the display and dragging its origin on the vertical scale upwards.
-Since $Z$ and $R$ are identical, $v_\text{R}$ (purple trace) and $v_\text{Z}$ (red trace) should be the same. 
+Calculate and display $v_\text{R}$ on the oscilloscope by pressing `MATH` and setting the options at the right hand side of the screen to CH1, SUB and CH2. You can now remove CH1 from the screen by pressing `CH1` twice — it will still be used by the oscilloscope to calculate the MATH trace and to determine the trigger.
+Since $Z$ and $R$ are identical, $v_\text{R}$ (red trace) and $v_\text{Z}$ (blue trace) should be the same.
 		
-		\noindent\includegraphics[width=0.9\textwidth]{graphics/PN-mathpico}
-		
-		{\footnotesize\emph{Picoscope set up to show $v_\text{R}$ on the math channel (purple/middle) and $v_\text{Z}$ (red/bottom) on CHB. CHA (blue/top), showing $v_\text{in}$, is scaled down and moved out of the way. The trigger is set to 0V on CHA.}}
+![Oscilloscope display using math mode](graphics/PN-math.png)
 		
 - [ ] Set up the oscilloscope to compare $v_\text{Z}$ and $v_\text{R}$. Confirm that $v_\text{Z}=v_\text{R}$ when $Z=R$.
 
-When $v_\text{Z}\neq v_\text{R}$ you'll need to take measurements of both amplitudes and calculate using $Z=Rv_\text{Z}/v_\text{R}$.
-Using the cursors can be laborious so the oscilloscope provides some automatic measurement functions.
-You can add a measurement to the screen with Measurements → Add Measurement.
-For this exercise, use the AC RMS measurement since it averages over the entire waveform.
-Peak to Peak might appear useful but it includes any peaks of noise, so it's not always an accurate measurement of the underlying sinusoid.
+When $v_1\neq v_2$ you'll need to take measurements of both amplitudes and calculate using $Z=Rv_\text{Z}/v_\text{R}$, since $Z=v_\text{Z}/i$ and $i=v_\text{R}/R$.
+On the oscilloscope, it's more accurate to make peak-to-peak measurements with cursors because it's easier to align them with peaks of the waveform than the centre.
+You will calculating the ratio of amplitudes, so it doesn't matter if you use peak-to-peak amplitude instead of true amplitude as long as you are consistent.
 		
-Set up RMS and peak to peak measurements for the channels B and A-B (math).
-Compare them to measurements made with the cursors using the conversion $v_\text{RMS}=A/\sqrt{2}$, where A is the amplitude.
-Also compare with a voltage measurement from with the multimeter in V∿ mode, which is an RMS measurement.
+Using the cursors can be laborious so the oscilloscope provides some automatic measurement functions.
+However, it's important to examine what exactly these are measuring. Press `AUTO MEASURE` to turn on measurements.
+You can add up to six measurements to the screen and the side menu lets you choose which measurement number, it's source (e.g. CH1, CH2, MATH) and the measurement type.
+Add the measurements 'Amplitude', 'Peak-peak' and 'RMS' for channels MATH ( $v_\text{R}$ ) and CH2 ( $v_\text{Z}$ ).
+
+Compare the measurements and find which ones match peak-to-peak measurements made by the cursors. 
+You will find that 'amplitude' and 'peak-peak' are similar because oscilloscopes tend to use the terms interchangeably and not consider true amplitude at all.
+On the Rohde and Schwarz oscilloscope, 'amplitude' is more accurate than 'peak-peak' because it uses an algorithm to filter out any noise spikes that might be superimposed on your signal.
 		
 - [ ] Check the accuracy of the auto measure functions of the oscilloscope by comparing to cursor and multimeter measurements.
 

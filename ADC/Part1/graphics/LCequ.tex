@@ -1,0 +1,25 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\draw
+		(0,0) to[short,o-] ++(0,5mm) node(LS){}
+		to[L,l=$L$] ++(0,15mm)
+		to[R,l=$R$] ++(0,15mm) node(LN){}
+		to [short,-o] ++(0,5mm);
+	\draw
+		(25mm,0) to[short,o-] ++(0,5mm) node(CS){}
+		to[C,l=$C$] ++(0,15mm)
+		to[R,l=$R$] ++(0,15mm) node(CN){}
+		to [short,-o] ++(0,5mm);
+	\draw[dashed]
+		($(LS)+(-8mm,0)$) rectangle ($(LN)+(+5mm,0)$)
+		($(CS)+(-10mm,0)$) rectangle ($(CN)+(+6mm,0)$);
+\end{circuitikz}
+
+\end{document}
