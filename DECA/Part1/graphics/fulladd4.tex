@@ -1,0 +1,41 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}[scale=0.6]
+	\draw
+		coordinate(org){}
+		(org) to ++(-0.5,0)
+		node[left]{CIN};
+	\foreach \y in {0,...,3}
+	{
+	\draw
+		(org) to ++(1,0)
+		node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0,anchor=bpin 3](fa1){\bfseries FA}
+		node[right] at (fa1.bpin 1) {A}
+		node[right] at (fa1.bpin 2) {B}
+		node[right] at (fa1.bpin 3) {C$_\text{in}$}
+		node[left] at (fa1.bpin 6) {S}
+		node[left] at (fa1.bpin 4) {C$_\text{out}$}
+		(fa1.bpin 4) to ++(1,0)
+		coordinate(org) {}
+	;
+	\draw
+		(fa1.bpin 1) to ++(-0.5,0)
+		to ++(0,1.5) node[above]{A$_\y$}
+		(fa1.bpin 2) to ++(-1,0)
+		to ++(0,1.5) node[above]{B$_\y$}
+		(fa1.bpin 6) to ++(0.5,0)
+		to ++(0,-2.5) node[below]{S$_\y$}
+	;
+	}
+	\draw
+		(fa1.bpin 4) to ++(1,0)
+		node[right] {COUT}
+	;
+\end{circuitikz}
+
+\end{document}

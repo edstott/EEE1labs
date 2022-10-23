@@ -1,0 +1,40 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\draw
+		(0,0) node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0](ha1){\bfseries HA}
+		node[right] at (ha1.pin 1) {A}
+		node[right] at (ha1.pin 3) {B}
+		node[left] at (ha1.pin 4) {S}
+		node[left] at (ha1.pin 6) {C}
+	;
+	\draw
+		(ha1.pin 4) -- ++(1,0)
+		node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0,anchor=pin 1](ha2){\bfseries HA}
+		node[right] at (ha2.pin 1) {A}
+		node[right] at (ha2.pin 3) {B}
+		node[left] at (ha2.pin 4) {S}
+		node[left] at (ha2.pin 6) {C}
+	;
+	\draw
+		(ha2.pin 6) -- ++(0.5,0)
+		node[or port,anchor=in 2](or1){}
+	;
+	\draw
+		(ha1.pin 1) to[->] ++(-1,0) node(in){} node[left]{A}
+		(ha1.pin 3) to[->] (ha1.pin 3-|in) node[left]{B}
+		(ha2.pin 3) to (ha2.pin 3-|in) node[left]{CIN}
+		(ha1.pin 6) to ++(2,0) node(x){}
+		to (x|-or1.in 1)
+		to (or1.in 1)
+		(or1.out) to ++(1,0) node(out){} node[right]{COUT}
+		(ha2.pin 4) to (ha2.pin 4-|out) node[right]{S}
+	;
+\end{circuitikz}
+
+\end{document}

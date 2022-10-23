@@ -1,0 +1,69 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}[scale=1]
+	\draw
+		coordinate(org){}
+		(org) to[short] ++(0,-0.75) coordinate(x){}
+		;
+	\ctikzset{multipoles/dipchip/width=2}
+	\draw
+		(org) to[short] ++(0.5,0)
+		node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0,anchor=bpin 3](fa1){\bfseries FA4}
+		node[right] at (fa1.bpin 1) {A}
+		node[right] at (fa1.bpin 2) {B}
+		node[right] at (fa1.bpin 3) {C$_\text{in}$}
+		node[left] at (fa1.bpin 6) {S}
+		node[left] at (fa1.bpin 4) {C$_\text{out}$}
+	;
+	\draw
+		(fa1.pin 2) node [dipchip, num pins=6, hide numbers, no topmark, external pins width=0,anchor=pin 4,left=1.5 of fa1.pin 2](cinv) {\bfseries CINV}
+		node[right] at (cinv.pin 1) {A}
+		node[right] at (cinv.pin 3) {C}
+		node[left] at (cinv.pin 4) {Y}
+		;
+	\draw
+		(cinv.pin 3) to ++(-0.5,0)
+		to ++(0,-1.5)
+		coordinate(sub){}
+		node[below]{SUB}
+		(x) to[short] (x-|sub)
+	;
+	\draw[ultra thick]
+		(fa1.bpin 1) to ++(-0.5,0)
+		-- ++(0,1.0) 
+		coordinate[midway](am){}
+		coordinate(a){} node[above]{A}
+		(fa1.bpin 2) -- ++(-1,0)
+		coordinate[pos=0.7](xm){} coordinate(xn){}
+		-- (xn|-cinv.pin 4)
+		-- (cinv.pin 4)
+		(fa1.bpin 6) -- ++(0.5,0)
+		coordinate[midway](sm){}
+		node[right]{S}
+		(cinv.pin 1) to ++(-0.5,0) node(b){}
+		-- (b|-a)
+		coordinate[midway](bm){}
+		node[above]{B}
+	;
+	\draw
+		(fa1.bpin 4) to ++(0.5,0)
+		node[right] {COUT}
+	;
+	\draw
+		($(am) + (-0.1,-0.1)$) -- ($(am) + (0.1,0.1)$)
+		node[right=0 of am]{4}
+		($(bm) + (-0.1,-0.1)$) -- ($(bm) + (0.1,0.1)$)
+		node[right=0 of bm]{4}
+		($(sm) + (-0.1,-0.1)$) -- ($(sm) + (0.1,0.1)$)
+		node[above=0 of sm]{4}
+		($(xm) + (-0.1,-0.1)$) -- ($(xm) + (0.1,0.1)$)
+		node[above=0 of xm]{4}
+	;
+\end{circuitikz}
+
+\end{document}

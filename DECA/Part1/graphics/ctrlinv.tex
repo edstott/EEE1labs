@@ -1,0 +1,29 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\node[xor port,rotate=-90](xor0) at (0,0){};
+	\node[xor port,rotate=-90](xor1) at (2,0){};
+	\node[xor port,rotate=-90](xor2) at (4,0){};
+	\node[xor port,rotate=-90](xor3) at (6,0){};
+	\draw
+		(xor0.in 2) to[short] ++(0,1) node[above]{A$_0$}
+		(xor1.in 2) to[short] ++(0,1) node[above]{A$_1$}
+		(xor2.in 2) to[short] ++(0,1) node[above]{A$_2$}
+		(xor3.in 2) to[short] ++(0,1) node[above]{A$_3$}
+		(xor3.in 1) to[short] ++(0,0.5) to[short] ++(-7,0) node[left](C){C}
+		(xor2.in 1) to[short] (xor2.in 1|-C)
+		(xor1.in 1) to[short] (xor1.in 1|-C)
+		(xor0.in 1) to[short] (xor0.in 1|-C)
+		(xor0.out) to[short] ++(0,-0.5) node[below]{Y$_0$}
+		(xor1.out) to[short] ++(0,-0.5) node[below]{Y$_1$}
+		(xor2.out) to[short] ++(0,-0.5) node[below]{Y$_2$}
+		(xor3.out) to[short] ++(0,-0.5) node[below]{Y$_3$}
+	;
+\end{circuitikz}
+
+\end{document}

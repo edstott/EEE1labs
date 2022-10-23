@@ -1,0 +1,124 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{circuitikz}[scale=1]
+	\footnotesize
+
+
+	\draw %MUX4
+		(0,0) node(m2nw){}
+		-- ++(1.2,-0.5) node[midway,below=1.5mm](mux4){\textbf{MUX4}}
+		-- ++(0,-5) node[midway](m2Y){}
+		-- ++(-1.2,-0.5) node[midway](m2S){}
+		-- (m2nw.center) coordinate[pos=0.2](m2D){}
+		coordinate[pos=0.4](m2C){}
+		coordinate[pos=0.6](m2B){}
+		coordinate[pos=0.8](m2A){}
+		;
+	\node[right=0mm of m2A]{A};
+	\node[right=0mm of m2B]{B};
+	\node[right=0mm of m2C]{C};
+	\node[right=0mm of m2D]{D};
+	\node[left=-1mm of m2Y]{Y};
+	\node[above=0 of m2S]{S};
+
+	\draw[ultra thick] %Gates
+		(m2A) to[short] ++ (-0.5,0) node[thin, not port,anchor=out](not){}
+		(m2B) to[short] ++ (-1.5,0) node[thin, or port,anchor=out](or){}
+		(m2C) to[short] ++ (-0.5,0) node[thin, and port,anchor=out](and){}
+		(m2D) to[short] ++ (-1.5,0) node[thin, xor port,anchor=out](xor){}
+		(xor.in 2) to[short] ++(-1.5,0) to ++(0,5) node[above](Ain){A}
+		(and.in 2) to[short] (and.in 2-|Ain)
+		(or.in 2) to[short] (or.in 2-|Ain)
+		(not.in) to[short] (not.in-|Ain)
+		(xor.in 1) to[short] ++(-1,0) node(x){} to (x|-Ain.south) node[above](Bin){B}
+		(and.in 1) to[short] (and.in 1-|Bin)
+		(or.in 1) to[short] (or.in 1-|Bin)
+		(m2S.center) -- ++(0,-1) node[midway](sm){} node[below]{[S$_1$,S$_0$]}
+		node[below=0.5 of Ain](am){}
+		node[below=0.5 of Bin](bm){}
+		;
+
+	\draw[dashed]
+		($(xor.south west)+(0,-0.5)$) rectangle ($(not.north east)+(0,0.5)$) node(x){}
+		($(x)!0.5!(x-|xor.west)$) node[anchor=south,align=center] {Bitwise operations\\on 4-bit busses}
+		;
+
+	\draw
+		($(am) + (-0.1,-0.1)$) -- ($(am) + (0.1,0.1)$)
+		node[left=0 of am]{4}
+		($(bm) + (-0.1,-0.1)$) -- ($(bm) + (0.1,0.1)$)
+		node[right=0 of bm]{4}
+		($(sm) + (-0.1,-0.1)$) -- ($(sm) + (0.1,0.1)$)
+		node[left=0 of sm]{2}
+	;
+
+	\draw %add/sub input B mux
+		($(m2D)+(-3,-2)$) node(m3nw){}
+		-- ++(1.2,-0.5) node[midway,below=1.5mm](mux4){\textbf{MUX2}}
+		-- ++(0,-2) node[midway](m3Y){}
+		-- ++(-1.2,-0.5) node[midway](m3S){}
+		-- (m3nw.center) 
+		node[pos=0.33](m3B){}
+		node[pos=0.66](m3A){}
+		;
+	\node[right=-1mm of m3A]{A};
+	\node[right=-1mm of m3B]{B};
+	\node[left=-1mm of m3Y]{Y};
+	\node[above=0 of m3S]{S};
+
+	\ctikzset{multipoles/dipchip/width=2}
+	\draw %FA
+		node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0,right=1 of m3Y,anchor=pin 2](fa1){\textbf{ADDSUB}}
+		node[right] at (fa1.bpin 1) {A}
+		node[right] at (fa1.bpin 2) {B}
+		node[right] at (fa1.bpin 3) {SUB}
+		node[left] at (fa1.bpin 6) {S}
+		node[left] at (fa1.bpin 4) {C$_\text{out}$}
+	;
+	\draw %Output mux
+		($(fa1.pin 6)+(2,4)$) node(m4nw){}
+		-- ++(1.2,-0.5) node[midway,below=1.5mm](mux4){\textbf{MUX2}}
+		-- ++(0,-2) node[midway](m4Y){}
+		-- ++(-1.2,-0.5) node[midway](m4S){}
+		-- (m4nw.center) 
+		node[pos=0.33](m4B){}
+		node[pos=0.66](m4A){}
+		;
+	\node[right=-1mm of m4A]{A};
+	\node[right=-1mm of m4B]{B};
+	\node[left=-1mm of m4Y]{Y};
+	\node[above=0 of m4S]{S};
+
+	\draw[ultra thick]
+		(m3A.center) -- (m3A-|Bin)
+		-- (xor.in 1-|Bin)
+		(m3B.center) -- ++(-1,0) node[left]{b0001}
+		(m3Y.center) -- (fa1.pin 2)
+		(fa1.pin 1) -- ++(-0.5,0) -- ++(0,1.5) node(y){} -- (y-|Ain) -- (xor.in 2-|Ain)
+		(fa1.pin 6) -- ++(0.5,0) node(x){} -- (x|-m4B) node[midway](sm){} -- (m4B.center)
+		(m4Y.center) -- ++(1,0) node[midway](ym){} node[right]{Y}
+		(m2Y.center) -- ++(1,0) node(x){} -- (x|-m4A) -- (m4A.center)
+		;
+	\draw
+		(m3S.center) -- ++(0,-1) node(s){} node[below]{S$_0$}
+		(fa1.pin 3) -- ++(-0.5,0) node(y){}
+		-- (y|-s) node[midway](s1){} node[below]{S$_1$}
+		(m4S.center) -- (m4S|-s) node[below]{S$_2$}
+	;
+
+	\draw
+		($(ym) + (-0.1,-0.1)$) -- ($(ym) + (0.1,0.1)$)
+		node[above=0 of ym]{4}
+		%($(sm) + (-0.1,-0.1)$) -- ($(sm) + (0.1,0.1)$)
+		%node[left=0 of sm]{4}
+	;
+
+	
+\end{circuitikz}
+
+\end{document}
