@@ -67,7 +67,7 @@ Leave the signal generator amplitude, represented here by $V_\text{source}$, at 
 			
 ![Equivalent circuit of a loaded signal generator](graphics/sigenloadeq.png)
 			
-Take measurements with $R_\text{load}=10\text{kΩ}$ and $R_\text{load}=1\text{k}\Omega$.
+Take measurements with $R_\text{load}=10\text{kΩ}$ and $R_\text{load}=200\Omega$.
 Using the equation for a potential divider, your voltage measurements satisfy the equation:
 $$v_\text{out}=v_\text{source}\frac{R_\text{load}}{R_\text{load} + R_\text{source}}$$
 You should be able to find $R_\text{source}$ by writing out the expression for each value of $R_\text{load}$ and its respective measurement of $v_\text{out}$, and solving as a pair of simultaneous equations.
