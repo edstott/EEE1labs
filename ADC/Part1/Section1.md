@@ -29,7 +29,7 @@ Set the switches on both probes to the ×10 position and configure the oscillosc
 		
 Generate $v_\text{in}$ from the signal generator with $f=100$Hz, amplitude $v_\text{in}=1V$ and offset 0V.
 The voltage source in the circuit will be a sine function because that will be important when we come to characterise capacitors and inductors.
-Set the sensitivities of both channels to Auto and the timebase to 5ms/div.
+Set the timebase to 5ms/div.
 Place the trigger diamond in the centre of the CHA (blue) waveform and set the trigger mode to Auto, Trigger Channel A.
 		
 ![Potential divider on a breadboard](graphics/PN-breadboard.jpg)
