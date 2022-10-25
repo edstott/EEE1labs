@@ -44,7 +44,7 @@ You will see a blank canvas, with the *catalogue* on the right-hand side.
 			
 ### Adding Gates and Port
 
-![AND gate in Issie](graphics/DiANDGateIEC.png)
+![AND gate in Issie](graphics/iANDGateIEC.png)
 			
 We'll start with a simple 2-input AND gate.
 The catalogue is used to insert predefined logic functions into your design.
@@ -117,7 +117,7 @@ The library already contains a primitive for a 2-input multiplexer, but we'll cr
             
 In Issie, create a new sheet (in the top-left, select Sheets > New sheet) called `mux2` and input the design for the multiplexer, which has the Boolean function $Y = \overline{S}A + SB$.
 A multiplexer in digital logic performs a function similar to a `if...else` statement in C and C++ programming: it allows you to select one of a number of different options.
-Here, if $S=1$ then $Y=B$, else $Y=B$.
+Here, if $S=1$ then $Y=B$, else $Y=A$.
 			
 As you build your design, you may find that some wires appear to overlap.
 This isn't a problem for circuit function, since wires in Issie are only between components; wires cannot connect to other wires directly.
