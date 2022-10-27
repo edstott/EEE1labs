@@ -28,7 +28,7 @@ The output `Q` is equal to the stored value and it cannot change until the next 
 Often, the state of a bus will be stored so a multi-bit DFF is needed, known as a *register*.
 The bits of the register share the same clock input.
 				
-![A 4-bit register](graphics/reg4})
+![A 4-bit register](graphics/reg4.png)
 
 Make a new project in Issie, and inside make a new sheet with a design for a 4-bit register called `DFF4`, with a bus input `D(3:0)` and a bus output `Q(3:0)`.
 Place four of the the Issie component 'D-flip-flop', which is in the 'Flip flops and registers' category of the catalogue.
