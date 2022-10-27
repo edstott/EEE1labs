@@ -29,7 +29,7 @@ Set the switches on both probes to the ×10 position and configure the oscillosc
 		
 Generate $v_\text{in}$ from the signal generator with $f=100$Hz, amplitude $v_\text{in}=1V$ and offset 0V.
 The voltage source in the circuit will be a sine function because that will be important when we come to characterise capacitors and inductors.
-Set the sensitivities of both channels to Auto and the timebase to 5ms/div.
+Set the timebase to 5ms/div.
 Place the trigger diamond in the centre of the CHA (blue) waveform and set the trigger mode to Auto, Trigger Channel A.
 		
 ![Potential divider on a breadboard](graphics/PN-breadboard.jpg)
@@ -67,7 +67,7 @@ Leave the signal generator amplitude, represented here by $V_\text{source}$, at 
 			
 ![Equivalent circuit of a loaded signal generator](graphics/sigenloadeq.png)
 			
-Take measurements with $R_\text{load}=10\text{kΩ}$ and $R_\text{load}=1\text{k}\Omega$.
+Take measurements with $R_\text{load}=10\text{kΩ}$ and $R_\text{load}=200\Omega$.
 Using the equation for a potential divider, your voltage measurements satisfy the equation:
 $$v_\text{out}=v_\text{source}\frac{R_\text{load}}{R_\text{load} + R_\text{source}}$$
 You should be able to find $R_\text{source}$ by writing out the expression for each value of $R_\text{load}$ and its respective measurement of $v_\text{out}$, and solving as a pair of simultaneous equations.
