@@ -1,0 +1,29 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	%\footnotesize
+	\ctikzset{multipoles/thickness=3}
+	\ctikzset{multipoles/dipchip/width=1}
+
+	\node(org){};
+
+	\foreach \y in {3,...,0} {
+		\draw (org) node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0](dff\y){};
+		\node [right] at (dff\y.bpin 1) {D};
+		\node [left] at (dff\y.bpin 6) {Q};
+		\draw (dff\y.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+		\draw (dff\y.bpin 1) -- ++(-0.5,0) -- ++(0,1) node[above]{D$_\y$};
+		\draw (dff\y.bpin 3) -- ++(-0.5,0) -- ++(0,-0.8) node(clk){};
+		\draw (dff\y.bpin 6) -- ++(0.5,0) -- ++(0,-2.5) node[below]{Q$_\y$};
+		\node[right=2.5 of org](org){};
+	}
+	\draw (clk.center) -- ++(-9,0) node(wlab){} node[left]{CLK};
+\end{circuitikz}
+
+\end{document}
