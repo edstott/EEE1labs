@@ -1,0 +1,78 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\footnotesize
+	\ctikzset{multipoles/thickness=3}
+
+	\draw[very thick] %add/sub input B mux
+		(0,0) node(m3nw){}
+		-- ++(1.2,-0.5) node[midway,below=1.5mm](mux4){\textbf{MUX2}}
+		-- ++(0,-2) node[midway](m3Y){}
+		-- ++(-1.2,-0.5) node[midway](m3S){}
+		-- (m3nw.center) 
+		node[pos=0.33](m3B){}
+		node[pos=0.66](m3A){}
+		;
+	\node[right=-1mm of m3A]{A};
+	\node[right=-1mm of m3B]{B};
+	\node[left=-1mm of m3Y]{Y};
+	\node[above=0 of m3S]{S};
+
+	\ctikzset{multipoles/dipchip/width=1}
+	\draw (m3Y.center) ++(1,0) node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0,anchor=bpin 1](dff){\bfseries DFF4};
+	\node [right] at (dff.bpin 1) {D};
+	\node [left] at (dff.bpin 6) {Q};
+% 	\node [above] at (dff.south) {R};
+	\draw (dff.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+
+	\ctikzset{multipoles/dipchip/width=1.5}
+	\draw
+		(m3A) ++(-1,0)
+		node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0,anchor=pin 6](fa1){\bfseries FA4}
+		node[right] at (fa1.bpin 1) {A}
+		node[right] at (fa1.bpin 2) {B}
+		node[right] at (fa1.bpin 3) {C$_\text{in}$}
+		node[left] at (fa1.bpin 6) {S}
+		node[left] at (fa1.bpin 4) {C$_\text{out}$};
+
+	\draw[ultra thick]
+		(dff.pin 1) -- (m3Y.center) node[midway](m){};
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{4};
+	\draw[ultra thick]
+		(m3A.center) -- (fa1.pin 6) node[midway](m){};
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{4};
+	\draw[ultra thick] (dff.pin 6) -- ++(0.5,0) node(q){} -- ++(0,2) node(y){} -- (fa1.pin 1|- y) node[midway](m){} -- ++(-0.5,0) node(x){} -- (x|-fa1.pin 1) -- (fa1.pin 1);
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{4};
+	\draw[ultra thick] (q.center) -- ++(1,0) node[right]{Q};
+	\draw[ultra thick] (fa1.pin 2) -- ++(-1,0) node(wlab){} node[left]{b`1111'};
+	\draw (fa1.pin 3) -- (fa1.pin 3-|wlab) node(clab){} node[left]{0};
+	\coordinate[below=0.7 of clab](dlab){};
+	\draw[ultra thick] (m3B.center) -- ++(-0.5,0) coordinate(x) -- (x|-dlab) -- (dlab) coordinate[midway](m) node[left]{D};
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{4};
+	\coordinate[below=0.4 of dlab](klab){};
+	\draw (dff.pin 3) -- ++(-0.5,0) node(x){} -- (x|-klab) -- (klab) node[left]{CLK};
+	\coordinate[below=0.4 of klab](rlab){};
+% 	\draw (dff.south) -- (dff.south|-rlab) -- (rlab) node[left]{RST};
+
+	\node[thin,below=1 of q,nor port,number inputs=4,anchor=south west,rotate=270](rnand){};
+	\draw (rnand.in 1) -- (rnand.in 4) coordinate[midway](m);
+	\draw[ultra thick] (m) -- (m|-q);
+	\draw (rnand.out) -- ++(0,-0.2) coordinate(y) -- (y-|m3S) -- (m3S.center);
+
+\end{circuitikz}
+
+\end{document}
