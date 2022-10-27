@@ -1,0 +1,47 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\footnotesize
+	\ctikzset{multipoles/thickness=3}
+	\ctikzset{multipoles/dipchip/width=1}
+	\draw (0,0) node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0](dff){\bfseries DFF4};
+	\node [right] at (dff.bpin 1) {D};
+	\node [left] at (dff.bpin 6) {Q};
+% 	\node [above] at (dff.south) {R};
+	\draw (dff.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+
+	\ctikzset{multipoles/dipchip/width=1.5}
+	\draw
+		(dff.pin 1) ++(-1,0)
+		node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0,anchor=pin 6](fa1){\bfseries FA4}
+		node[right] at (fa1.bpin 1) {A}
+		node[right] at (fa1.bpin 2) {B}
+		node[right] at (fa1.bpin 3) {C$_\text{in}$}
+		node[left] at (fa1.bpin 6) {S}
+		node[left] at (fa1.bpin 4) {C$_\text{out}$};
+
+	\draw[ultra thick]
+		(dff.pin 1) -- (fa1.pin 6) node[midway](m){};
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{4};
+	\draw[ultra thick] (dff.pin 6) -- ++(0.5,0) node(q){} -- ++(0,1) node(y){} -- (fa1.pin 1|- y) node[midway](m){} -- ++(-0.5,0) node(x){} -- (x|-fa1.pin 1) -- (fa1.pin 1);
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{4};
+	\draw[ultra thick] (q.center) -- ++(0.5,0) node[right]{Q};
+	\draw[ultra thick] (fa1.pin 2) -- ++(-1,0) node(wlab){} node[left]{0};
+	\draw (fa1.pin 3) -- (fa1.pin 3-|wlab) node[left]{1};
+	\draw (dff.pin 3) -- ++(-0.5,0) -- ++(0,-0.75) node(y){} -- (y-|wlab) node[left]{CLK};
+% 	\draw (dff.south) -- ++(0,-1) node(y){} -- (y-|wlab) node[left]{RST};
+
+
+\end{circuitikz}
+
+\end{document}
