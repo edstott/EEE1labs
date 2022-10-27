@@ -11,8 +11,8 @@ The output of the register is fed back to the input via an adder, which creates 
 ## Before the lab
 
 The basic unit of information storage within digital circuits is the *D-type flip flop* (DFF).
-It stores the state of input `D` at the moment when the clock input changes from low to high.
-The output `Q` is equal to the stored value and it cannot change until the next rising edge of the clock, also known as a *clock tick*.
+It stores the state of input `D` at the moment when the clock input (>) changes from low to high, known as a *rising edge* or *clock tick*.
+The output `Q` is equal to the stored value and it cannot change until the next clock tick.
 				
 ![Symbol of a D-type flip flop](graphics/dff.png)
 
@@ -20,10 +20,10 @@ The output `Q` is equal to the stored value and it cannot change until the next 
 | -- | --- | -- |
 | X  | 0   | NC |
 | X  | 1   | NC |
-| 1  | ↑   | 1  |
-| 0  | ↑   | 0  |			
+| 1  | ⮥   | 1  |
+| 0  | ⮥   | 0  |			
 
-*X: Don't care, NC: No Change, ↑: Rising Edge*
+*X: Don't care, NC: No Change, ⮥: Rising Edge*
 					
 Often, the state of a bus will be stored so a multi-bit DFF is needed, known as a *register*.
 The bits of the register share the same clock input.
@@ -34,7 +34,6 @@ Make a new project in Issie, and inside make a new sheet with a design for a 4-b
 Place four of the the Issie component 'D-flip-flop', which is in the 'Flip flops and registers' category of the catalogue.
 				
 In Issie, all components with a clock input are connected to a global clock line automatically.
-The clock ports are marked with a > symbol.
 Therefore, you do not have to wire the clock inputs up yourself.
 				
 ## Simulating a sequential circuit
