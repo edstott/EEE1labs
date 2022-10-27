@@ -56,8 +56,8 @@
 		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
 		node[above=0 of m]{4};
 	\draw[ultra thick] (q.center) -- ++(0.5,0) node[right]{Q};
-	\draw[ultra thick] (fa1.pin 2) -- ++(-1,0) node(wlab){} node[left]{0};
-	\draw (fa1.pin 3) -- (fa1.pin 3-|wlab) node(clab){} node[left]{1};
+	\draw[ultra thick] (fa1.pin 2) -- ++(-1,0) node(wlab){} node[left]{1};
+	\draw (fa1.pin 3) -- (fa1.pin 3-|wlab) node(clab){} node[left]{0};
 	\node[below=0.7 of clab](dlab){};
 	\draw[ultra thick] (m3B.center) -- ++(-0.5,0) coordinate(x) -- (x|-dlab) -- (dlab) coordinate[midway](m) node[left]{D};
 	\draw
