@@ -2,6 +2,8 @@
 
 ## The LEDCounter example project
 
+- [ ] TODO: Screenshot of sheet
+
 Load the LEDCounter project in Issie. It works like this:
 - Components `REG1`, `MUX1` and `ADD1` form a counter with load, just like [Part 1, Section 3](../Part1/Section3.md).
 The load signal is connected to bit 0 of the `PB` input port, which is the centre push button.
@@ -47,3 +49,41 @@ Press 'Continue' and the counter will resume.
 
 - [ ] Use debugging mode to view the state of the internal counters.
 
+## Snake Head Position
+
+We are going to implement a snake game on the IssieStick.
+The first task is to implement an up/down counter that will determine the position of the snake's head.
+Create a new sheet called `UPDNCTR` and make a 16-bit counter using a register and an adder. Use a register with an enable input.
+
+The counter needs to increment, decrement or stay the same depending on button presses.
+So instead of passing a constant 1 to the adder, use a 4-input multiplexer to choose the constant as follows:
+
+| SEL | Constant  |
+| --- | -- |
+| 00  | 0 |
+| 01  | 1 |
+| 10  | -1 |
+| 11  | 0 |
+
+Connect the 2-bit multiplexer select input to an input port named `DIR`, connect the register enable to a port `EN` and the register `Q` output to a port `POS`.
+Simulate the sheet with a step simulation. Set `EN` to 1 and check that the ouput increments and decrements as expected.
+
+- [ ] Create and test the up/down counter
+
+Go back to the main sheet and remove the main counter. Keep the prescale counter.
+Place two instances of the up/down counter, naming one `HEADX` and the other `HEADY`.
+Use Bus Select components to connect the bits of the `PB` port to the `DIR` inputs of the counters as follows:
+
+| `PB` Bit | Button | Function | Counter  | `DIR` bit |
+| --- | ------ | -------- | -------- | ------- |
+| 1   | Left   | $X=X-1$  | `HEAD X` | 1       |
+| 2   | Down   | $Y=Y-1$  | `HEAD Y` | 1       |
+| 3   | Right  | $X=X+1$  | `HEAD X` | 0       |
+| 4   | Up     | $Y=Y+1$  | `HEAD Y` | 0       |
+
+We'll display the value of the two counters for now. Use a MergeWires component to join the outputs of the two counters to make a single 32-bit bus.
+Connect that bus to the `D` input of the `LEDDIGITS` component.
+The counter will count continuously when a button is pressed, so limit the count rate by connecting the output of the prescaler to the `EN` port of both counters, just like it was with the single counter previously.
+Build and upload the design. If it works, you will the see output of one counter on each row and you will be able to increment and decrement each using the push buttons.
+
+- [ ] Test the counters on the IssieStick
