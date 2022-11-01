@@ -1,0 +1,25 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}[scale=1]
+    \ctikzset{multipoles/thickness=3}
+    \ctikzset{multipoles/dipchip/width=1}
+    \draw (0,0) node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0](dff){};
+    \node [right] at (dff.bpin 1) {D};
+    \node [left] at (dff.bpin 6) {Q};
+    \draw (dff.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+
+    \node[not port,left=of dff.bpin 1](g){};
+
+    \draw (dff.bpin 6) -| ++(1,1) coordinate (qt);
+    \draw (g.in) -- ++ (-0.7,0) |- (qt);
+    \draw (g.out) -- (dff.bpin 1);
+    
+\end{circuitikz}
+
+\end{document}
