@@ -1,0 +1,49 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}[scale=1]
+    \ctikzset{multipoles/thickness=3}
+    \ctikzset{multipoles/dipchip/width=1}
+    \draw (0,0) node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0](headx){HEADX};
+    \node [left] at (headx.bpin 6) {POS};
+    \draw (headx.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+    
+    \draw (0,-2) node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0](heady){HEADY};
+    \node [left] at (heady.bpin 6) {POS};
+    \draw (heady.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+
+    \coordinate [right=1] (mw) at ($ (headx.bpin 6) !0.5! (heady.bpin 6) $);
+    
+    \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0,right=of mw,anchor=bpin 1](tail){REG};
+    \node [right] at (tail.bpin 1) {D};
+    \node [left] at (tail.bpin 6) {Q};
+    \draw (tail.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+
+    \draw[very thick] %add/sub input B mux
+		coordinate [right = of tail.bpin 6] (m3B)
+		coordinate [above = of m3B] (m3A)
+        coordinate [right=1.2] (m3Y) at ($ (m3A) !0.5! (m3B) $)
+		coordinate [above = of m3A] (m3nw)
+        (m3nw) -- ++(1.2,-0.5) node[midway,below=1.5mm](mux3){\textbf{MUX2}}
+		-- ++(0,-2)
+		-- ++(-1.2,-0.5) node[midway](m3S){}
+		-- (m3nw)
+		;
+	\node[right=-1mm of m3A]{A};
+	\node[right=-1mm of m3B]{B};
+	\node[left=-1mm of m3Y]{Y};
+	\node[above=0 of m3S]{S};
+
+   
+    \draw (headx.bpin 6) -| ($ (mw) + (-0.3,0.3) $) node [above right] {3..0} -| (mw);
+    \draw (heady.bpin 6) -| ($ (mw) + (-0.3,-0.3) $) node [below right] {7..4} -| (mw);
+    \draw (mw) -- (tail.bpin 1);
+    
+\end{circuitikz}
+
+\end{document}
