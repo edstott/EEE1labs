@@ -9,47 +9,59 @@ Futhermore, it should be impossible to reverse direction 180° on the spot.
 To fix this, we'll need a state machine to remember the current direction of the snake.
 The state transition diagram will look like this:
 
-- [ ] TODO: State transition diagram
+![State transition diagram for snake direction](graphics/dirfsm.png)
 
-The push button inputs have the same coding as previously, and this coding is also used for the state machine outputs.
-| Input | Meaning |
+The state machine has 4 inputs: L, R, U & D. Each input comes from a push button using the same mapping as previously:
+| PB bit | Symbol |
 | ------| ------- |
-| 0001  | Left    |
-| 0010  | Down    |
-| 0100  | Right   |
-| 1000  | Up      |
+| 0  | Unused (X) |
+| 1  | L    |
+| 2  | D    |
+| 3  | R  |
+| 4  | U     |
 
-The states are coded accordingly
-| State | Meaning |
+There are four states, represented by a state variable Q with 2 bits:
+| Q | State name |
 | ----- | ------- |
-| 00    | Left    |
-| 01    | Down    |
-| 10    | Right   |
-| 11    | Up      |
+| 00    | LEFT   |
+| 01    | DOWN    |
+| 10    | RIGHT   |
+| 11    | UP      |
 
-There is one state for every direction and transitions are only possible in right-angle turns.
-E.g. if the state machine is in the `LEFT` state then transitions are possible to `UP` or `DOWN`, but not `RIGHT`.
-The state machine must be in one of the four states, so the snake will always be moving.
-
-The state machine will sit between the push button inputs and the head position counters, so the input and output will both be 4-bit busses.
-It will be a Mealy state machine, meaning that the outputs are a function of the current state and the input — this avoids increasing the lag between pressing a button and the counter updating.
-If more than one button is pressed then the state will not change.
+The state transition diagram has many edges but there is some symmetry. Each state has two possible transitions to other states, for example LEFT → UP and LEFT → DOWN, and it is also possible to remain in the same state. It isn't possible to transition to the opposite direction, for example LEFT → RIGHT. The state machine must be in one of the four states, so the snake will always be moving.
 
 Complete a state transition table for the state machine, based on this template:
 
-| Current State | Input | Next State | Output |
-| ----- | ------------- | ---------- | ------ |
-| 00    | 0000          | 00         | 0001   |
-| 00    | 0001          | 00         | 0001   |
-| 00    | 0010          | 01         | 0010   |
-| 00    | 0011          | 00         | 0001   |
-| …     | …             | …          | …      |
+| Current State | PB (URDLX) | Next State |
+| ----- | ------------- | ---------- |
+| 00    | 0000X          | 00         |
+| 00    | 0001X          | 00         |
+| 00    | 0010X          | 01         |
+| 00    | 0011X          | 01         |
+| 00    | 0100X          | 00         |
+| …     | …             | …          |
 
 - [ ] Complete the state transition table
 
+The state machine will generate direction signals for the head position counters, so output will be a 4-bit bus.
+We want the direction to change as quickly as possible when a button is pressed, so we will derive the direction signals from the next state.
+If we used the current state to generate the output there would be an extra tick of delay, since the head counters would only change direction on the tick after the state machine changed state.
+
+| Next State | OUT(URDL) |
+| ----- | ------------- |
+| 00    | 0001 |
+| 01    | 0010 |
+| 10    | 0100 |
+| 11    | 1000 |
+
+Generating the state mahcine outputs from the next state signal makes it a *Mealy* state machine, which means that the outputs depend on the current state *and* the inputs.
+
+- [ ] Write down Boolean expressions for each of the 4 bits of the outputs.
+
 ## Implementing the state machine
 
-The state transition table is quite large because there are 6 inputs and 6 outputs.
+The state transition table is quite large because there are 6 inputs, but there is also some symmetry that will permit simplification of the resulting logic.
+You can choose whether to derive simplified Boolean expressions for each bit of 
 You can reduce it using Boolean algebra techniques and implement it with basic logic gates.
 However, it's easier to implement it using an *asynchronous ROM*, where you can enter the truth table as memory contents.
 That will also be easier to modify and debug.
