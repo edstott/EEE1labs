@@ -1,0 +1,43 @@
+\documentclass[tikz]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usetikzlibrary{calc,positioning,shapes.multipart,arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}
+	\node[circle split,draw,minimum width=2cm] (up) at (0,3) {UP \nodepart{lower} $11$}
+            edge [-{Stealth[length=10]},loop above]
+            node[auto] {$\overline{\text{L}} \cdot\overline{\text{R}} + \text{L}\cdot\text{R}$} ();
+		
+        \node[draw,circle split,minimum width=2cm] (down) at (0,-3) {DOWN \nodepart{lower} $01$}
+            edge [-{Stealth[length=10]},loop below]
+            node[auto] {$\overline{\text{L}} \cdot\overline{\text{R}} + \text{L}\cdot\text{R}$} ();
+
+        \node[draw,circle split,minimum width=2cm] (left) at (-3,0)         {LEFT \nodepart{lower} $00$}
+            edge [-{Stealth[length=10]},bend right=30]
+            node[auto] {$\text{U} \cdot\overline{\text{D}}$}(up)
+            edge [{Stealth[length=10]}-,bend left=30]
+            node[auto] {$\text{L} \cdot\overline{\text{R}}$} (up)
+            edge [-{Stealth[length=10]},bend left=30]
+            node[auto] {$\text{D} \cdot\overline{\text{U}}$} (down)
+            edge [{Stealth[length=10]}-,bend right=30]
+            node[auto] {$\text{L} \cdot\overline{\text{R}}$} (down)
+            edge [-{Stealth[length=10]},loop left]
+            node[auto] {$\overline{\text{U}} \cdot\overline{\text{D}} + \text{U}\cdot\text{D}$} ();
+		
+        \node[draw,circle split,minimum width=2cm] (right) at (3,0) 
+            {RIGHT \nodepart{lower} $10$}
+            edge [-{Stealth[length=10]},bend left=30]
+            node[auto] {$\text{U} \cdot\overline{\text{D}}$} (up)
+            edge [{Stealth[length=10]}-,bend right=30]
+            node[auto] {$\text{R} \cdot\overline{\text{L}}$} (up)
+            edge [-{Stealth[length=10]},bend right=30]
+            node[auto] {$\text{D} \cdot\overline{\text{U}}$} (down)
+            edge [{Stealth[length=10]}-,bend left=30]
+            node[auto] {$\text{R} \cdot\overline{\text{L}}$} (down)
+            edge [-{Stealth[length=10]},loop right]
+            node[auto] {$\overline{\text{U}} \cdot\overline{\text{D}} + \text{U}\cdot\text{D}$} ();
+
+\end{tikzpicture}
+
+\end{document}
