@@ -1,0 +1,46 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}[scale=1]
+    \ctikzset{multipoles/thickness=3}
+    \ctikzset{multipoles/dipchip/width=1}
+    \def \ctikz@hook@start@draw@default {}
+    
+    \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0](state){REG2};
+    \node [right] at (state.bpin 1) {D};
+    \node [left] at (state.bpin 6) {Q};
+    \draw (state.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+    
+    \ctikzset{multipoles/dipchip/width=1.5}
+    \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0,left=of state](nlogic){NEXT};
+    \node [right] at (nlogic.bpin 3) {IN};
+    \node [right] at (nlogic.bpin 1) {CS};
+    \node [left] at (nlogic.bpin 6) {OUT};
+    
+    \ctikzset{multipoles/dipchip/width=1.5}
+    \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0,below=of nlogic,rounded corners](ologic){OUTPUT};
+    \node [right] at (ologic.bpin 3) {IN};
+    \node [right] at (ologic.bpin 1) {CS};
+    \node [left] at (ologic.bpin 6) {OUT};
+
+    \draw (state.bpin 6) -| ++(1,1)
+    -| ($(nlogic.bpin 1) + (-1,0)$) coordinate (csfork)
+    -- (nlogic.bpin 1)
+    (csfork) |- (ologic.bpin 1);
+
+    \draw (nlogic.bpin 6) -- (state.bpin 1);
+
+    \draw (nlogic.bpin 3) -- ++(-2,0) coordinate (infork)
+    to[short,-o] ++(-1,0) node[left] {PB}
+    (infork) |- (ologic.bpin 3);
+
+    \draw (ologic.bpin 6) to[short,-o] ++(3,0) node[right] {OUT};
+    
+\end{circuitikz}
+
+\end{document}
