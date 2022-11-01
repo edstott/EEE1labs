@@ -60,8 +60,13 @@ Generating the state mahcine outputs from the next state signal makes it a *Meal
 
 ## Implementing the state machine
 
-The state transition table is quite large because there are 6 inputs, but there is also some symmetry that will permit simplification of the resulting logic.
-You can choose whether to derive simplified Boolean expressions for each bit of 
+The state transition table is quite large because there are 6 inputs, but it is also symmetric, which permits simplification of the resulting logic.
+There are two options for implementation
+
+### Next state logic with gates
+
+
+### Next state logic with ROM
 You can reduce it using Boolean algebra techniques and implement it with basic logic gates.
 However, it's easier to implement it using an *asynchronous ROM*, where you can enter the truth table as memory contents.
 That will also be easier to modify and debug.
