@@ -22,6 +22,8 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
   - [Section 1: Measuring Impedance](ADC/Part1/Section1.md)
   - [Section 2: Reactive Components](ADC/Part1/Section2.md)
   - [Section 3: Resonance and Filters](ADC/Part1/Section3.md)
+- Part 2 (Autumn Term Weeks 8–10)
+  - [Section 1: Biasing and amplification](ADC/Part2/Section1.md)
   
 ## Digital Electronics and Computer Architecture
 - Part 1 (Autumn Term Weeks 4–6)
