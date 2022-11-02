@@ -1,0 +1,45 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}[american voltages]
+
+	\small
+
+	\draw
+		node[oscillator,box] (sig) {}
+	;
+
+	\node[below left=0 of sig.south] {GND};
+	\node[above left=0 of sig.north] {VCC};
+	\node[above right=0 of sig.east] {OUT};
+	\node[below right=0 of sig.east] {sig. 0};
+
+	\draw (sig.east) -- ++(2,0)coordinate[pos=0.6](br1)  coordinate[pos=0.8](br)
+		to[twoport,n=phone] ++(2,0)
+		to ++(0,-1) node[ground] {}
+		;
+		
+	\draw (br) to[short,-o] ++(0,5mm) node[above] {$V_\text{in}$};
+
+	\draw (sig.south) to ++(0,-2em) node[ground] {};
+	\draw (sig.east) to (phone.west);
+	\draw (sig.north) to[short,-o] ++(0,2em) node[above] {5V};
+
+	\draw (phone.center) ++(-4mm,-2.5mm) rectangle ++(1.5mm,5mm)
+	-- ++(1.5mm,1mm) -- ++(0,-7mm) -- ++(-1.5mm,1mm)
+	(phone.center) ++(4mm,-2.5mm) rectangle ++(-1.5mm,5mm)
+	-- ++(-1.5mm,1mm) -- ++(0,-7mm) -- ++(1.5mm,1mm)
+	(phone.left) node[below left]{L}
+	(phone.right) node[below right]{R}
+	;
+
+
+
+\end{circuitikz}
+
+\end{document}

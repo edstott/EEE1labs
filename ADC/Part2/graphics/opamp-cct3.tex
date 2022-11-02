@@ -1,0 +1,65 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\small
+	\draw node[oscillator,box] (mic) {}
+		(mic.east) -- ++(1.0,0) to[C=1μF] ++(1,0) to[pR,l_=$R_\text B$,n=pot1] ++(2.0,0)
+		(pot1.wiper) -- ++(1.0,0) coordinate (node1)
+		-- ++(0.5,0) node [op amp,anchor=-] (opamp) {}
+		(opamp.out) to ++(0.5,0) coordinate (node3)
+		(opamp.up) to[short,-o] ++(0,5mm) {} node[above] {$5\text{V}$}
+		(opamp.down) to[short] ++(0,-5mm) {} node[ground] {}
+		%($(mic.30)+(3mm,0)$) to[short,-o] ++(0,5mm) node[above]{$V_\text{in}$}
+		;
+
+
+	%AC source
+	\draw ($(mic) + (-1,2)$) node[oscillator,box] (sig) {}
+		(sig.east) -- ++(1.0,0) to[C=1μF] ++(1,0) to[pR,l_=$R_\text A$,n=pot2] ++(2.0,0)
+		(pot2.wiper) -- (pot2.wiper -| node1) coordinate (node2);
+
+	\draw	(node1.center) -- ++(0,20mm) node (node2) {} to [R,l=$4.7\text k\Omega$] +(3,0) -| (node3);
+
+	\draw (mic.south) to ++(0,-0.5) node[ground]{}
+		(sig.south) to ++(0,-0.5) node[ground]{}
+		(mic.north) to[short,-o] ++(0,5mm) node[above=1mm]{$5\text{V}$}
+		(sig.north) to[short,-o] ++(0,5mm) node[above=1mm]{$5\text{V}$};
+
+	\node[above right] at (sig.east) {Sig. 2};
+	\node[above right] at (mic.east) {Sig. 3};
+	\node[below left] at (mic.west) {SYN};
+	\node[below left] at (sig.west) {SYN};
+
+	\draw (mic.west) to[short] ++(-2,0) |- (sig.west)
+	; 
+
+	\draw (node3) to ++(0.5,0) coordinate (node4)
+	to[twoport,n=spk] ++(2,0)
+	to ++(0,-1) node[ground]{}
+	(node4) to[short,-o] ++(0,0.5) node[above] {$V_\text{out}$}
+	;
+
+	\draw (spk.center) ++(-4mm,-2.5mm) rectangle ++(1.5mm,5mm)
+	-- ++(1.5mm,1mm) -- ++(0,-7mm) -- ++(-1.5mm,1mm)
+	(spk.center) ++(4mm,-2.5mm) rectangle ++(-1.5mm,5mm)
+	-- ++(-1.5mm,1mm) -- ++(0,-7mm) -- ++(1.5mm,1mm)
+	(spk.left) node[below left]{L}
+	(spk.right) node[below right]{R}
+	;
+
+	\draw (opamp.+) ++(-1.5,-1) node[above=1mm] {$5\text{V}$}
+	to[R,l_=10kΩ,o-] ++(0,-2) coordinate (node25) 
+	to[R,l_=10kΩ] ++(0,-2) node[ground] {}
+	(opamp.+) -- ++(-0.5,0) |- (node25);
+
+	%opamp pin numbers
+	\draw node[right=4mm of opamp.down] {LT1366};
+\end{circuitikz}
+
+\end{document}

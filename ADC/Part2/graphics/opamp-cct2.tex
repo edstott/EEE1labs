@@ -1,0 +1,48 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+	\begin{circuitikz}
+		\small
+		\draw node[oscillator,box] (mic) {}
+			node [op amp,right=40mm of mic.30,anchor=-] (opamp) {}
+			(opamp.out) to ++(0.5,0) coordinate (node3)
+			(opamp.-) -| ++(-5mm,0) coordinate (node1)
+			(opamp.+) -| ++(-5mm,-6mm) node[ground] (gnd1) {}
+			(node1.center) -- ++(0,15mm) to [R,l=$R_\text{fb}$] +(30mm,0) -| (node3)
+			(mic.30) to[R,l=1.5k$\Omega$] (node1)
+			(opamp.up) to[short,-o] ++(0,5mm) {} node[above] {$5\text{V}$}
+			(opamp.down) to[short] (opamp.down |- gnd1) node[ground] {}
+			%($(opamp)+(-25mm,25mm)$)  node[ground]{} to[C,-o,l=100nF] ++(0,10mm) node[above=2mm] {$-5\text{V}$}
+			%($(opamp)+(-45mm,25mm)$)  node[ground]{} to[C,-o,l=100nF] ++(0,10mm) node[above=2mm] {$5\text{V}$}
+			($(mic.30)+(3mm,0)$) to[short,-o] ++(0,5mm) node[above]{$V_\text{in}$}
+		(mic.south) to (mic.south |- gnd1) node[ground] {}
+			(mic.north) to[short,-o] ++(0,5mm) node[above=1mm]{$5\text{V}$}
+		;
+
+		\draw (node3) to ++(0.5,0) coordinate (node4)
+		to[twoport,n=spk] ++(2,0) coordinate (x)
+		to (x|-gnd1) node[ground]{}
+		(node4) to[short,-o] ++(0,0.5) node[above] {$V_\text{out}$}
+		;
+
+		\draw (spk.center) ++(-4mm,-2.5mm) rectangle ++(1.5mm,5mm)
+		-- ++(1.5mm,1mm) -- ++(0,-7mm) -- ++(-1.5mm,1mm)
+		(spk.center) ++(4mm,-2.5mm) rectangle ++(-1.5mm,5mm)
+		-- ++(-1.5mm,1mm) -- ++(0,-7mm) -- ++(1.5mm,1mm)
+		(spk.left) node[below left]{L}
+		(spk.right) node[below right]{R}
+		;
+
+		\node[below right] at (mic.east) {Sig. 0};
+
+		\draw (opamp.up) node[above right]{V$+$}
+		(opamp.down) node[below right]{V--}
+		node[right=4mm of opamp.down] {LT1366};
+	\end{circuitikz}
+
+\end{document}

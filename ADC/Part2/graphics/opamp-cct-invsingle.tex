@@ -1,0 +1,52 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\draw 
+		node[oscillator,box] (source) {}
+		(source.south) to ++(0,-1) node[ground] {}
+		(source.north) to[short,-o] ++(0,5mm) node[above=1mm]{$5\text{V}$}
+		($(source.east)+(5mm,0)$) to[short,-o] ++(0,5mm) node[above=1mm]{$V_\text{in}$}
+		
+		node [op amp,right=58mm of source,anchor=-] (opamp) {}
+		(opamp.-) -| ++(-5mm,0) node (node1){} node[below] {A}
+		(opamp.out) to ++(0.5,0) coordinate (node3)
+		
+		%Feedback and gain path
+		(node1.center) -- ++(0,15mm) to [R,l=$R_\text{fb}$] +(30mm,0) -| (node3)
+		(source) -- ++(13mm,0) coordinate[pos=1] (inbr) to[C=1μF] ++(20mm,0) to[R,l_=1.5k$\Omega$] ++(12mm,0) -- (node1.center) 
+		
+		%Reference voltage
+		(opamp.+) -- ++(-10mm,0) node (node2) {}
+		(node2.center) -- ++(0,10mm) to[R=10k$\Omega$,-o] ++(0,20mm) node[above] {$5\text{V}$}
+		(node2.center) to[R,l_=10k$\Omega$] ++(0,-20mm) node[ground]{}
+
+		(opamp.up) to[short,-o] ++(0,5mm) {} node[above] {$5\text{V}$}
+		(opamp.down) -- ++(0,-5mm) {} node[ground] {}
+		;
+
+	\node[below right] at (source.east) {Sig. 2};
+
+	\draw (node3) to ++(0.5,0) coordinate (node4)
+	to[twoport,n=spk] ++(2,0)
+	to ++(0,-1) node[ground]{}
+	(node4) to[short,-o] ++(0,0.5) node[above] {$V_\text{out}$}
+	;
+
+	\draw (spk.center) ++(-4mm,-2.5mm) rectangle ++(1.5mm,5mm)
+	-- ++(1.5mm,1mm) -- ++(0,-7mm) -- ++(-1.5mm,1mm)
+	(spk.center) ++(4mm,-2.5mm) rectangle ++(-1.5mm,5mm)
+	-- ++(-1.5mm,1mm) -- ++(0,-7mm) -- ++(1.5mm,1mm)
+	(spk.left) node[below left]{L}
+	(spk.right) node[below right]{R}
+	;
+
+	\draw node[right=4mm of opamp.down] {LT1366};
+\end{circuitikz}
+
+\end{document}

@@ -1,0 +1,27 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}[american voltages]
+	\small
+	\draw node[oscillator,box] (mic) {}
+		(mic.south) -- ++(0,-5mm) node[ground] (gnd1){}
+		(mic.30) to[R,l=$Z_\text{input}$] ++(20mm,0) node (node1){} -- (node1|-gnd1) node[ground]{}
+		++(10mm,0) node[ground] (gnd2){}
+		++(5mm,15mm) coordinate (out)
+		++(5mm,0)
+		node[right]{$V_\text{out}$} to[short,o-] (out -| gnd2) to[V,] (gnd2);
+
+	\node[anchor=south] at ($(node1) + (0,10mm)$) {amplifier circuit};
+
+	\draw[dashed]
+		($(mic.east) + (2mm,-10mm)$) rectangle ($(out) + (2mm,5mm)$)
+		;
+
+\end{circuitikz}
+
+\end{document}
