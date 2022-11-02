@@ -13,7 +13,7 @@
 		\node[anchor=west]{(a) LT1366 Opamp Module};&
 			\node[op amp]{}
 			;	
-		&\node{\includegraphics[height=18mm]{graphics/opamp-module.jpg}};\\
+		&\node{\includegraphics[height=18mm]{opamp-module}};\\
 
 		\node[anchor=west]{(b) Signal source module};	&
 			\draw node[anchor=center,oscillator,box] (sig) {}
@@ -23,7 +23,7 @@
 			\node[below left=0 of sig.south] {GND};
 			\node[above left=0 of sig.north] {VCC};
 			\node[above right=0 of sig.east] {OUT}; 
-		& \node{\includegraphics[height=18mm]{graphics/sig-src}};\\
+		& \node{\includegraphics[height=18mm]{sig-src}};\\
 		
 		\node[anchor=west]{(c) Earphone adapter};&
 			\draw (-1,0) to[twoport,n=phone] ++(2,0);
@@ -35,11 +35,11 @@
 			(phone.left) node[below left]{L}
 			(phone.right) node[below right]{R}
 			;	
-		&\node{\includegraphics[height=18mm]{graphics/phone}};\\
+		&\node{\includegraphics[height=18mm]{phone}};\\
 		
 		\node[anchor=west]{(d) Signal generator};&
 			\draw ++(0,-7.5mm) to[sV] ++(0,15mm);
-		& \node{\includegraphics[height=18mm]{graphics/scope}};\\
+		& \node{\includegraphics[height=18mm]{scope}};\\
 		};
 		\end{circuitikz}
 
