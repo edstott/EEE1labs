@@ -8,14 +8,15 @@
 
 		\begin{circuitikz}[american voltages]
 			\small
-			\draw node[ground] {} to[short,sV,l=$V_\text{source}$,n=sig] ++(0,3)
+			\node[ground] (gnd) {};
+			\draw (gnd) to[short,sV,l=$V_\text{source}$,n=sig] ++(0,3)
 			to[R,l=$R_\text{source}$,a=1k$\Omega$,n=rsource] ++(2,0)
-			to[C,l=$C_\text{source}$,a=3.3μF,n=csource, l2 halign=c, l2 valign=b] ++(2,0)
+			to[C,l=$C_\text{source}$,a=$3.3\mu$F,n=csource, l2 halign=c, l2 valign=b] ++(2,0)
 			-- ++(1.0,0) coordinate(br1)
 			-- ++(0.5,0) coordinate(br)
 			-- ++(1.5,0) 
 			to[R,n=rphone,l2=$R_\text{load}$ and $64\Omega$, l2 halign=c] ++(0,-1.5) node{}
-			to[C,n=cphone,l2=$C_\text{load}$ and 50μF, l2 halign=c] ++(0,-1.5)  node[ground] {};
+			to[C,n=cphone,l2=$C_\text{load}$ and $50\mu$F, l2 halign=c] ++(0,-1.5)  node[ground] {};
 			;
 
 			\draw (br1) to[short,-o] ++(0,5mm) node[above=1mm]{$V_\text{in}$};
