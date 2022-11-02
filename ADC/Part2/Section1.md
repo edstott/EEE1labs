@@ -9,7 +9,7 @@ Opamps are used for amplifying and processing analogue signals.
 In this experiment you will build some of the most common opamp circuits.
 There are two parts to the experiment and you should allow approximately one lab session for each part, leaving one session for catchup and oral preparation.
 				
-![Non-passive components in this experiment](graphics/opamp-components)
+![Non-passive components in this experiment](graphics/opamp-components.png)
 		
 ### LT1366 opamp
 
@@ -58,8 +58,10 @@ Use the yellow version for all tasks that require just one signal source.
 
 1. Examine the circuit in section.~\ref{s:inv}. Determine a value of feedback resistor $R_\text{fb}$ to produce a voltage gain of $-1.5\pm5\%$.
 2. An idealised amplifier circuit can be represented as an input impedance to ground and a voltage source and is shown here connected to a signal source:
-	 ![Ideal equivalent](graphics/opamp-miceq.png)
-	Determine the theoretical input impedance $Z_\text{input}$ of the circuits in sections ~\ref{s:ssinv} and ~\ref{s:ssnoninv}.
+
+![Ideal equivalent](graphics/opamp-miceq.png)
+
+Determine the theoretical input impedance $Z_\text{input}$ of the circuits in sections ~\ref{s:ssinv} and ~\ref{s:ssnoninv}.
   Remember that the opamp itself has an (ideally) infinite impedance at the input pins so any finite impedance must originate from the other components in the circuit.
   Use the virtual ground approximation in the case of the inverting amplifier.
   A voltage source such as the 5V power supply can be considered as short circuit to ground.
@@ -87,7 +89,7 @@ The next diagram shows an equivalent circuit for what you have built.
 The earphones have a predominantly resistive impedance of 64Ω (32Ω per channel, connected in series) and the adapter module contains 50µF of series capacitance to prevent the earphones being damaged by DC current.
 The signal source module has an equivalent circuit made of $V_\text{source}$, $R_\text{source}$ and $C_\text{source}$. $R_\text{source}$ and $C_\text{source}$ form the *output impedance* of the signal source.
 
-![Equivalent circuit of earphones connected to signal source](!graphics/opamp-phonedirecteq.png)
+![Equivalent circuit of earphones connected to signal source](graphics/opamp-phonedirecteq.png)
 
 When the earphone is connected, the current flowing in the earphones results in a voltage drop across $V_\text{source}$ and $C_\text{source}$.
 This results in the reduction that you can measure at $V_\text{in}$ and the quiet sound.
