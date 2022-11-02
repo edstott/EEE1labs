@@ -9,7 +9,7 @@
 \begin{circuitikz}
 	\small
 	\draw node[oscillator,box] (mic) {}
-		(mic.east) -- ++(1.0,0) to[C=1μF] ++(1,0) to[pR,l_=$R_\text B$,n=pot1] ++(2.0,0)
+		(mic.east) -- ++(1.0,0) to[C=$1\mu$F] ++(1,0) to[pR,l_=$R_\text B$,n=pot1] ++(2.0,0)
 		(pot1.wiper) -- ++(1.0,0) coordinate (node1)
 		-- ++(0.5,0) node [op amp,anchor=-] (opamp) {}
 		(opamp.out) to ++(0.5,0) coordinate (node3)
@@ -21,7 +21,7 @@
 
 	%AC source
 	\draw ($(mic) + (-1,2)$) node[oscillator,box] (sig) {}
-		(sig.east) -- ++(1.0,0) to[C=1μF] ++(1,0) to[pR,l_=$R_\text A$,n=pot2] ++(2.0,0)
+		(sig.east) -- ++(1.0,0) to[C=$1\mu$F] ++(1,0) to[pR,l_=$R_\text A$,n=pot2] ++(2.0,0)
 		(pot2.wiper) -- (pot2.wiper -| node1) coordinate (node2);
 
 	\draw	(node1.center) -- ++(0,20mm) node (node2) {} to [R,l=$4.7\text k\Omega$] +(3,0) -| (node3);
