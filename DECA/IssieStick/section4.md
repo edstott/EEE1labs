@@ -14,11 +14,13 @@ The state transition diagram will look like this:
 The state machine has 4 inputs: L, R, U & D. Each input comes from a push button using the same mapping as previously:
 | PB bit | Symbol |
 | ------| ------- |
-| 0  | Unused (X) |
+| 0  | C |
 | 1  | L    |
 | 2  | D    |
 | 3  | R  |
 | 4  | U     |
+
+Push button C (centre) is unused in the snake game.
 
 There are four states, represented by a state variable Q with 2 bits:
 | Q | State name |
@@ -30,29 +32,34 @@ There are four states, represented by a state variable Q with 2 bits:
 
 The state transition diagram has many edges but there is some symmetry. Each state has two possible transitions to other states, for example LEFT → UP and LEFT → DOWN, and it is also possible to remain in the same state. It isn't possible to transition to the opposite direction, for example LEFT → RIGHT. The state machine must be in one of the four states, so the snake will always be moving.
 
-Complete a state transition table for the state machine, based on this template:
+Note also that each state is responsive to only two of the PB inputs.
+For example, if the state is LEFT then we don't care about the L or R inputs, only U and D.
+By using the don't care symbol (X), we can write a simplified truth table for the next state logic.
 
-| Current State | PB (URDLX) | Next State |
+| Q | PB (URDL) | N |
 | ----- | ------------- | ---------- |
-| 00    | 0000X          | 00         |
-| 00    | 0001X          | 00         |
-| 00    | 0010X          | 01         |
-| 00    | 0011X          | 01         |
-| 00    | 0100X          | 00         |
-| …     | …             | …          |
+| 00    | 0X0X          | 00         |
+| 00    | 0X1X          | 01         |
+| 00    | 1X0X          | 11         |
+| 00    | 1X1X          | 00         |
+| 01    | X0X0          | 01         |
+| 01    | X0X1          | 00         |
+| 01    | X1X0          | 10         |
+| 01    | X1X1          | 01         |
+| …    | …         | …        |
 
 - [ ] Complete the state transition table
 
-The state machine will generate direction signals for the head position counters, so output will be a 4-bit bus.
-We want the direction to change as quickly as possible when a button is pressed, so we will derive the direction signals from the next state.
+The state machine will generate direction signals for the head position counters, so output Y will be a 4-bit bus.
+We want the direction to change as quickly as possible when a button is pressed, so we will derive the direction signals from the next state bus.
 If we used the current state to generate the output there would be an extra tick of delay, since the head counters would only change direction on the tick after the state machine changed state.
 
-| Next State | OUT(URDL) |
-| ----- | ------------- |
-| 00    | 0001 |
-| 01    | 0010 |
-| 10    | 0100 |
-| 11    | 1000 |
+| N | Y | Effect |
+| ----- | ------------- | ---- |
+| 00    | 0001 | Left |
+| 01    | 0010 | Down |
+| 10    | 0100 | Right |
+| 11    | 1000 | Up |
 
 Generating the state mahcine outputs from the next state signal makes it a *Mealy* state machine, which means that the outputs depend on the current state *and* the inputs.
 
@@ -60,29 +67,49 @@ Generating the state mahcine outputs from the next state signal makes it a *Meal
 
 ## Implementing the state machine
 
-The state transition table is quite large because there are 6 inputs, but it is also symmetric, which permits simplification of the resulting logic.
-There are two options for implementation
+A state machine is formed from a feedback loop of a register and a block of combinational logic.
+The counters you have already implemented are examples of state machines, where the combinational logic is based on an adder.
 
-### Next state logic with gates
+- [ ] TODO: geenric diagram of a Mealy state machine
+- [ ] 
+Create the state machine in a new sheet called `DIRSM` with input ports `PB` and `EN` and and output port `Y`.
+Place a 2-bit register with an enable input to store the current state, Q.
+The state machine will use an enable to ensure it only changes state on the TICK signal.
+Otherwise it would be possible to reverse the direction of the snake within one game tick.
 
+### (Option 1) Combinational logic with gates
 
-### Next state logic with ROM
-You can reduce it using Boolean algebra techniques and implement it with basic logic gates.
-However, it's easier to implement it using an *asynchronous ROM*, where you can enter the truth table as memory contents.
-That will also be easier to modify and debug.
-The FPGA synthesis tool will do its own logic minimisation and it can convert a ROM into an efficient implementation in its lookup tables.
+![State machine implementation with blocks of combinational logic for next state and outputs](graphics/smgates.png)
 
-- [ ] TODO: diagram of ROM-based Mealy state machine
+Ignoring the C input (PB bit 0), the N signal is dependent on 6 binary signals: the 2-bit current state and 4 PB inputs.
+That's too many to reduce with a Karnaugh map, but you can nevertheless derive an efficient logic mapping with gates for each bit of N.
+Start by writing a sum-of-products expression with a term for every line in the truth table that produces a logic 1, for example:
 
-This next state and output logic block will require a ROM with 64 words (a 6-bit address port) and a word width of 6 bits.
-The state register `STATE` will have 2 bits and an enable port so that it only updates once per prescaler tick.
-The address input port will be formed by merging the current state (output of `STATE`) with the 4-bit input.
-Notice that the rows of the state transition table are ordered by increasing binary count of the two input columns.
-To preserve that ordering when you write the ROM contents, you will need to map the state machine input to the LSBs of the address and the current state to the MSBs.
+$$ N_0 = \overline{Q_1}\overline{Q_0}\overline{U}D + \overline{Q_1}\overline{Q_0}U\overline{D} \ldots $$
 
-- [ ] TODO: diagram showing mapping of signals to address inputs
+Then look for factorisations and equivalences that simplify the expression to a minimum number of gates.
+In fact, the FPGA synthesis tool will do its own logic optimisation, so there is no practical benefit to hand optimisation.
+It can, however, result in a tidier and more maintainable sheet.
 
-| Current State | Input | Next State | Output | ROM Address | ROM Data |
+You also need to generate logic for the state machine outputs Y, which are derived quite easily from N according to the output table.
+You can use gates for the output logic, or you can use a 4-port DEMUX component (independent research required).
+
+- [ ] (Option 1) Implement the logic to generate N (next state) and Y (outputs) with gates.
+
+### (Option 2) Combinational logic with ROM
+
+It is common to implement the combinational logic for state machines in a ROM.
+The ROM contains values for N and Y for every input combination: $2^6 = 64$ combinations in this case.
+The advantage of ROM implementation is that it is easier to modify the state machine in future, since the ROM contents are a direct transcription of the truth table.
+On an FPGA implementation, the synthesis tool can automatically choose whether to convert the ROM to an optimal implementation in lookup tables, or to use a dedictaed memory block.
+
+![State machine implementation with ROM for next state and outputs](graphics/smrom.png)
+
+This next state and output logic block will require a ROM with 64 words (a 6-bit address port).
+The address input port will be formed by merging Q (the current state) with the 4 relevant bits of PB.
+The simplified truth table above needs to be expanded by elaborating don't cares and adding the outputs.
+
+| Q | PB (URDL) | N | Y | ROM Address | ROM Data |
 | ----- | ------------- | ---------- | ------ | ----------- | -------- |
 | 00    | 0000          | 00         | 0001   | 0x00        | 0x01     |
 | 00    | 0001          | 00         | 0001   | 0x01        | 0x01     |
@@ -90,8 +117,27 @@ To preserve that ordering when you write the ROM contents, you will need to map 
 | 00    | 0011          | 00         | 0001   | 0x03        | 0x01     |
 | …     | …             | …          | …      | …           | …        |
 
-Create the state machine in a new sheet called `DIRSM` with input ports `IN` and `EN` and and output port `OUT`.
+Notice that the rows of the state transition table are ordered by increasing binary count of the two input columns, which are concatenated to form the ROM Address.
+It is important to use a consistent mapping of signals to the bits of ROM address and data.
+For the table above, the mapping of ROM address bits is this:
+
+| ROM add bit | Signal |
+| ----------- | ------ |
+| $A_0$       | L      |
+| $A_1$       | D      |
+| $A_2$       | R      |
+| $A_3$       | U      |
+| $A_4$       | $Q_0$  |
+| $A_5$       | $Q_1$  |
+
+Implement the state machine with the correct size of ROM.
+Use Bus Select and MergeWires components to connect the address and data ports to the appropriate signals.
 Transfer the state transition table to the ROM contents.
+
+- [ ] (Option 2) Implement the logic to generate N (next state) and Y (outputs) with a ROM.
+
+### State machine testing
+
 Simulate the completed state machine with step simulation.
 Exhaustive testing would be laborious so you can ignore the cases where mutliple buttons are pressed:
 
