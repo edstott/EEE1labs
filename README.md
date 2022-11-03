@@ -30,4 +30,5 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
   - [Section 1: Design with Issie](DECA/Part1/Section1.md)
   - [Section 2: Digital Arithmetic](DECA/Part1/Section2.md)
   - [Section 3: Sequential Circuits](DECA/Part1/Section3.md)
-  
+- Part 2 (Autumn Term Weeks 8–10)
+  - [Section 1: Memory](DECA/Part2/Section1.md)
