@@ -38,9 +38,9 @@ Add a 'ROM (synchronous)' component (under the 'Memories' section of the Issie c
 Click on the ROM to select it, and then go to the `Properties' tab.
 Click the `View/Edit memory content' button, and fill in the values of your text message in the memory editor window that appears.
 		
-![A ROM placed in a sheet](graphics/DECA-iROMcfg1.png)
+![A ROM placed in a sheet](graphics/IssieROM.png)
 
-![Configuring the contents of the ROM](graphics/DECA-iROMcfg2.png)
+![Configuring the contents of the ROM](graphics/IssieROMcontents.png)
 		
 - [ ] Create a synchronous ROM containing your message.
 	
