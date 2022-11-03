@@ -7,7 +7,20 @@ If the player releases all the keys then the snake should continue moving in the
 Futhermore, it should be impossible to reverse direction 180° on the spot.
 
 To fix this, we'll need a state machine to remember the current direction of the snake.
-The state transition diagram will look like this:
+A state machine is always in one condition of a finite set of possibilities.
+In this case, there will be a state for each direction, represented by a state variable Q with 2 bits:
+
+| State name | Q |
+| ----- | ------- |
+| LEFT   | 00    |
+| DOWN    | 01    |
+| RIGHT   | 10    |
+| UP      | 11    |
+
+A state machine can be represented with a state transition diagram, which shows states as nodes and possible transitions between states as *edges* (lines) connecting the states.
+Each edge is annotated by the conditions necessary to trigger the associated change of state.
+Some edges loop back to their origin node to show that the state does not change in that circumstance.
+The state transition diagram for the snake direction will look like this:
 
 ![State transition diagram for snake direction](graphics/dirfsm.png)
 
@@ -22,19 +35,14 @@ The state machine has 4 inputs: L, R, U & D. Each input comes from a push button
 
 Push button C (centre) is unused in the snake game.
 
-There are four states, represented by a state variable Q with 2 bits:
-| Q | State name |
-| ----- | ------- |
-| 00    | LEFT   |
-| 01    | DOWN    |
-| 10    | RIGHT   |
-| 11    | UP      |
+The state transition diagram has many edges but there is some symmetry. Each state has two possible transitions to other states, for example `LEFT` → `UP` and `LEFT` → `DOWN`, and it is also possible to remain in the same state.
+The state machine will be clocked using the `TICK` signal as an enable, which means that Q, the state, changes only on system tick.
+This ensures that the snake cannot reverse direction in a single game step, since two transitions are necessary to change from, for example `LEFT` to `RIGHT.
+The state machine must be in one of the four states, so the snake will always be moving.
 
-The state transition diagram has many edges but there is some symmetry. Each state has two possible transitions to other states, for example LEFT → UP and LEFT → DOWN, and it is also possible to remain in the same state. It isn't possible to transition to the opposite direction, for example LEFT → RIGHT. The state machine must be in one of the four states, so the snake will always be moving.
-
-Note also that each state is responsive to only two of the PB inputs.
+Note that each state is responsive to only two of the PB inputs.
 For example, if the state is LEFT then we don't care about the L or R inputs, only U and D.
-By using the don't care symbol (X), we can write a simplified truth table for the next state logic.
+By using the don't care symbol (X), we can write a simplified truth table that relates the inputs and the current state to the next state, N.
 
 | Q | PB (URDL) | N |
 | ----- | ------------- | ---------- |
@@ -48,11 +56,10 @@ By using the don't care symbol (X), we can write a simplified truth table for th
 | 01    | X1X1          | 01         |
 | …    | …         | …        |
 
-- [ ] Complete the state transition table
+- [ ] Complete the truth table for state transitions
 
-The state machine will generate direction signals for the head position counters, so output Y will be a 4-bit bus.
-We want the direction to change as quickly as possible when a button is pressed, so we will derive the direction signals from the next state bus.
-If we used the current state to generate the output there would be an extra tick of delay, since the head counters would only change direction on the tick after the state machine changed state.
+The state machine will generate direction signals for the head position counters, so its output Y will be a 4-bit bus.
+The value of Y will depend on N:
 
 | N | Y | Effect |
 | ----- | ------------- | ---- |
@@ -61,7 +68,12 @@ If we used the current state to generate the output there would be an extra tick
 | 10    | 0100 | Right |
 | 11    | 1000 | Up |
 
-Generating the state mahcine outputs from the next state signal makes it a *Mealy* state machine, which means that the outputs depend on the current state *and* the inputs.
+N is dependent on the PB inputs, which means there is a combinational logic path between inputs and outputs.
+That makes the state machine a *Mealy* state machine, which means that the outputs depend on the current state *and* the inputs.
+
+The alternative would be to derive Y from Q.
+That would break the combinational path from input to output and the ouputs would change only when the state changes, which is a *Moore* state machine.
+In this case, that would be a disadvantage because there would be an extra tick of latency before the output changes after pressing an input.
 
 - [ ] Write down Boolean expressions for each of the 4 bits of the outputs.
 
@@ -69,13 +81,13 @@ Generating the state mahcine outputs from the next state signal makes it a *Meal
 
 A state machine is formed from a feedback loop of a register and a block of combinational logic.
 The counters you have already implemented are examples of state machines, where the combinational logic is based on an adder.
+A generic Mealy state machine has a block diagram like this:
 
-- [ ] TODO: geenric diagram of a Mealy state machine
-- [ ] 
+![A generic Mealy state machine](graphics/mealy.png)
+
 Create the state machine in a new sheet called `DIRSM` with input ports `PB` and `EN` and and output port `Y`.
 Place a 2-bit register with an enable input to store the current state, Q.
-The state machine will use an enable to ensure it only changes state on the TICK signal.
-Otherwise it would be possible to reverse the direction of the snake within one game tick.
+There are two methods for implementing the logic for next state and outputs. Choose the one you prefer:
 
 ### (Option 1) Combinational logic with gates
 
