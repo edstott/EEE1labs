@@ -1,0 +1,37 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\footnotesize
+	\tikzset{flipflop D/.style={flipflop,
+            flipflop def={t1=D, t6=Q, td=EN,
+            c3=1},
+            }}
+
+	\draw
+		(0,0)
+		node[flipflop D,external pins width=0](tmr){\bfseries REG2}
+        node[above] at (tmr.bup) {STATE};
+
+        \node[draw,left=of tmr.pin 1,anchor=15,rounded corners,minimum width=3cm,minimum height=1.5cm,thick] (logic) {Logic};
+        \node[left] at (logic.15) {N};
+        \node[left] at (logic.345) {Y};
+        \node[right] at (logic.165) {Q};
+        \node[right] at (logic.195) {IN};
+
+        \draw[ultra thick] (logic.15) -- (tmr.pin 1)
+        (tmr.pin 6) -| ++(1,1)
+        -- ($(logic.165) + (-1,1)$)
+        |- (logic.165)
+        (logic.195) -- ++(-2,0)
+        (logic.345) -| ++(0.5,-2)
+        -- ++(4,0);
+
+\end{circuitikz}
+
+\end{document}
