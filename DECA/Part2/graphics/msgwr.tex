@@ -1,0 +1,43 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}
+	\footnotesize
+	\ctikzset{multipoles/dipchip/width=1.5}
+	\draw
+		(0,0)
+		node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0,anchor=pin 6](tmr){\bfseries CTR}
+		node[right] at (tmr.bpin 1) {D}
+% 		node[above] at (tmr.s) {RSTn}
+		node[left] at (tmr.bpin 6) {Q};
+	\draw (tmr.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+	\draw
+		node[dipchip, num pins=6, hide numbers, no topmark, external pins width=0,anchor=pin 1,right=of tmr](rom){\bfseries ROM}
+		node[right] at (rom.bpin 1) {ADDR}
+		node[left] at (rom.bpin 6) {DOUT};
+	\draw (rom.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+
+	\draw[ultra thick] (tmr.pin 6) -- (rom.pin 1) coordinate[midway](m);
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{4};
+	
+	\draw[ultra thick] (tmr.pin 1) -- ++(-1,0) coordinate(mlab) node[left]{\texttt{<MSG\_LEN>}};
+
+	\coordinate[below=2 of mlab] (rlab);
+% 	\draw (tmr.s) -- (tmr.s|-rlab) -- (rlab) node[left] {RSTn};
+
+	\draw[ultra thick] (rom.pin 6) -- ++(1,0) coordinate[midway](m) node[right]{OUT};
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{7};
+	
+
+\end{circuitikz}
+
+\end{document}
