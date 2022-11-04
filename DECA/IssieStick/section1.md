@@ -48,3 +48,26 @@ This repository contains an example project which displays a counter on the LED 
 
 After all the stages successfully complete you will see digits counting on the LED array.
 You can reset the counter by pushing the centre button.
+
+## Build errors
+
+The hardware build system does not yet produce meaningful errors, partially because it uses third-party tools.
+
+### Synthesis fails
+The synthesis step can fail for the following reasons:
+
+- There are errors in your sheets. Go to the simulation tab and check that simulation is available. If not, fix the errors that are reported
+- The project is stored in a directory path that contains spaces. In OneDrive for Windows, you can work around this without moving your files by creating a link to your Issie project directory with a different path. [This guide tells you how.] (https://blog.jongallant.com/2020/01/onedrive-rename-remove-spaces-from-folder-name/)
+- OSS tools are not available. Make sure you run Issie in the OSS environemnt as described above every time you want to build.
+- (Mac only) Your project folder does not contain the 'hdl' folder with the build dependencies.
+
+### Place and route fails
+The place and route step can fail for the following reasons:
+
+- You are trying to build a sheet that isn't the main sheet.
+- Your sheet contains port names that don't exist on the IssieStick. Refer to the example projects to see the correct port names.
+
+### Upload fails
+The upload step can fail for the following reasons:
+
+- The IssieStick isn't connected
