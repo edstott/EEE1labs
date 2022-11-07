@@ -60,12 +60,14 @@ The synthesis step can fail for the following reasons:
 - The project is stored in a directory path that contains spaces. In OneDrive for Windows, you can work around this without moving your files by creating a link to your Issie project directory with a different path. [This guide tells you how.] (https://blog.jongallant.com/2020/01/onedrive-rename-remove-spaces-from-folder-name/)
 - OSS tools are not available. Make sure you run Issie in the OSS environemnt as described above every time you want to build.
 - (Mac only) Your project folder does not contain the 'hdl' folder with the build dependencies.
+- (Failure after running for several minutes) Your design contains a large asynchronous ROM or RAM, which can't be implemented efficiently on the FPGA. Use a synchronous memory or smaller memory instead.
 
 ### Place and route fails
 The place and route step can fail for the following reasons:
 
 - You are trying to build a sheet that isn't the main sheet.
 - Your sheet contains port names that don't exist on the IssieStick. Refer to the example projects to see the correct port names.
+- Your design is too complex for the FPGA. This may be due to an asynchronous ROM or RAM.
 
 ### Upload fails
 The upload step can fail for the following reasons:
