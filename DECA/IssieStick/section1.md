@@ -26,7 +26,7 @@ These are not yet fully integrated with Issie so some setup is required:
    5. Open the drop down list at the top of the main window. You will see a list of every USB device connected to your computer. Select 'Dual RS232-H (Interface 0)'.
 ![Selecting the correct USB device with Zadig](graphics/zadig.png)
    6. Select the driver 'libusb-win32' in the middle box of the window.
-   7. **Warning: changing the driver for the wrong device will stop it from working. Make sure you have selected 'Dual RS232-H (Interface 0)'. Ask for help if you are not sure.**
+   7. **Warning: changing the driver for the wrong device will stop it from working. Make sure you have selected 'Dual RS232-H (Interface 0)' and the 'USB ID' fields match the screenshot above. Ask for help if you are not sure.**
    8. Click 'Replace Driver'. The process will take a little while.
    8. Repeat the process for the device 'Dual RS232-H (Interface 1)'
    9. Close Zadig. Disconnect and reconnect the IssieStick.
