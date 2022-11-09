@@ -58,6 +58,7 @@ The synthesis step can fail for the following reasons:
 
 - There are errors in your sheets. Go to the simulation tab and check that simulation is available. If not, fix the errors that are reported
 - The project is stored in a directory path that contains spaces. In OneDrive for Windows, you can work around this without moving your files by creating a link to your Issie project directory with a different path. [This guide tells you how.] (https://blog.jongallant.com/2020/01/onedrive-rename-remove-spaces-from-folder-name/)
+- Issie is stored in a directory path that contains spaces. Move it to a path with no spaces.
 - OSS tools are not available. Make sure you run Issie in the OSS environemnt as described above every time you want to build.
 - (Mac only) Your project folder does not contain the 'hdl' folder with the build dependencies.
 - (Failure after running for several minutes) Your design contains a large asynchronous ROM or RAM, which can't be implemented efficiently on the FPGA. Use a synchronous memory or smaller memory instead.
