@@ -59,7 +59,7 @@ The 4-bit adder and its dependencies, `halfadd` and `fulladd`, are now available
 			
 Connect one input to the 4-bit adder to the output of the `DFF4`.
 Connect the other input to the adder to a `Constant` component, found in the catalogue under 'Input/Output'.
-Set the number of bits of the constant to 4 and the value to 0.
+Set the number of bits of the constant to 4 and the value to 1.
 Connect another constant to the carry input, with a width of 1 and a value of 0.
 
 In Issie, floating ports (inputs/outputs of components that are not connected to anything) are not allowed.
