@@ -56,13 +56,13 @@ Use the yellow version for all tasks that require just one signal source.
 			
 ## Before the lab
 
-1. Examine the circuit in section.~\ref{s:inv}. Determine a value of feedback resistor $R_\text{fb}$ to produce a voltage gain of $-1.5\pm5\%$.
+1. Examine the [inverting amplifier](#inverting-amplifier) below. Determine a value of feedback resistor $R_\text{fb}$ to produce a voltage gain of $-1.5\pm5\%$.
 2. An idealised amplifier circuit can be represented as an input impedance to ground and a voltage source and is shown here connected to a signal source:
 
 ![Ideal equivalent](graphics/opamp-miceq.png)
 
-Determine the theoretical input impedance $Z_\text{input}$ of the circuits in sections ~\ref{s:ssinv} and ~\ref{s:ssnoninv}.
-  Remember that the opamp itself has an (ideally) infinite impedance at the input pins so any finite impedance must originate from the other components in the circuit.
+Determine the theoretical input impedance $Z_\text{input}$ of the single supply [inverting amplifier](#single-supply-inverting-amplifier) and [non-inverting amplifier](#single-supply-non-inverting-amplifier).
+  Remember that the opamp itself has an (ideally) infinite impedance at the input pins so any finite impedance must originate from resistors connected to ground.
   Use the virtual ground approximation in the case of the inverting amplifier.
   A voltage source such as the 5V power supply can be considered as short circuit to ground.
 
@@ -99,7 +99,7 @@ Confirm that the change in $V_\text{in}$ when the earphones are connected is con
 			
 - [ ] Test the performance of the signal source module without amplification.	Confirm the effect of the earphone load on the amplitude of $V_\text{in}$.
 
-## Inverting amplifier
+## Inverting Amplifier
 
 An amplifier can help make the signal louder in three ways:
 1. It adds gain so that output voltage amplitude is larger than the input amplitude.
@@ -121,7 +121,7 @@ We will address this in the next section.
 		
 - [ ] Build the inverting amplifier and check the output waveform
 		
-## Single supply Inverting amplifier
+## Single Supply Inverting Amplifier
 
 The original inverting amplifier circuit does not work correctly and the lower part of the output signal is missing.
 The reason is that the opamp can't produce an output lower than the negative power supply (V− pin), which is 0V in this circuit.
@@ -148,7 +148,7 @@ Then you can measure the amplitude of the output, compare it to the input and fi
 		
 - [ ] Modify the inverting amplifier so it works correctly and check that the three requirements at the start of section~\ref{s:inv} have been achieved.
 		
-## Single-supply Non-inverting amplifier
+## Single-Supply Non-inverting Amplifier
 
 Build a non-inverting amplifier according to this circuit:
 
@@ -167,7 +167,7 @@ The values are chosen to place the corner frequency at or below 100Hz.
 				
 - [ ]	Build and test the single-supply, non-inverting amplifier.
 
-## Challenge: audio mixer
+## Challenge: Audio Mixer
 
 Modes 2 and 3 of the signal source play the left and right hand parts of a piece of piano music.
 Listen to them by using your amplifier and changing the mode switch.
