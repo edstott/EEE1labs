@@ -32,7 +32,7 @@ The frequency at which the opamp *open loop* gain drops to unity (0dB) is known 
 Remember that open loop gain is the gain of the opamp with no negative feedback, which is ideally infinite.
 The gain of an opamp in a circuit with negative feedback cannot be greater than the open loop gain.
 
-![Opamp amplifier with a high gain(opamp-highgain.png]
+![Opamp amplifier with a high gain](graphics/opamp-highgain.png)
 			
 The circuit above has a relatively high gain for a single-opamp amplifier.
 Use the oscilloscope signal generator (AWG) as an input instead of the signal source module, and set it up with a sine wave with 50mV amplitude and 0V DC offset.
