@@ -1,6 +1,6 @@
 # Digital Electronics and Computer Architecture Lab
-# Part 1: Autumn Term weeks 4--6
-## Section 3: Memory
+# Part 2: Autumn Term weeks 8–10
+## Section 1: Memory
 
 Memory allows the storage of large blocks of data.
 Unlike registers, in which every bit can be accessed and updated every clock cycle, data in memory must be *addressed* and only one word can be accessed at once.
