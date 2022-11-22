@@ -1,0 +1,71 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\begin{circuitikz}
+	\footnotesize
+
+	\ctikzset{multipoles/dipchip/width=1}
+	\node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0,anchor=bpin 1](dff){\bfseries DFFn};
+	\node [right] at (dff.bpin 1) {D};
+	\node [left] at (dff.bpin 6) {Q};
+% 	\node [above] at (dff.south) {R};
+	\draw (dff.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+
+% 	\ctikzset{multipoles/dipchip/width=1.5}
+% 	\node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0,anchor=bpin 1,right=of dff](out){\bfseries OUT};
+% 	\node [right] at (out.bpin 1) {STATE};
+% 	\node [left] at (out.bpin 4) {MOTOR};
+
+	\ctikzset{multipoles/dipchip/width=2.5}
+	\node[dipchip,num pins=6, hide numbers, no topmark,external pins width=0,left=of dff.bpin 1,anchor=bpin 6](ns){\bfseries NXT};
+	\node [right] at (ns.bpin 1) {STATE};
+	\node [right] at (ns.bpin 2) {C};
+	\node [right] at (ns.bpin 3) {S};
+	\node [left] at (ns.bpin 6) {NEXT};
+
+	\draw[ultra thick] (ns.pin 6) -- (dff.pin 1) coordinate[midway](m);
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{2};
+
+% 	\draw[ultra thick] (dff.pin 6) -- (nxt.pin 1) coordinate[midway](x)
+% 		(x) -- ++(0,1) coordinate(y)
+% 		(ns.pin 1) -- ++(-0.5,0) coordinate (x) -- (x|-y) -- (y) coordinate[midway](m);
+	\draw[ultra thick] (dff.pin 6) -- ++(1,0) node[right]{Q};
+	\draw[ultra thick] (dff.pin 6) -- ++(0.5,0) node(q){} -- ++(0,1.2) node(y){} -- (ns.pin 1|- y) node[midway](m){} -- ++(-0.5,0) node(x){} -- (x|-ns.pin 1) -- (ns.pin 1);
+
+	\draw
+		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+		node[above=0 of m]{2};
+	
+	\coordinate[left = of ns.pin 2] (lab1);
+	\draw (ns.pin 2) -- (lab1) coordinate[midway](m) node[left]{C};
+% 	\draw
+% 		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+% 		node[above=0 of m];
+
+	\draw (ns.pin 3) -- (ns.pin 3-|lab1) coordinate[midway](m) coordinate(lab2) node[left]{S};
+% 	\draw
+% 		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+% 		node[above=0 of m];
+
+	\coordinate[below=0.6 of lab2](lab3);
+	\draw (dff.pin 3) -- ++(-0.5,0) coordinate (x) -- (x|-lab3) -- (lab3) node[left]{CLK};
+
+% 	\coordinate[below=0.6 of lab3](lab4);
+% 	\draw (dff.s) -- (dff.s|-lab4) -- (lab4) node[left]{RST};
+
+% 	\draw[ultra thick] (out.pin 4) -- ++(1,0) coordinate[midway](m) node[right]{MOTOR};
+% 	\draw
+% 		($(m) + (-0.1,-0.1)$) -- ($(m) + (0.1,0.1)$)
+% 		node[above=0 of m]{2};
+
+	
+
+\end{circuitikz}
+
+\end{document}
