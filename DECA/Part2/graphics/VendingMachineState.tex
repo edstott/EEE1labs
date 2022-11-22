@@ -1,0 +1,25 @@
+\documentclass[tikz]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usetikzlibrary{calc,positioning}
+\usetikzlibrary{shapes.multipart} % LATEX and plain TEX when using Tik Z
+
+\begin{document}
+\begin{tikzpicture}
+		\node[circle split,draw,minimum width=2cm] (vnd) at (0,-3) {VEND \nodepart{lower} $11$};
+		\node[draw,circle split,minimum width=2cm] (wc) at (-7,-5) {W/COIN \nodepart{lower} $01$}
+			edge [->, loop above, looseness=5] node[auto] {$\overline{\text{C}}$} (wc)
+		    edge [->, bend right=30] node[auto] {C}  (vnd);
+		\node[draw,circle split,minimum width=2cm] (ws) at (-3,0) {W/SEL \nodepart{lower} $10$}
+			edge [->, bend left=30] node[auto] {S}  (vnd)
+			edge [->, loop below, looseness=5] node[auto] {$\overline{\text{S}}$} (ws);
+		\node[draw,circle split,minimum width=2cm] (start) at (-8,0) {START \nodepart{lower} $00$}
+			edge [->, loop left, looseness=5] node[auto] {$\overline{\text{C}} \cdot \overline{\text{S}}$} (start)
+			edge [->, bend right=45] node[auto,swap] {$\overline{\text{C}} \cdot \text{S}$} (wc)
+			edge [->, bend left=30] node[auto] {$\text{C} \cdot \overline{\text{S}}$} (ws)
+			edge [<-, bend left=110, looseness=1.5] node[auto] {}  (vnd)
+			edge [->, bend right=30] node[auto] {$\text{CS}$}  (vnd);
+
+\end{tikzpicture}
+
+\end{document}
