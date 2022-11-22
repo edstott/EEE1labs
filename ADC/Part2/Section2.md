@@ -1,7 +1,7 @@
 # Analysis and Design of Circuits Lab
 # Part 2: Autumn Term weeks 8–10
 
-## Section 2: Bandwidth and filtering}
+## Section 2: Bandwidth and Filtering
 	
 Opamp circuits have frequency-dependent transfer functions just like passive networks containing capacitors and/or inductors.
 In this section you will measure the built-in bandwidth limitation of the LT1366 opamp and design a circuit with a custom transfer function.
