@@ -10,7 +10,7 @@ In this section you will measure the built-in bandwidth limitation of the LT1366
 1. Look up the datasheet for the LT1366 and find out the *Gain-bandwidth product* for the opamp.
    Also locate the plot for gain versus frequency. How does the gain-bandwidth product relate to the gain transfer characteristic?
 2. Signal source mode 8 generates a melody with an annoying whine.
-   Use the (Analog Devices Filter Wizard)[http://www.analog.com/designtools/en/filterwizard/] to design a low-pass active filter that will block out the unwanted signal.
+   Use the [Analog Devices Filter Wizard](http://www.analog.com/designtools/en/filterwizard/) to design a low-pass active filter that will block out the unwanted signal.
    Observe the following specifications:
    1. The notes of the tune are in the range 200Hz–2KHz and must lie within the passband
 	 2. The unwanted signal is at 8kHZ must lie within the -40dB stopband
