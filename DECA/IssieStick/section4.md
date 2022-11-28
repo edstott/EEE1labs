@@ -113,7 +113,7 @@ You can use gates for the output logic, or you can use a 4-port DEMUX component 
 It is common to implement the combinational logic for state machines in a ROM.
 The ROM contains values for N and Y for every input combination: $2^6 = 64$ combinations in this case.
 The advantage of ROM implementation is that it is easier to modify the state machine in future, since the ROM contents are a direct transcription of the truth table.
-On an FPGA implementation, the synthesis tool can automatically choose whether to convert the ROM to an optimal implementation in lookup tables, or to use a dedictaed memory block.
+On an FPGA implementation, the synthesis tool can automatically choose whether to convert the ROM to an optimal implementation in lookup tables, or to use a dedicated memory block.
 
 ![State machine implementation with ROM for next state and outputs](graphics/smrom.png)
 
