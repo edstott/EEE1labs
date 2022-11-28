@@ -44,7 +44,7 @@ This repository contains an example project which displays a counter on the LED 
 3. In Issie, open the 'LEDCounter' [project](downloads/LEDCounter). Open the `main` sheet. You will always need to return to `main` after editing another sheet because Issie will always try to compile the current sheet.
 5. The FPGA build options are hidden by default. Enable them by clicking View -> Show/Hide Build Tab. Open the build Tab.
 6. Under 'Device Selection', choose 'IssieSick v1.0'.
-7. Click 'Build an upload'.
+7. Click 'Build and upload'.
 
 After all the stages successfully complete you will see digits counting on the LED array.
 You can reset the counter by pushing the centre button.
@@ -74,3 +74,4 @@ The place and route step can fail for the following reasons:
 The upload step can fail for the following reasons:
 
 - The IssieStick isn't connected
+- (Windows only) The USB driver is not installed
