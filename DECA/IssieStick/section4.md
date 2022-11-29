@@ -37,11 +37,11 @@ Push button C (centre) is unused in the snake game.
 
 The state transition diagram has many edges but there is some symmetry. Each state has two possible transitions to other states, for example `LEFT` → `UP` and `LEFT` → `DOWN`, and it is also possible to remain in the same state.
 The state machine will be clocked using the `TICK` signal as an enable, which means that Q, the state, changes only on system tick.
-This ensures that the snake cannot reverse direction in a single game step, since two transitions are necessary to change from, for example `LEFT` to `RIGHT.
+This ensures that the snake cannot reverse direction in a single game step, since two transitions are necessary to change from, for example `LEFT` to `RIGHT`.
 The state machine must be in one of the four states, so the snake will always be moving.
 
-Note that each state is responsive to only two of the PB inputs.
-For example, if the state is LEFT then we don't care about the L or R inputs, only U and D.
+Note that each state is responsive to only two of the `PB` inputs.
+For example, if the state is `LEFT` then we don't care about the L or R inputs, only U and D.
 By using the don't care symbol (X), we can write a simplified truth table that relates the inputs and the current state to the next state, N.
 
 | Q | PB (URDL) | N |
@@ -151,7 +151,7 @@ Transfer the state transition table to the ROM contents.
 ### State machine testing
 
 Simulate the completed state machine with step simulation.
-Exhaustive testing would be laborious so you can ignore the cases where mutliple buttons are pressed:
+Exhaustive testing would be laborious so you can ignore the cases where multiple buttons are pressed:
 
 | Tick | Input | Expected Next State | Expected Output | Comment |
 | ---- | ----- | ------------------- | --------------- | ------- |
