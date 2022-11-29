@@ -189,7 +189,7 @@ Don't try to do this only when the food moves — it's simpler to write the food
 That also prevents the food disappearing if it appears on top of the snake and it gets erased by the tail.
 You'll need to convert your toggle into a small state machine (it already was the simplest possible state machine) so that you can execute a 3-stage cycle of write head → erase tail → write food.
 
-- [ ]  TODO: state machine diagram
+![Simple state machine to alternate between generating food, moving the snake's head, and deleting the snake's tail](graphics/foodsm.png)
 
 ### Expanding snake
 
