@@ -20,14 +20,14 @@
         \ctikzset{multipoles/dipchip/width=1.5}
         \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0,left=of state](nlogic){NEXT};
         \node [right] at (nlogic.bpin 3) {IN};
-        \node [right] at (nlogic.bpin 1) {CS};
-        \node [left] at (nlogic.bpin 6) {OUT};
+        \node [right] at (nlogic.bpin 1) {Q};
+        \node [left] at (nlogic.bpin 6) {N};
         
         \ctikzset{multipoles/dipchip/width=1.5}
         \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0,below=of nlogic,rounded corners](ologic){OUTPUT};
         \node [right] at (ologic.bpin 3) {IN};
-        \node [right] at (ologic.bpin 1) {CS};
-        \node [left] at (ologic.bpin 6) {OUT};
+        \node [right] at (ologic.bpin 1) {Q};
+        \node [left] at (ologic.bpin 6) {Y};
 
         \draw (state.bpin 6) -| ++(1,1)
         -| ($(nlogic.bpin 1) + (-1,0)$) coordinate (csfork)
@@ -40,7 +40,7 @@
         to[short,-o] ++(-1,0) node[left] {PB}
         (infork) |- (ologic.bpin 3);
 
-        \draw (ologic.bpin 6) to[short,-o] ++(3,0) node[right] {OUT};
+        \draw (ologic.bpin 6) to[short,-o] ++(3,0) node[right] {Y};
         
     \end{circuitikz}
 }
