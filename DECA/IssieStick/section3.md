@@ -11,7 +11,7 @@ The input ports for the `LEDMATRIX` are like a RAM — you present the address o
 The outputs of the two head counters will be the coordiantes of the snake's head, so they will form the address input controlling which LED to write.
 The LED array is 16×16 pixels, so only 4 bits are needed to address each axis.
 Use a Bus Select to extract the 4 LSBs of the output of each head counter and merge the results together to make the 8-bit address bus.
-Connect it to port `A` of the `LEDMATRIX`.
+Connect it to port `A` of the `LEDMATRIX`. Bits `0:3` of `A` control the X-axis position, and bits `7:4` control the Y-axis position on the grid.
 
 The `D` port is the colour that will be written to the LED. Set it to a non-zero constant of your choice.
 `WEN` is used to execute the write. Connect it to the prescaler output. Set the prescaler constant to -5999999 to give a tick rate of 2Hz.
@@ -28,7 +28,7 @@ Create a toggle flip-flop by connecting the `D` input of a D flip-flop to its `Q
 Use a 'D flip-flop with enable' from the catalogue and connect the `EN` input to the prescaler output so that it toggles once per prescaler period.
 Double the prescaler frequency by setting the constant to -3999999.
 
-- [ ] TODO: Diagram of toggle flip flop
+![Diagram of the toggle flip-flop.](graphics/tff.png)
 
 The toggle will allow us to switch the memory inputs between head and tail.
 Connect a 2-input multiplexer to the `D` input of the `LEDMATRIX`, with its `SEL` input connected to the toggle.

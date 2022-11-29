@@ -2,18 +2,19 @@
 
 ## The LEDCounter example project
 
-- [ ] TODO: Screenshot of sheet
+![The LEDCounter example project, main sheet.](graphics/LEDCounter_main.png)
 
 Load the LEDCounter project in Issie. It works like this:
 - Components `REG1`, `MUX1` and `ADD1` form a counter with load, just like [Part 1, Section 3](../Part1/Section3.md).
 The load signal is connected to bit 0 of the `PB` input port, which is the centre push button.
+    - `PB` contains 5 bits. Each bit of `PB` is used for a different button on the board.
 - Component `LEDDIGITS1` is the logic for the LED array.
 The LEDs are not connected to the FPGA individually because there would be too many wires.
 Instead, they are connected in a grid with wires to drive each row and column, and an LED is lit by setting its column connection high and its row connection low.
 To light the whole display, the columns are enabled one by one in sequence, very quickly so all the activated LEDs appear lit simultaneously.
 The `LEDDIGITS` component contains logic to control this sequence, plus a memory containing dot patterns for each hexadecimal digit.
 The block is connected directly to the various outputs that drive the LED array.
-An input port `COLOUR` sets the colour of the digits with a 12-bit bus made up of three 4-bit fields concatenated together, one for each colour channel (red, green and blue).
+An input port `COLOUR` sets the colour of the digits with a 12-bit bus made up of three 4-bit fields concatenated together, one for each colour channel (red, blue, and green, in that order).
 - Component `CTR1` acts as a *prescaler*.
 The clock speed of the FPGA is 12MHz, which is too fast to drive a human-viewable counter directly.
 The counter is loaded with the value -119999 and it counts up until it reaches 0, at which point it restarts and enables `REG1` for one clock tick.
@@ -23,7 +24,7 @@ Try making some changes to the project:
 - Connect the colour port to a multiplexer controlled by the remaining 4 push buttons, so that pressing different buttons chooses a different constant
 - Change the constant `INTERVAL` to $-(12\times 10^6-1)$  (-11999999), so that the counter increments once per second
 
-- [ ] Become familiar with the LEDCounter project
+- [ ] Become familiar with the LEDCounter project by making changes to it.
 
 ## Debugging
 
@@ -51,11 +52,10 @@ Press 'Continue' and the counter will resume.
 
 ## Snake Head Position
 
-We are going to implement a snake game on the IssieStick.
-The first task is to implement an up/down counter that will determine the position of the snake's head.
-Create a new sheet called `UPDNCTR` and make a 16-bit counter using a register and an adder. Use a register with an enable input.
+We are going to implement a [snake game](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) on the IssieStick.
+The first task is to implement an up/down counter that will determine the position of the snake's head in one axis. With two of these, we will be able to control the position of the snake's head in the 2D LED array.
 
-The counter needs to increment, decrement or stay the same depending on button presses.
+Create a new sheet called `UPDNCTR` and make a 16-bit counter using a register and an adder. Use a register with an enable input. The counter needs to increment, decrement or stay the same depending on button presses, to correspond to moving the snake one direction or the other along an axis.
 So instead of passing a constant 1 to the adder, use a 4-input multiplexer to choose the constant as follows:
 
 | SEL | Constant  |
@@ -76,10 +76,10 @@ Use Bus Select components to connect the bits of the `PB` port to the `DIR` inpu
 
 | `PB` Bit | Button | Function | Counter  | `DIR` bit |
 | --- | ------ | -------- | -------- | ------- |
-| 1   | Left   | $X=X-1$  | `HEAD X` | 1       |
-| 2   | Down   | $Y=Y-1$  | `HEAD Y` | 1       |
-| 3   | Right  | $X=X+1$  | `HEAD X` | 0       |
-| 4   | Up     | $Y=Y+1$  | `HEAD Y` | 0       |
+| 1   | Left   | $X=X-1$  | `HEADX` | 1       |
+| 2   | Down   | $Y=Y-1$  | `HEADY` | 1       |
+| 3   | Right  | $X=X+1$  | `HEADX` | 0       |
+| 4   | Up     | $Y=Y+1$  | `HEADY` | 0       |
 
 We'll display the value of the two counters for now. Use a MergeWires component to join the outputs of the two counters to make a single 32-bit bus.
 Connect that bus to the `D` input of the `LEDDIGITS` component.
