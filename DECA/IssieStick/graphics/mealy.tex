@@ -2,10 +2,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage[europeanresistors, europeanports]{circuitikz}
-\usetikzlibrary{calc,positioning}
+\usetikzlibrary{calc,positioning, backgrounds}
 
 \begin{document}
 
+\trimbox{-.25cm -.25cm -.25cm -.25cm}{ 
 \begin{circuitikz}[background rectangle/.style={fill=white!45}, show background rectangle]
 	\footnotesize
 	\tikzset{flipflop D/.style={flipflop,
@@ -32,6 +33,7 @@
         (logic.345) -| ++(0.5,-2)
         -- ++(4,0);
 
-\end{circuitikz}
+    \end{circuitikz}
+}
 
 \end{document}
