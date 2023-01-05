@@ -114,23 +114,23 @@ The soldering process is illustrated below a cross-section through the PCB.
 
 First, the component leads are bent if necessary and inserted through the correct holes in the PCB. 
 
-![Diagram showing a component lead pushed through a PCB](graphics/solder-1)
+![Diagram showing a component lead pushed through a PCB](graphics/solder-1.svg)
 
 Then, the soldering iron is used to heat up both the lead and the pad where they meet.
 
-![Heating the component lead and the PCB pad with the soldering iron](graphics/solder-2)
+![Heating the component lead and the PCB pad with the soldering iron](graphics/solder-2.svg)
 
 Once the area is hot enough, solder is introduced to the joint.
 
-![Adding solder to the heated joint](graphics/solder-3)
+![Adding solder to the heated joint](graphics/solder-3.svg)
 
 Add enough solder to cover the entire pad and fill the gap around the lead and keep the soldering iron in place long enough so that the solder flows around the joint.
 
-![A good quality joint with solder fused to the lead and the pad](graphics/solder-4)
+![A good quality joint with solder fused to the lead and the pad](graphics/solder-4.svg)
 
 If there is not enough heat, or if the soldering iron is removed too early, the solder won't stick to the metal parts properly and the joint will be unreliable (e).
 
-![A poor quality joint where the solder has formed a ball instead of fusing to the component lead](graphics/solder-5)
+![A poor quality joint where the solder has formed a ball instead of fusing to the component lead](graphics/solder-5.svg)
 
 Check the following to ensure you have a good quality joint:
 
@@ -140,7 +140,7 @@ Check the following to ensure you have a good quality joint:
 - Too much solder can cause short circuits and make it hard to check the quality of the joint. Use a desoldering pump to remove solder if there is too much.
 - Thicker leads and larger pads will take longer to reach sufficient temperature for a good joint.
 
-![A rendering of the assembled PCB](graphics/EEEbug-pcb)
+![A rendering of the assembled PCB](graphics/EEEbug-pcb.png)
 
 - [ ] Solder the components onto the PCB
 		
@@ -156,28 +156,14 @@ Checking continuity before applying power to a circuit can prevent permanent dam
 		
 Test continuity by studying the circuit diagram for the PCB and identifying all the different nodes (nodes are also called *nets* on a PCB).
 Set your multimeter to *continuity test* mode, which measures resistance and gives an audible tone when it is low so you can check continuity without looking at the display.
-(
-		\begin{tikzpicture}[scale=0.12,line width=1mm,line cap=round]
-		    \fill (0,0) circle [radius=0.25];
-		    \draw (1,0) arc [radius=1,start angle=0,delta angle=20];
-		    \draw (1,0) arc [radius=1,start angle=0,delta angle=-20];
-		    \draw (2,0) arc [radius=2,start angle=0,delta angle=20];
-		    \draw (2,0) arc [radius=2,start angle=0,delta angle=-20];
-		    \draw (3,0) arc [radius=3,start angle=0,delta angle=20];
-		    \draw (3,0) arc [radius=3,start angle=0,delta angle=-20];
-		\end{tikzpicture}
-		)
+
+![Multimeter in continuitytest mode](graphics/continuity.jpg)
 		
 For each node in the circuit, check that all the component terminals on that node have continuity (low resistance) between them.
 Probe the component leads directly so you are measuring both the solder joints and the PCB track.
 Be wary of intermittent connections - if the measurement seems unreliable try pushing the component to check for an insecure joint.
 
-		\begin{figure}
-			\centering
-			\includegraphics[width=10cm]{graphics/EEEbug-pcbprobe}
-			\caption{Measuring continuity between nodes on a PCB}
-			\label{f:pcbprobe}
-		\end{figure}
+![Measuring continuity between nodes on a PCB](graphics/EEEbug-pcbprobe.jpg)
 		
 Also test for short circuits by probing between different pairs of nodes.
 This time there should be no direct continuity, however, some node pairs may exhibit a low resistance due to the components in the circuit, for example the 1Ω resistors.
@@ -198,12 +184,7 @@ Build the motor drivers and connect them to the Orangepip and PCB as shown below
 Do not mount the PCB and motors to the EEEBug chassis at this time in case there are faults to repair.
 Look up the datasheet for the BC337 transistor to determine the relationship between the circuit symbol and the physical package so you can connect the terminals correctly.
 	
-		\begin{figure}
-			\centering
-			\input{graphics/EEEbug-pcbtest}
-			\caption{The PCB is connected to DC motors, a breadboard circuit and the Orangepip to carry out a functional test}
-			\label{f:testcct}
-		\end{figure}
+![The PCB is connected to DC motors, a breadboard circuit and the Orangepip to carry out a functional test](graphics/EEEbug-pcbtest.png)
   
 The PCB is designed for use with a 6V battery, but for now use the Orangepip with the 7.5V power supply by connecting the Vin pin to J9 on the PCB.
 This is safer for testing because the power supply has a maximum current of 1A whereas, if there is a fault, the short circuit current of the battery is much higher and it could melt wires and connectors.
@@ -241,10 +222,6 @@ Add a wire between a 5V pin of J1 and the 5V pin of the Orangepip.
 When switched on, the EEEBug should drive in a meandering line as the motor speeds vary.
 The modified connection diagram is shown below.
 		
-		\begin{figure}
-			\centering\input{graphics/EEEbug-battTest}
-			\caption{The battery is connected to J9 and the Orangepip is now powered by the 5V output, so the USB cable and 7.5V power supply can be disconnected}
-			\label{f:testBatt}
-		\end{figure}
+![The battery is connected to J9 and the Orangepip is now powered by the 5V output, so the USB cable and 7.5V power supply can be disconnected](graphics/EEEbug-battTest.png)
 
 - [ ] Finish constructing the EEEBug
