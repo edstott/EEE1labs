@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}[american voltages]
+	\footnotesize
+
+	\draw %Orangepip
+		(0,0) coordinate(5V) node[left]{5V}
+		++(0,-3) coordinate(GND) node[left] {GND};
+
+	\draw %Breadboard
+		(5V) to[short,o-] ++(2,0) coordinate(5V1) to ++(2,0) coordinate (5V2) to ++(1,0)
+		(GND) to[short,o-] ++(2,0) coordinate(G1) to ++(2,0) coordinate (G2) to ++(1,0) coordinate(G3)
+		(G1) to [pR, n=pot1, l_=10k$\Omega$] (G1|-5V)
+		(G2) to [pR, n=pot2, l_=10k$\Omega$] (G2|-5V)
+		(pot1.wiper) to[short,-o] (pot1.wiper-|5V) node[left] {A0}
+		(pot2.wiper) to ++(0,-1) coordinate(y) to[short,-o] (y-|5V) node[left] {A1};
+
+	\draw[dashed]
+		($(5V)+(-1.2,0.5)$) node[above=0.2,anchor=base west]{Orangepip} rectangle ($(GND)+(0.5,-0.5)$)
+		($(5V1)+(-1,0.5)$) node[above=0.2,anchor=base west]{Breadboard} rectangle ($(G3)+(0.5,-0.5)$);
+
+
+\end{circuitikz}
+
+\end{document}
