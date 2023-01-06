@@ -61,7 +61,7 @@ The PWM signal you have generated is a digital signal and it doesn't look like a
 If you zoom out with the timebase you can maybe see how the duty cycle varies over time.
 The average voltage of a PWM signal is proportional to its duty cycle so you can turn your digital PWM signal into an analogue sine wave by passing it through a low-pass filter, as shown below.
 	
-![](graphics/EEEbug-pwm.png)
+![Digital to analogue conversion with PWM](graphics/EEEbug-pwm.PNG)
 
 *Digital to analogue conversion with PWM. Upper trace: unfiltered PWM signal. Lower trace: filtered PWM signal. Note the phase shift of the sine wave caused by the low-pass filter*
 
