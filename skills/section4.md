@@ -1,5 +1,5 @@
 # Lab Skills
-## Part 1
+## Part 2
 ## Section 4 - Power and Motor Drive
 
 This experiment continues work on the EEEBug platform and develops it into a self-powered, autonomous, light-seeking robot.
