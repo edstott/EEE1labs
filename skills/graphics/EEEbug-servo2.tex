@@ -1,0 +1,82 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}[american voltages]
+	\footnotesize
+
+	\draw %PCB
+		(0,0) coordinate(PCB+) node[right]{$+$} node[above=0.2]{J9} 
+		++(0,-0.3) coordinate(PCB-) node[right] {$-$}
+
+		(2,0) coordinate(PCBright)
+
+		($(PCBright)+(0,-1)$) coordinate(Vb1) node[left]{Vbatt} node[above=0.2] {J6}
+		++(0,-0.3) coordinate(PCBgnd1) node[left] {GND}
+		
+		++(0,-1) coordinate(PCB5V) node[left]{5V} node[above=0.2] {J1}
+		++(0,-0.3) coordinate(PCBgnd2) node[left] {GND};
+
+
+	\draw %Battery
+		(PCB+) to[short,o-] ++(-0.75,0) |- ++(-0.75,0.7)
+		to [battery,l_=6V] ++(0,-1.5)
+		to ++(0.75,0) coordinate(x) to (x|-PCB-) to[short,-o] (PCB-);
+
+	\draw %Orangepip
+		($(PCBright)+(1.7,-3)$) coordinate(OPtop)
+		coordinate(OP5V) node[right,rotate=-90] {5V}
+		++(-0.3,0) coordinate(OPgnd) node[right,rotate=-90] {GND}
+		(PCBgnd2) to[short,o-] (PCBgnd2-|OPgnd) to[short,-o] (OPgnd)
+		(PCB5V) to[short,o-] (PCB5V-|OP5V) to[short,-o] (OP5V);
+
+	\draw%Breadboard
+		($(PCBright)+(2,0)$) coordinate(BBleft)
+		(PCBgnd1) to [short,o-] ++(4,0) coordinate(BBgnd1) to ++(1,0) coordinate(BBgnd2) to ++(1,0) coordinate(BBgndr)
+
+		(BBgnd2) to[C,l_=C] ++(0,2) coordinate(out)
+		to ++(-1,0) to[R,l_=R] ++(0,-2) coordinate(x) to[short,-o] (x|-OPgnd)
+		node[right,rotate=-90]{5}
+
+		(out) to[short,-o] ++(0.5,0) node[right]{out};
+
+	\draw%Servo
+		($(BBleft)+(0,0.5)$) coordinate (srvgnd)
+		++(0.2,0) coordinate(srvpwr)
+		++(0.2,0) coordinate(srvctl)
+		($(srvpwr) + (-5mm,-2mm)$) rectangle ($(srvpwr) + (5mm,2mm)$);
+	\draw[very thick,brown]
+		(srvgnd) to[short,o-] ++(0,8mm);
+	\draw[very thick,red]
+		(srvpwr) to[short,o-] ++(0,8mm);
+	\draw[very thick,orange]
+		(srvctl) to[short,o-] ++(0,8mm);
+	\draw
+		($(srvpwr) + (0,10mm)$) node[rotate=270] (cbr) {\Large\{}
+		node[above=1mm] {to servo};
+
+	\draw%more breadboard
+		(srvgnd) to (srvgnd|-BBgnd1)
+		(srvpwr) to (srvpwr|-Vb1) to[short,-o] (Vb1)
+		(srvctl) to[short,-o] (srvctl|-OPgnd) node[right,rotate=-90]{9};
+
+	\draw[dashed] %boxes
+		($(PCB+)+(-0.5,1)$) coordinate(PCBnw) rectangle ($(PCBgnd2)+(0.5,-0.5)$)
+		($(PCBright)+(1.2,1)$) coordinate(BBnw) rectangle ($(BBgndr)+(0.2,-0.8)$)
+		($(OPtop)+(-0.5,0.3)$) rectangle ($(OPtop)+(4.5,-1)$) coordinate(OPse) ;
+		
+	\draw %labels
+		(PCBnw) ++(-1,0) coordinate (battop)
+		(BBnw-|BBgndr) coordinate(BBne)
+		node[above=0.2 of battop,anchor=base]{Battery}
+		node[above=0.2 of PCBnw,anchor=base west]{EEEBug PCB}
+		node[above=0.2 of BBne,anchor=base east]{Breadboard}
+		node[below=0.4 of OPse,anchor=base east]{Orangepip};
+
+\end{circuitikz}
+
+\end{document}

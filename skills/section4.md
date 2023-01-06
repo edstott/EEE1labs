@@ -1,5 +1,5 @@
 # Lab Skills
-## Part 1
+## Part 2
 ## Section 4 - Power and Motor Drive
 
 This experiment continues work on the EEEBug platform and develops it into a self-powered, autonomous, light-seeking robot.
@@ -77,7 +77,7 @@ Assemble the PCB by placing and soldering the components one by one.
 Each PCB component has a unique *designator* that links the BOM, the circuit diagram and the PCB.
 Fit each component into the holes indicated its designator and outline markings.
 
-The circuit diagram for the PCB is included at the end of this document.
+Refer to the BOM and [circuit diagram](graphics/EEELAB-EEEBUG-002.PDF) to identify all the components.
 		
 Be aware of *polarised* components, which must be fitted in a specific orientation.
 Polarised components have markings or other features on their bodies that relate in some way to the outline markings on the PCB.
@@ -213,7 +213,7 @@ With the Orangepip power supply still connected, use the multimeter to confirm t
 ## EEEBug final assembly
 	
 Now you have tested the PCB you can finish assembling the EEEBug.
-Refer to the assembly drawing at the end of this document to see how the parts should be fitted to the chassis.
+Refer to the [assembly drawing](graphics/EEELAB-EEEBUG-010_1-0.pdf) to see how the parts should be fitted to the chassis.
 You may need to refer to the assembly drawing in Lab Skills Part 1 if any of the Part 1 assembly is incomplete.
 		
 The wire to Orangepip Vin should be disconnected and the battery box wired to J9 in its place.
