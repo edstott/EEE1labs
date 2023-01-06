@@ -16,7 +16,10 @@ These are not yet fully integrated with Issie so some setup is required:
 
 1. Download [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build).
    1. Go to [latest release](https://github.com/YosysHQ/oss-cad-suite-build/releases/latest) and download the appropriate file for your computer.
-   2. Unzip the archive. On Windows, put it in a location with a simple file path, like `C:\oss-cad-suite`.
+   2. Extract the archive:
+      * On Windows, move the `.exe` file that you just downloaded to a location with a simple file path, like `C:\oss-cad-suite`, then run it and it will download and extract the archive. Your antivirus software or Windows Defender may block you from doing this. If so, you can safely ignore the warning (for Windows Defender, click "more info" and then "Run anyway").
+      * On Linux, you will have downloaded a `.tgz` file. You can extract this file using a terminal with `tar -xvzf /path/to/archive.tgz`.
+      * On Mac (Darwin), the download is also a `.tgz`, but can be extracted by just double-clicking it.
 
 2. (Windows only) Install the compatible USB driver for the IssieStick.
    1. Download the [Zadig](https://github.com/pbatard/libwdi/releases/latest) USB driver configuration tool.
@@ -28,7 +31,7 @@ These are not yet fully integrated with Issie so some setup is required:
    6. Select the driver 'libusb-win32' in the middle box of the window.
    7. **Warning: changing the driver for the wrong device will stop it from working. Make sure you have selected 'Dual RS232-H (Interface 0)' and the 'USB ID' fields match the screenshot above. Ask for help if you are not sure.**
    8. Click 'Replace Driver'. The process will take a little while.
-   8. Repeat the process for the device 'Dual RS232-H (Interface 1)'
+   8. Repeat the process for the device 'Dual RS232-H (Interface 1)'. The USB ID will be `0403 6010 01` instead of the ID shown in the above image.
    9. Close Zadig. Disconnect and reconnect the IssieStick.
 
 ## Running the sample project
@@ -37,12 +40,13 @@ This repository contains an example project which displays a counter on the LED 
 
 1. [Download](https://github.com/edstott/EEE1labs/archive/refs/heads/main.zip) and unzip this repository
 1. Load the environment for OSS CAD Suite
-   1. In Windows, run `start.bat` in the main directory for OSS.
+   1. In Windows, run `start.bat` in the main directory for OSS. This will open a terminal with the environment already loaded.
    2. In Mac or Linux, start a terminal and run `source <extracted_location>/oss-cad-suite/environment`. `<extracted location>` is the parent for OSS
-   3. OSS GitHub has [full instructions](https://github.com/YosysHQ/oss-cad-suite-build#installation)
+   * OSS GitHub has [full instructions](https://github.com/YosysHQ/oss-cad-suite-build#installation)
 2. Run Issie in the same terminal. In Windows, `start.bat` creates a terminal for you. You'll need to change to the directory where you have extracted Issie and run `Issie`.
 3. In Issie, open the 'LEDCounter' [project](downloads/LEDCounter). Open the `main` sheet. You will always need to return to `main` after editing another sheet because Issie will always try to compile the current sheet.
 5. The FPGA build options are hidden by default. Enable them by clicking View -> Show/Hide Build Tab. Open the build Tab.
+   * There is a bug in Issie where if you are on the Simulations tab, then clicking on the build tab will not work. Just click on one of the other tabs first, and it should work.
 6. Under 'Device Selection', choose 'IssieSick v1.0'.
 7. Click 'Build and upload'.
 
@@ -57,9 +61,9 @@ The hardware build system does not yet produce meaningful errors, partially beca
 The synthesis step can fail for the following reasons:
 
 - There are errors in your sheets. Go to the simulation tab and check that simulation is available. If not, fix the errors that are reported
-- The project is stored in a directory path that contains spaces. In OneDrive for Windows, you can work around this without moving your files by creating a link to your Issie project directory with a different path. [This guide tells you how.] (https://blog.jongallant.com/2020/01/onedrive-rename-remove-spaces-from-folder-name/)
+- The project is stored in a directory path that contains spaces. In OneDrive for Windows, you can work around this without moving your files by creating a link to your Issie project directory with a different path. [This guide tells you how](https://blog.jongallant.com/2020/01/onedrive-rename-remove-spaces-from-folder-name/).
 - Issie is stored in a directory path that contains spaces. Move it to a path with no spaces.
-- OSS tools are not available. Make sure you run Issie in the OSS environemnt as described above every time you want to build.
+- OSS tools are not available. Make sure you run Issie in the OSS environment as described above every time you want to build. Running Issie directly (and not through the OSS environment terminal) will **not** work.
 - (Mac only) Your project folder does not contain the 'hdl' folder with the build dependencies.
 - (Failure after running for several minutes) Your design contains a large asynchronous ROM or RAM, which can't be implemented efficiently on the FPGA. Use a synchronous memory or smaller memory instead.
 

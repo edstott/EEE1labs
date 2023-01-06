@@ -1,0 +1,75 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+%\ctikzset{bipoles/length=10mm}
+\begin{circuitikz}[american voltages]
+	\footnotesize
+
+	\draw %PCB
+		(0,0) coordinate(PCB+) node[right]{$+$} node[above=0.2]{J9} 
+		++(0,-0.3) coordinate(PCB-) node[right] {$-$}
+		++(0,-1) coordinate(L+) node[right]{L$+$} node[above=0.2]{J7} 
+		++(0,-0.3) coordinate(L-) node[right]{L$-$}
+		++(0,-1) coordinate(R+) node[right]{R$+$} node[above=0.2]{J8} 
+		++(0,-0.3) coordinate(R-) node[right]{R$-$}
+
+		(2,0) coordinate(PCBright)
+		coordinate(ML-) node[left] {ML$-$} node[above=0.2] {J3}
+		++(0,-0.3) coordinate(MR-) node[left] {MR$-$}
+		++(0,-0.3) coordinate(ML+) node[left] {ML$+$}
+		++(0,-0.3) coordinate(MR+) node[left] {MR$+$}
+
+		($(PCBright)+(0,-2)$) coordinate(Vb1) node[left]{Vbatt} node[above=0.2] {J6}
+		++(0,-0.3) coordinate(Vb2) node[left] {Vbatt}
+		++(0,-0.3) coordinate(PCBgnd1) node[left] {GND}
+		++(0,-0.3) coordinate(PCBgnd2) node[left] {GND}
+
+		(Vb1) to[short,o-] ++(0.8,0) coordinate(x) to (x|-MR+) to[short,-o] (MR+)
+		(Vb2) to[short,o-] ++(1,0) coordinate(x) to (x|-ML+) to[short,-o] (ML+)
+		
+		(PCB-) to [short,o-] ++(-0.3,0);
+
+	\draw%Motors
+		(L+) to[short,o-] ++(-0.5,0) to[Telmech=M] ++(-2,0)
+		to ++(0,-0.7) to ++(1.75,0) coordinate(x) to (x|-L-) to[short,-o] (L-)
+		(R+) to[short,o-] ++(-0.5,0) to[Telmech=M,n=mot] ++(-2,0)
+		to ++(0,-0.7) to ++(1.75,0) coordinate(x) to (x|-R-) to[short,-o] (R-);
+
+	\draw %Orangepip
+		($(PCBright)+(0.8,-4)$) coordinate(OPtop)
+		coordinate(OPgnd) node[right,rotate=-90] {GND}
+		++(0.8,0) coordinate(OP1) node[right,rotate=-90] {9}
+		++(3,0) coordinate(OP2) node[right,rotate=-90] {10}
+		(OPgnd) ++(-0.3,0) coordinate(vin) node[right,rotate=-90] {Vin}
+		(PCBgnd2) to[short,o-] (PCBgnd2-|OPgnd) to[short,-o] (OPgnd)
+		(PCB+) to[short,o-] ++(-3,0) |- ($(vin)+(-1,0)$) to[short,-o] (vin); 
+
+	\draw%Breadboard
+		($(PCBright)+(2,0)$) coordinate(BBleft)
+		(PCBgnd1) to [short,o-] ++(4,0) coordinate(BBgnd1) to ++(3,0) coordinate(BBgnd2) to ++(0.5,0) coordinate(BBgndr)
+		(BBgnd1) to ++(0,0.2) node[npn,anchor=E](npn1){}
+		(npn1.C) to (npn1.C|-MR-) to[short,-o] (MR-)
+		(npn1.B) to[R,l_=1k$\Omega$] (npn1.B-|OP1) to[short,-o] (OP1)
+		node[below=0.3 of npn1.B]{BC337}
+		(BBgnd2) to ++(0,0.2) node[npn,anchor=E](npn2){}
+		(npn2.C) to (npn2.C|-ML-) to[short,-o] (ML-)
+		(npn2.B) to[R,l_=1k$\Omega$] (npn1.B-|OP2) to[short,-o] (OP2)
+		node[below=0.3 of npn2.B]{BC337};
+
+	\draw[dashed] %boxes
+		($(PCB+)+(-0.5,1)$) coordinate(PCBnw) rectangle ($(PCBgnd2)+(0.5,-0.5)$)
+		($(PCBright)+(1.2,1)$) coordinate(BBnw) rectangle ($(BBgndr)+(0.2,-0.8)$)
+		($(vin)+(-0.5,0.3)$) rectangle ($(OPtop)+(5,-1)$) coordinate(OPse) ;
+		
+	\draw %labels
+		node[above=0.2 of PCBnw,anchor=base west]{EEEBug PCB}
+		node[above=0.2 of BBnw,anchor=base west]{Breadboard}
+		node[below=0.4 of OPse,anchor=base east]{Orangepip}
+		node[below=1 of mot.center,anchor=base]{DC Motors};
+
+\end{circuitikz}
+\end{document}

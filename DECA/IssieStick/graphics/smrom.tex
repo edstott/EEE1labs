@@ -1,38 +1,39 @@
 \documentclass{standalone}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{adjustbox}
 \usepackage[europeanresistors, europeanports]{circuitikz}
 \usetikzlibrary{calc,positioning}
 
 \begin{document}
+\trimbox{-.25cm -.25cm -.25cm -.25cm}{ 
+    \begin{circuitikz}[scale=1]
+        \ctikzset{multipoles/thickness=3}
+        \ctikzset{multipoles/dipchip/width=1}
+        \def \ctikz@hook@start@draw@default {}
+        
+        \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0](state){REG2};
+        \node [right] at (state.bpin 1) {D};
+        \node [left] at (state.bpin 6) {Q};
+        \draw (state.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
+        
+        \ctikzset{multipoles/dipchip/width=1.5}
+        \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0,left=2 of state](rom){ROM64x6};
+        \node [right] at (rom.bpin 1) {A};
+        \node [left] at (rom.bpin 6) {D};
 
-\begin{circuitikz}[scale=1]
-    \ctikzset{multipoles/thickness=3}
-    \ctikzset{multipoles/dipchip/width=1}
-    \def \ctikz@hook@start@draw@default {}
-    
-    \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0](state){REG2};
-    \node [right] at (state.bpin 1) {D};
-    \node [left] at (state.bpin 6) {Q};
-    \draw (state.bpin 3) ++(0,0.2) -- ++(0.2,-0.2) -- ++(-0.2,-0.2);
-    
-    \ctikzset{multipoles/dipchip/width=1.5}
-    \node [dipchip,num pins=6, hide numbers, no topmark,external pins width=0,left=2 of state](rom){ROM64x6};
-    \node [right] at (rom.bpin 1) {A};
-    \node [left] at (rom.bpin 6) {D};
+        \draw (rom.bpin 6) -- ++(0.5,0) coordinate (dfork)
+        -- (state.bpin 1) node[midway,above] {5:4}
+        (dfork) |- ++(1,-2) node[above] {3:0}
+        to[short,-o] ++(1,0) node[right] {Y};
 
-    \draw (rom.bpin 6) -- ++(0.5,0) coordinate (dfork)
-    -- (state.bpin 1) node[midway,above] {5:4}
-    (dfork) |- ++(1,-2) node[above] {3:0}
-    to[short,-o] ++(1,0) node[right] {OUT};
-
-    \draw (rom.bpin 1) -- ++(-0.5,0) coordinate (afork)
-    -- ++(0,0.5) -- ++(-1,0) node[midway,above] {5:4}
-    coordinate (csbend)
-    (state.bpin 6) -| ++(1,1) -| (csbend)
-    (afork) -- ++(0,-0.5) -- ++(-1,0) node[midway,above] {3:0}
-    to[short,-o] ++(-1,0) node[left]{PB[4:1]};
-    
-\end{circuitikz}
-
+        \draw (rom.bpin 1) -- ++(-0.5,0) coordinate (afork)
+        -- ++(0,0.5) -- ++(-1,0) node[midway,above] {5:4}
+        coordinate (csbend)
+        (state.bpin 6) -| ++(1,1) -| (csbend)
+        (afork) -- ++(0,-0.5) -- ++(-1,0) node[midway,above] {3:0}
+        to[short,-o] ++(-1,0) node[left]{PB[4:1]};
+        
+    \end{circuitikz}
+}
 \end{document}
