@@ -16,6 +16,11 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
   - [Section 1: Construct the EEEBug](skills/section1.md)
   - [Section 2: Pulses](skills/section2.md)
   - [Section 3: Sinusoids](skills/section3.md)
+- Part 2 (Spring Term weeks 1–2)
+  - [Section 4: Power and Motor Drive](skills/section4.md)
+  - [Section 5: Signal Generation](skills/section5.md)
+  - [Section 6: Sensing](skills/section6.md)
+  - Section 7: Control
 
 ## Analysis and Design of Circuits
 - Part 1 (Autumn Term Weeks 4–6)
