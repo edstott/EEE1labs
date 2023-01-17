@@ -46,7 +46,7 @@ Measure the voltages at the A0 and A1 pins of the Orangepip and find the relatio
 ### UART Communication
 
 The data sent over the serial port uses a *UART* (universal asynchronous receiver transmitter) protocol.
-In UART, each byte (8 bits) of data is sent as a digital sequence preceded by a *start bit* (logic low) and terminated by a *stop bit* (logic high).
+In UART, each byte (8 bits) of data is sent as a digital sequence preceded by a *start bit* (logic low) and terminated by a *stop bit* (logic high). The least significant bit (bit 0) is transmitted first, so the binary data will appear reversed on an oscilloscope trace compared to how you would normally write it.
 		
 ![UART timing diagram for transmitting one byte](graphics/EEEbug-uart.png)
 
