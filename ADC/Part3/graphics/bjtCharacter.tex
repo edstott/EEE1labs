@@ -1,0 +1,34 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\begin{circuitikz}[american]
+	\node[npn] (bjt) {$Q_1$};
+	
+	\draw ($(bjt.B)+(-6,0)$) coordinate (v5)
+	to[vR=$R_{B1}$] ++(3,0) coordinate (vin) 
+	to[R=$R_{B3}$,i=$i_b$] (bjt.B)
+	(vin) to[R=$R_{B2}$] ++(0,-3) coordinate (GND1)
+	($(vin)+(0.2,0)$) to[short,-o] ++(0,0.5) node[above]{$V_\text{INB}$};
+
+	\draw (v5) to[V=$V_\text{in}$] (GND1 -| v5) node[ground] {} to (GND1);
+
+	\draw (bjt.E) to (bjt.E |- GND1) coordinate (bjtGND) to (GND1);
+
+	\draw
+	($(bjt.C) + (0,3)$) coordinate (vcc) node [above] {$V_\text{CC}$}
+	(vcc) to[R=$R_{C3}$,i=$i_C$] (bjt.C)
+	(vcc -| v5) coordinate (vtop)
+	(vtop) to[vR=$R_{C1}$] (vcc)
+	(vtop) to (v5)
+	(vcc) to ++(2,0) coordinate (vne)
+	to [R=$R_{C2}$] (vne |- bjtGND)
+	to (bjtGND);
+
+
+\end{circuitikz}
+\end{document}
