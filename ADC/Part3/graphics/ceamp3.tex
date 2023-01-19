@@ -1,0 +1,40 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\begin{circuitikz}[american]
+	\node[npn] (bjt) {$Q_1$};
+
+	\draw (bjt.B) to ++(-1,0) coordinate (vb1)
+	to[R,l_=$R_\text{B1}$] ++(0,4) coordinate (vcc1)
+	to (vcc1 -| bjt.C)
+	to[R=$R_\text{C}$] (bjt.C);
+
+	\draw	(vb1) to ++(0,-0.5) coordinate (vb2)
+	to[R=$R_\text{B2}$] ++(0,-2)
+	to[vR=$R_\text{B3}$] ++(0,-2) coordinate (gnd1)
+	to (gnd1 -| bjt.E) coordinate (gnd3)
+	to [R,l_=$R_\text{E}$] (bjt.E);
+
+	\draw (vb2) to[C,l_=$C_\text{1}$] ++(-2,0) coordinate (vin)
+	to[sV=$V_\text{in}$] (vin |- gnd1) coordinate (gnd2)
+	to (gnd1);
+
+	\draw (gnd2) to ++(-2,0) node[ground] (gnd) {};
+
+	\draw (vcc1) to (gnd |- vcc1)
+	to[V=$V_\text{CC}$] (gnd);
+
+	\draw (bjt.C) to [C=$C_\text{2}$,-o] ++(2,0) node[above] {$V_\text{out}$};
+	
+	\draw (bjt.E) to ++(2,0) coordinate (x)
+	to[ecapacitor,l=10μF] (x |- gnd3)
+	to (gnd3);
+	
+
+
+\end{circuitikz}
+\end{document}
