@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+{
+\ctikzset{bipoles/length=2cm}
+\begin{circuitikz}[american]
+	\footnotesize
+	\node[npn] (npn) {};
+	\node[pnp,left=2 of npn] (pnp) {};
+
+	\draw[arrows = [-{Stealth[length=3mm]}] (npn.E) ++(-0.2,0) to[bend left]  node[anchor=north east] {$V_\text{BE}$} ($(npn.B) + (0,-0.2)$);
+	\draw[arrows = [-{Stealth[length=3mm]}] 	(npn.E) ++(0.2,0) to[bend right]  node[anchor=west] {$V_\text{CE}$} ($(npn.C) + (0.2,0)$);
+	\draw[arrows = [-{Stealth[length=3mm]}] 	(npn.B) ++(0,0.2) to[bend left]  node[anchor=south east] {$V_\text{EB}$} ($(npn.C) + (-0.2,0)$);
+
+	\draw[arrows = [-{Stealth[length=3mm]}] (pnp.B) ++(0,0.2) to[bend left]  node[anchor=south east] {$V_\text{EB}$} ($(pnp.E) + (-0.2,0)$);
+	\draw[arrows = [-{Stealth[length=3mm]}] 	(pnp.C) ++(0.2,0) to[bend right]  node[anchor=west] {$V_\text{EC}$} ($(pnp.E) + (0.2,0)$);
+	\draw[arrows = [-{Stealth[length=3mm]}] 	(pnp.C) ++(-0.2,0) to[bend left]  node[anchor=north east] {$V_\text{BC}$} ($(pnp.B) + (0,-0.2)$);
+
+	\node[below = 0.5 of npn.E] {\textbf{NPN}};
+	\node[below = 0.5 of pnp.C] {\textbf{PNP}};
+
+
+\end{circuitikz}
+}
+
+\end{document}
