@@ -1,7 +1,7 @@
 # Analysis and Design of Circuits Lab
 # Part 3: Spring Term weeks 3--5
 
-Transistors are the core building bloacks of every modern piece of electronics. 
+Transistors are the core building blocks of every modern piece of electronics. 
 BJTs and FETs are used for a wide set of applications ranging from switching to amplification, and every electrical and electronic engineer needs to have at least a basic understanding of how they work and how they are used in circuits.
 
 This experiment has been designed to give you some insight and fundamental understanding of basic BJT operation and characterisation and their use in circuits. 
