@@ -43,3 +43,4 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
   - [Section 2: State Machines](DECA/Part2/Section2.md)
 - Part 3 (Spring Term Weeks 3-6)
   - [Section 1: CPU Datapath](https://intranet.ee.ic.ac.uk/t.clarke/arch/deca/images/Lab23_1_ALU.pdf)
+  - Section 2: CPU Controlpath
