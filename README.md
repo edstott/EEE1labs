@@ -30,8 +30,9 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
 - Part 2 (Autumn Term Weeks 8–10)
   - [Section 1: Biasing and amplification](ADC/Part2/Section1.md)
   - [Section 2: Bandwidth and Filtering](ADC/Part2/Section2.md)
-  
- 
+- Part 3 (Spring Term Weeks 3-5)
+  - [Section 1: Characterising a BJT](ADC/Part3/Section1.md)
+  - [Section 2: Common Emitter Amplifiers](ADC/Part3/Section2.md)
   
 ## Digital Electronics and Computer Architecture
 - Part 1 (Autumn Term Weeks 4–6)
