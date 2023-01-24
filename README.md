@@ -6,7 +6,7 @@ This repository contains documentation and downloads for Year 1 labs in Electric
 The lab pairs and seating plan can be viewed [here](https://imperiallondon-my.sharepoint.com/:x:/g/personal/estott_ic_ac_uk/EXyfZ0G2pgdCrL0NEN46TxABjKJ9YiJVqA6ZOhACViz06g?e=q1tXPC)
 You can post questions about the lab on Edstem ([ADC and skills](https://edstem.org/us/courses/30206/discussion/), DECA)
 
-### Oscillosocpes
+### Oscilloscopes
 Remind yourself about using the Rohde and Schwarz oscilloscope with [this video](https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=9507f2f9-77a8-4b19-80d2-aada00cc383d).
 
 If you want to catch up on lab work at home, you can borrow a Picoscope (USB oscilloscope) from EEE Stores. [This video](https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=08772fd6-0eab-4e4a-a5b3-ac5600dde606) explains how to use it.
