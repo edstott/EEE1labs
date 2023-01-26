@@ -65,7 +65,7 @@ Measure it by applying a sine wave input such that $V_\text{out}$ is not distort
 Then, without changing the input amplitude, introduce a 10kΩ resistor in series with the signal generator input.
 This will cause $V_\text{out}$ to drop according to the equation below.
              
-$ V_\mathrm{OUT1} = V_\mathrm{OUT2} \left(1+\frac{10k}{R_\mathrm{IN}}\right) $
+$V_\mathrm{OUT1} = V_\mathrm{OUT2} \left(1+\frac{10k}{R_\mathrm{IN}}\right)$
 
  Here, $R_\text{IN}$ is the input impedance of the amplifier. Can you derive this formula yourself?
             
