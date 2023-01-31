@@ -33,6 +33,7 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
 - Part 3 (Spring Term Weeks 3-5)
   - [Section 1: Characterising a BJT](ADC/Part3/Section1.md)
   - [Section 2: Common Emitter Amplifiers](ADC/Part3/Section2.md)
+  - [Section 3: Amplifiers Optimisation](ADC/Part3/Section3.md)
   
 ## Digital Electronics and Computer Architecture
 - Part 1 (Autumn Term Weeks 4–6)
