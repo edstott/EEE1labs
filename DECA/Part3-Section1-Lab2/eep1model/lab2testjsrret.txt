@@ -1,0 +1,6 @@
+JSR 4
+MOV R0, #3
+JMP 0
+MOV R0, #10
+MOV R0, #1
+RET
