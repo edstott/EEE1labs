@@ -1,0 +1,33 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\ctikzset{bipoles/length=2.0cm}
+\ctikzset{resistors/scale=0.6}
+\begin{circuitikz}
+
+	\draw 
+	node[pnp,xscale=-1] (pnpin) {\ctikzflipx{$T_1$}}
+	(pnpin.B) node[pnp,anchor=B] (pnpout) {$T_2$}
+	(pnpout.C) node[pnp,anchor=E] (pnpfb) {$T_3$}
+	(pnpin.B) |- (pnpout.C)
+	(pnpfb.B) -- (pnpfb.B-|pnpin.C)
+	(pnpout.E) -- (pnpin.E) to[short,-o] ++(-1,0)
+	node[left] {$V_\text{CC}$}
+	;
+	
+	\draw
+	(pnpin.C) -- (pnpin.C|-pnpfb.C)
+	to[short,i=\:$i_\text{IN}$] ++(0,-1)
+	to[R=$R_1$] ++(0,-1.5) node[ground] {}
+	(pnpfb.C) to[short,i=\:$i_\text{OUT}$] ++(0,-1)
+	to[R=$R_\text{m}$,a=$470\Omega$] ++(0,-1.5)
+	to[short,-o] ++(0,-1) node[right] {$V_\text{C}$}
+	;
+
+
+\end{circuitikz}
+\end{document}

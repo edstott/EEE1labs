@@ -1,0 +1,118 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\ctikzset{resistors/scale=0.6}
+\begin{circuitikz}
+
+	\draw %Gain
+	node[npn,anchor=B] (npndarl1) {}
+	(npndarl1.E) to[R] ++(0,-1.5) coordinate (vee)
+	(npndarl1.E) -- ++(0.5,0) node[npn,anchor=B] (npndarl2) {}
+	(npndarl1.B) -- ++(0,2)
+	to[C,n=cap] ++(1.5,0) coordinate (compcap)
+	-- (compcap|-npndarl1.C)
+	(npndarl2.E) -- (npndarl2.E|-vee)
+	(npndarl2.C) -- (npndarl2.C|-npndarl1.C)
+	;
+
+	\draw %power amp
+	(npndarl1.C) -- ++(2,0) node[pnp,anchor=C,xscale=-1] (pnppowerin) {}
+	(pnppowerin.B) -- (pnppowerin.B|-pnppowerin.C)
+	(pnppowerin.C) -- ++(1.5,0) node[pnp,anchor=C,xscale=-1] (pnplimit) {}
+	(pnplimit.C) -- ++(0.5,0) node[pnp,anchor=B] (pnpout) {}
+	(pnplimit.B) -- (pnpout.E)
+	(pnpout.C) -- (pnpout.E|-vee)
+	(pnpout.E) to[R] ++(0,1.5) coordinate (out)
+	(out) to[short,-o] ++(1,0) node[right] {$V_\text{OUT}$}
+	(out) -- ++(0,0.4) coordinate (out1)
+	to[R] ++(0,1.5)
+	node[npn,anchor=E] (npnout) {}
+	(npnout.B-|pnplimit.E) node[npn,anchor=C,xscale=-1] (npnlimit) {}
+	(npnlimit.B) -- (npnout.E)
+	(npnlimit.E) -- (pnplimit.E)
+	(out1) -- (out1-|pnplimit.E)
+	(npnout.B-|pnppowerin.E) node[npn,anchor=C,xscale=-1] (npnpowerin) {}
+	(pnppowerin.E) -- (npnpowerin.E)
+	(npnout.B) -- (npnpowerin.C)
+	(npnpowerin.B) -- (npnpowerin.B|-npnpowerin.C)
+	;
+
+	\draw %output source
+	(npnpowerin.C) node[pnp,anchor=C] (outsrcout) {}
+	(outsrcout.E) coordinate (vcc)
+	(outsrcout.B) node [pnp,anchor=B,xscale=-1] (outsrcin) {}
+	(npnout.C) -- (npnout.C|-vcc)
+	;
+
+	\draw %LTP source
+	($(outsrcin.E)+(-5.5,0)$) node[pnp,anchor=E,xscale=-1] (srcout1) {}
+	(srcout1.C) node[pnp,anchor=E,xscale=-1] (srcout2) {}
+	(srcout1.B) node[pnp,anchor=B] (srcin) {}
+	(srcout1.C) -| (srcout1.B)
+	(srcout2.B) -- ++(2,0) coordinate (insrccnr) to[R] ++(0,-2)
+	-- (insrccnr|-vee)
+	(srcin.C) -- (srcin.C |- srcout2.B)
+	;
+
+	\draw %output source ref
+	(outsrcin.B) |- ($(insrccnr)+(1,0)$) coordinate (outsrccnr)
+	to[R] ++(0,-2)
+	-- (outsrccnr|-vee)
+	(outsrcin.C) -- (outsrcin.C|-outsrccnr)
+	;
+
+	\draw %LTP
+	(npndarl1.B-|srcout2.E) node[npn,anchor=north west] (npnLTPout) {}
+	(npnLTPout.C) node[pnp,anchor=C,xscale=-1] (pnpin+) {}
+	(npnLTPout.B) node[npn,anchor=B,xscale=-1] (npnLTPin) {}	
+	(npnLTPin.C) node[pnp,anchor=C] (pnpin-) {}
+	(npnLTPin.B) |- (npnLTPin.C)
+	(pnpin-.E) -- (pnpin+.E) coordinate[midway] (LTPE)
+	(LTPE) -- (srcout2.C)
+	(pnpin+.C) -- (npndarl1.B)
+	(npnLTPout.E) -- (npnLTPout.E|-vee)
+	(npnLTPin.E) -- (npnLTPin.E|-vee)
+	(pnpin+.B) to[short,-o] ++(0.1,0) node[right] {$V_\text{IN+}$}
+	(pnpin-.B) to[short,-o] ++(-0.1,0) coordinate (left) node[left] {$V_{\text{IN}-}$}
+	;
+
+	\draw %power
+	(vee-|left) coordinate (vee) node[left] {$-5$V}
+	(vee) to[short,o-] (vee-|pnpout.C)
+	(vcc-|left) coordinate (vcc) node[left] {$5$V}
+	(vcc) to[short,o-] (vcc-|npnout.C)
+	;
+
+	\draw[dashed,thick,blue]
+	($(vee)+(-1,-0.5)$) coordinate (veeoff)
+	($(vcc)+(-1,0.5)$) coordinate (vccoff)
+	($(insrccnr)+(+0.5,0)$) coordinate (midoff)
+
+	(veeoff) -| (midoff) 
+	|- (vccoff) -- (veeoff)
+	;
+
+	\draw[dashed,thick,green]
+	($(npndarl1.B)+(-0.2,0)$) coordinate (left)
+	(npndarl1.B|-veeoff) coordinate (bottom)
+	($(npndarl2.E)+(0.2,0)$) coordinate (right)
+	($(cap)+(0,1)$) coordinate (top)
+	(left) |- (bottom) -| (right) |- (top) -| (left)
+	;
+
+	\draw[dashed,thick,brown]
+	($(pnppowerin.C)+(-0.2,0)$) coordinate (left1)
+	(pnppowerin.C|-veeoff) coordinate (bottom1)
+	($(out)+(+0.5,0)$) coordinate (right)
+	(outsrcout.E|-vccoff) coordinate (top)
+	($(outsrcin.C)+(-0.5,0)$) coordinate (left2)
+	(outsrcin.C|-npnpowerin.E) coordinate (bottom2)
+	(left1) |- (bottom1) -| (right) |- (top) -| (left2) |- (bottom2) -| (left1)
+	;
+\end{circuitikz}
+\end{document}

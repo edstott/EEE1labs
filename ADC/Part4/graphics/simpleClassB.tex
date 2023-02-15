@@ -1,0 +1,29 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\ctikzset{resistors/scale=0.8}
+\ctikzset{capacitors/scale=0.8}
+\begin{circuitikz}[straight voltages,american currents,scale=1.8]
+
+	\draw %transistors and vertical sizing path
+		(0,0) node[pnp] (pull) {$T_2$}
+		(pull.E) node[npn,anchor=E] (push) {$T_1$}
+	;
+
+	\draw %R
+		(pull.E) -- ++(0.5,0) coordinate (vout)
+		to[R,l2=$R_\text{L}$ and $1.8\text{M}\Omega$] ++(0,-1) node[ground] {}
+		(pull.B) -- (push.B) coordinate[midway] (vin2)
+		(vin2) to[short,-o] ++(-0.25,0) coordinate (vin1)
+		node[above] {$V_{\text{IN}}$}
+		(pull.C) to[short,-o] (pull.C-|vin1) node[left] {$V_\text{EE}=-5$V}
+		(push.C) to[short,-o] (push.C-|vin1) node[left] {$V_\text{CC}=5$V}
+		(vout) to[short,-o] ++(0.25,0) node[above] {$V_{\text{OUT}}$}
+	;
+
+\end{circuitikz}
+\end{document}

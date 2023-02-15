@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\ctikzset{resistors/scale=0.8}
+\ctikzset{capacitors/scale=0.8}
+\begin{circuitikz}[straight voltages,american currents,scale=1.8]
+
+	\draw %transistors and vertical sizing path
+		(0,0) node[op amp] (opamp) {}	
+	;
+	\draw %Other components and wires
+		(opamp.-) |- ($(opamp.up)+(0,0.5)$) 
+		to[R,l=$R_\text{F}$] ++(1,0) coordinate (vout1)
+		-- (vout1|-opamp.out) coordinate (vout2)
+		(opamp.-) to[R,l=1k$\Omega$,-o] ++(-1,0) coordinate (vin)
+		(opamp.+) node[ground] {}
+	;
+	\draw %Terminals
+		(opamp.out) -- (vout2)
+		to[short,-o] ++(0.5,0) node[right] {$V_\text{OUT}$}
+		(vin) node[left] {$V_\text{IN}$}
+		(opamp.up) to[short,-o] ++(0,1) node[above] {$V_\text{CC}=5$V}
+		(opamp.down) to[short,-o] ++(0,-0.5) node[below] {$V_\text{CC}=-5$V}
+	;
+
+\end{circuitikz}
+\end{document}

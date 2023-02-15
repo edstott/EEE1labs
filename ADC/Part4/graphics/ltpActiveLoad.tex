@@ -1,0 +1,38 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\ctikzset{resistors/scale=0.8}
+\ctikzset{capacitors/scale=0.8}
+\begin{circuitikz}[straight voltages,american currents,scale=1.8]
+
+	\draw
+		(0,0) coordinate (vee4)
+		to[R,l=$R_\text{C}$,a=2k$\Omega$] ++(0,1)
+		node[pnp,anchor=C,xscale=-1] (ltp-) {\ctikzflipx{$T_2$}}
+		(ltp-.E) -- ++(-1,0) coordinate[midway] (e)
+		node[pnp,anchor=E] (ltp+) {$T_1$}
+		(e) node[pnp,anchor=C] (srcfb) {$T_5$}
+		(srcfb.E) node[pnp,anchor=C] (srcout) {$T_4$}
+		(srcout.B) node[pnp,anchor=B,xscale=-1] (srcin) {\ctikzflipx{$T_3$}}
+		(srcfb.B) -- ++(-1.5,0) coordinate (ref)
+		-- ++(0,-1)
+		to[R,l=$R_\text{1}$] (ref|-vee4) coordinate (vee2)
+		(ltp+.C) -- (ltp+.C|-vee4)
+		(srcout.B) |- (srcout.C)
+		(srcin.C) -- (srcin.C|-srcfb.B)
+		(vee4) -- (vee2)
+		to[short,-o] ++(-0.25,0) coordinate (vee1) node[left] {$V_\text{EE}=-5$V}
+		(ltp+.B) to[short,-o] ++(-0.25,0) node[left] {$V_{\text{IN}+}$}
+		(ltp-.B) to[short,-o] ++(0.25,0) coordinate (vin-) node[right] {$V_{\text{IN}-}$}
+		(srcout.E) to[short,-o] (srcout.E-|vee1) node[left] {$V_\text{CC}=5$V}
+		(ltp-.C) to[short,-o] (ltp-.C-|vin-) node[right] {$V_{\text{OUT}}$}
+	;
+
+
+
+\end{circuitikz}
+\end{document}

@@ -1,0 +1,38 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\begin{circuitikz}[straight voltages,american currents]
+
+	\draw
+		coordinate (vout) node[right] {$V_\text{OUT}$}
+		(vout) to[short,o-] ++(-1.5,0) coordinate (c3)
+		to[R,l_=$R_\text{C}$,v^<=$v_\text{o}$] ++(0,-2)
+		-- ++(-1.5,0) coordinate (e4)
+		to[R,l=$r_\text{0}$] (e4|-c3) coordinate(c2)
+		-- ++(-1.5,0) coordinate(c1)
+		to[I,l_=$g_\text{m}v_\text{be}$] (c1|-e4) coordinate (e3)
+		-- ++(-3,0) coordinate (e2) node[midway,ground] {}
+		to[R,l_=$r_\text{be}$] ++(0,2) coordinate (b2)
+		-- ++(-1.5,0) coordinate (b1)
+		to[R,l=$R_\text{B}$,v_<=$v_\text{be}$] ++(0,-2) coordinate (e1)
+	;
+
+	\draw
+		(b1) to[short,-o] ++(-1.5,0) node[left] {$V_\text{IN}$}
+		(e1) -- (e2)
+		(e3) -- (e4)
+		(c2) -- (c3)	
+	;
+
+	\draw
+		node[above=0.2 of c1] {c}
+		node[above=0.2 of b2] {b}
+		node[below=0.2 of e3] {e}
+	;
+
+\end{circuitikz}
+\end{document}

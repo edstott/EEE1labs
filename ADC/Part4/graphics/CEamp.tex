@@ -1,0 +1,30 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\ctikzset{resistors/scale=0.8}
+\ctikzset{capacitors/scale=0.8}
+\begin{circuitikz}
+
+	\draw
+		node[npn,align=left] (thebjt) {$T_1$\\2N2222}
+		(thebjt.B) -- ++(-0.5,0) coordinate (in)
+		to[C,l=$1\mu$F] ++(-1.5,0)
+		-- ++(-0.5,0) coordinate(sig)
+		to[sV] ++(0,-2) node[ground] (gnd) {}
+
+		(thebjt.C) to[R=$R_\text{C}$] ++(0,2) coordinate (top)
+		-- (top-|in) coordinate(top)
+		to[R,l_=$R_\text{B}$] (in|-thebjt.C)
+		-- (in)
+		(top) to[short,-o] (sig|-top) node[left] {$V_\text{CC}=5$V}
+		(thebjt.E) to[short,-o] (thebjt.E|-gnd) node[below] {$V_\text{EE}=-5$V}
+		(thebjt.C) to[short,-o] ++(1,0) node[right] {$V_\text{OUT}$}
+	;
+
+\end{circuitikz}
+\end{document}

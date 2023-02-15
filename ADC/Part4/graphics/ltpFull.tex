@@ -1,0 +1,50 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\ctikzset{resistors/scale=0.8}
+\ctikzset{capacitors/scale=0.8}
+\begin{circuitikz}[straight voltages,american currents,scale=1.8]
+
+	\draw %transistors and vertical sizing path
+		(0,0) node[pnp,anchor=C,xscale=-1] (ltp-) {\ctikzflipx{$T_2$}}
+		(ltp-.B) to[R,l2=$R_\text{B}$ and $1.8\text{M}\Omega$] ++(0,-1) coordinate (vout2)
+		(vout2-|ltp-.C) node[npn,anchor=C] (src2out) {$T_7$}
+		(src2out.B) node[npn,anchor=B,xscale=-1] (src2in) {\ctikzflipx{$T_6$}}
+		(src2in.C) -- (src2in.C|-ltp-.C)
+		node[pnp,anchor=C] (ltp+) {$T_1$}
+		(ltp-.E) -- (ltp+.E) coordinate[midway] (e)
+		(e) node[pnp,anchor=C] (srcfb) {$T_5$}
+		(srcfb.E) node[pnp,anchor=C] (srcout) {$T_4$}
+		(srcout.B) node[pnp,anchor=B,xscale=-1] (srcin) {\ctikzflipx{$T_3$}}
+	;
+	\draw %Extra R and C
+		(ltp-.B) to[C,l=$1\mu F$,-o] ++(1.5,0) coordinate (vin-) node[above] {$V_{\text{IN}-}$}
+		(ltp+.B) -- ++(0,-0.25)
+		to[R,l2_=$R_\text{B}$ and $1.8\text{M}\Omega$] ++(0,-1) node[ground] {}
+		(ltp+.B) to[C,l_=$1\mu F$,-o] ++(-1,0)  node[above] {$V_{\text{IN}+}$}
+		(srcfb.B) -- ++(-2,0) coordinate (ref)
+		to[R,l=$R_\text{1}$] (ref|-src2out.E) coordinate (vee2)
+	;
+
+	\draw %wires
+		(srcout.B) |- (srcout.C)
+		(srcin.C) -- (srcin.E|-srcfb.B)
+		(ltp-.C) -- (src2out.C) -- (vout2)
+		to[short,-o] (vout2-|vin-) node[above] {$V_{\text{OUT}}$}
+		(src2in.B) |- (src2in.C)
+	;
+
+	\draw %rails
+	(src2out.E) -- (vee2)
+	to[short,-o] ++(-0.25,0) coordinate (vee1) node[left] {$V_\text{EE}=-5$V}
+	(srcout.E) to[short,-o] (srcout.E-|vee1) node[left] {$V_\text{CC}=5$V}
+	;
+
+
+
+\end{circuitikz}
+\end{document}

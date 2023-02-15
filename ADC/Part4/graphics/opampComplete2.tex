@@ -1,0 +1,137 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+
+\ctikzset{resistors/scale=0.6}
+\begin{circuitikz}
+
+	\draw %Gain
+	node[npn,anchor=B] (npndarl1) {}
+	(npndarl1.E) to[R,l_=$1.5\text{k}\Omega$] ++(0,-1.5) coordinate (vee6)
+	(npndarl1.E) -- ++(0.5,0) node[npn,anchor=B] (npndarl2) {}
+	(npndarl1.B) -- ++(0,2)
+	to[C,n=cap] ++(1.5,0) coordinate (compcap)
+	-- (compcap|-npndarl1.C)
+	(npndarl2.E) -- (npndarl2.E|-vee6)
+	(npndarl2.C) -- (npndarl2.C|-npndarl1.C)
+	;
+
+	\draw %power amp
+	(npndarl1.C) -- ++(2,0) node[pnp,anchor=C,xscale=-1] (pnppowerin) {}
+	(pnppowerin.B) -- (pnppowerin.B|-pnppowerin.C)
+	(pnppowerin.C) -- ++(1.5,0) node[pnp,anchor=C,xscale=-1] (pnplimit) {}
+	(pnplimit.C) -- ++(0.5,0) node[pnp,anchor=B] (pnpout) {}
+	(pnplimit.B) -- (pnpout.E)
+	(pnpout.C) -- (pnpout.E|-vee6)
+	(pnpout.E) to[R] ++(0,1.5) coordinate (out)
+	(out) to[short,-o] ++(1,0) node[right] {$V_\text{OUT}$}
+	(out) -- ++(0,0.4) coordinate (out1)
+	to[R] ++(0,1.5)
+	node[npn,anchor=E] (npnout) {}
+	(npnout.B-|pnplimit.E) node[npn,anchor=C,xscale=-1] (npnlimit) {}
+	(npnlimit.B) -- (npnout.E)
+	(npnlimit.E) -- (pnplimit.E)
+	(out1) -- (out1-|pnplimit.E)
+	(npnout.B-|pnppowerin.E) node[npn,anchor=C,xscale=-1] (npnpowerin) {}
+	(pnppowerin.E) -- (npnpowerin.E)
+	(npnout.B) -- (npnpowerin.C)
+	(npnpowerin.B) -- (npnpowerin.B|-npnpowerin.C)
+	;
+
+	\draw %output source
+	(npnpowerin.C) node[pnp,anchor=C] (outsrcout) {}
+	(outsrcout.E) coordinate (vcc)
+	(outsrcout.B) node [pnp,anchor=B,xscale=-1] (outsrcin) {}
+	(npnout.C) -- (npnout.C|-vcc)
+	;
+
+	\draw %LTP source
+	($(outsrcin.E)+(-5.5,0)$) node[pnp,anchor=E,xscale=-1] (srcout1) {}
+	(srcout1.C) node[pnp,anchor=E,xscale=-1] (srcout2) {}
+	(srcout1.B) node[pnp,anchor=B] (srcin) {}
+	(srcout1.C) -| (srcout1.B)
+	(srcout2.B) -- ++(2,0) coordinate (insrccnr) to[R] ++(0,-2) coordinate (inrefvee)
+	-- (insrccnr|-vee6)
+	(srcin.C) -- (srcin.C |- srcout2.B)
+	;
+
+	\draw %output source ref
+	(outsrcin.B) |- ($(insrccnr)+(1,0)$) coordinate (outsrccnr)
+	to[R] ++(0,-2) coordinate (outsrcvee)
+	-- (outsrccnr|-vee6)
+	(outsrcin.C) -- (outsrcin.C|-outsrccnr)
+	;
+
+	\draw %LTP
+	(npndarl1.B-|srcout2.E) node[npn,anchor=north west] (npnLTPout) {}
+	(npnLTPout.C) node[pnp,anchor=C,xscale=-1] (pnpin+) {}
+	(npnLTPout.B) node[npn,anchor=B,xscale=-1] (npnLTPin) {}	
+	(npnLTPin.C) node[pnp,anchor=C] (pnpin-) {}
+	(npnLTPin.B) |- (npnLTPin.C)
+	(pnpin-.E) -- (pnpin+.E) coordinate[midway] (LTPE)
+	(LTPE) -- (srcout2.C)
+	(pnpin+.C) -- (npndarl1.B)
+	(npnLTPout.E) -- (npnLTPout.E|-vee6) coordinate (vee3)
+	(npnLTPin.E) -- (npnLTPin.E|-vee6)
+	(pnpin+.B) to[short,-o] ++(0.1,0) coordinate (vin+) node[right] {$V_\text{IN+}$}
+	(pnpin-.B) to[short,-o] ++(-0.1,0) coordinate (vin-) node[left] {$V_{\text{IN}-}$}
+	;
+
+	\draw %power
+	(vee6-|vin-) coordinate (vee) node[left] {$-5$V}
+	(vee) to[short,o-] (vee-|pnpout.C)
+	(vcc-|vin-) coordinate (vcc) node[left] {$5$V}
+	(vcc) to[short,o-] (vcc-|npnout.C)
+	;
+
+	\draw[dashed,thick]
+		($(srcin.E)+(-0.3,0.5)$) coordinate (top)
+		($(srcout1.C)+(-0.5,0)$) coordinate (left)
+		($(inrefvee)+(0,-0.5)$) coordinate (bottom)
+		($(inrefvee)+(0.4,0)$) coordinate (right)
+		(top) -| (left) |- (bottom) -| (right) |- (top)
+		node[above=0.1 of top] {Current source for LTP}
+	;
+
+	\draw[dashed,thick]
+		($(LTPE)+(0,0.5)$) coordinate (top)
+		($(vin-)+(-1,0)$) coordinate (left)
+		($(vee3)+(-0.7,-0.5)$) coordinate (bottom)
+		($(vin+)+(0.9,0)$) coordinate (right)
+		(top) -| (left) |- (bottom) -| (right) |- (top)
+		node[below=0.1 of bottom] {Long Tailed Pair}
+	;
+
+	\draw[dashed,thick]
+		($(compcap)+(0,0.5)$) coordinate (top)
+		($(npndarl1.B)+(-0.3,0)$) coordinate (left)
+		($(vee6)+(0.3,-0.5)$) coordinate (bottom)
+		($(npndarl2.E)+(0.2,0)$) coordinate (right)
+		(top) -| (left) |- (bottom) -| (right) |- (top)
+		node[below=0.1 of bottom] {CE Amplifier}
+	;
+
+	\draw[dashed,thick]
+		($(npnpowerin.C)+(0.9,1)$) coordinate (top)
+		($(npnpowerin.C)+(-0.2,-0.1)$) coordinate (left)
+		($(pnpout.C)+(-1.5,-0.5)$) coordinate (bottom)
+		($(out)+(0.5,0)$) coordinate (right)
+		(top) -- (left) |- (bottom) -| (right) |- (top)
+		node[below=0.1 of bottom] {Power Amplifier}
+	;
+
+	\draw[dashed,thick]
+		($(outsrcout.E)+(-1.5,0.5)$) coordinate (top)
+		($(outsrccnr)+(-0.4,0)$) coordinate (left)
+		($(outsrcvee)+(0,0)$) coordinate (bottom)
+		($(npnpowerin.C)+(-0.4,-0.1)$) coordinate (right1)
+		($(npnpowerin.C)+(0.3,0.6)$) coordinate (right2)
+		(top) -| (left) |- (bottom) -| (right1) -- (right2) |- (top)
+		node[above=0.1 of top,align=left] {Current source for\\power and CE amplifiers}
+	;
+\end{circuitikz}
+\end{document}

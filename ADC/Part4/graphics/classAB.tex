@@ -1,0 +1,37 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\ctikzset{resistors/scale=0.8}
+\ctikzset{capacitors/scale=0.8}
+\begin{circuitikz}[straight voltages,american currents,scale=1.8]
+
+	\draw %transistors and vertical sizing path
+		(0,0) coordinate (vee2)
+		to[R,l2=$R_\text{B}$ and $10\text{k}\Omega$] ++(0,1)
+		node[pnp,anchor=C,xscale=-1] (bias-) {\ctikzflipx{$T_4$}}
+		(bias-.E) node[npn,anchor=E,xscale=-1] (bias+) {\ctikzflipx{$T_3$}}
+		(bias+.C) to[R,l2=$R_\text{B}$ and $10\text{k}\Omega$] ++(0,1) coordinate (vcc2)
+		(bias-.B) node[pnp,anchor=B] (pull) {$T_2$}
+		(bias+.B) node[npn,anchor=B] (push) {$T_1$}		
+	;
+	\draw %Other components and wires
+		(pull.E) -- ++(0.5,0) coordinate (vout2)
+		to[R,l2=$R_\text{L}$ and $1\text{k}\Omega$] ++(0,-1) node[ground] {}
+		(pull.C) |- (vee2)
+		(push.C) |- (vcc2)
+		(bias+.B) |- (bias+.C)
+		(bias-.B) |- (bias-.C)
+	;
+	\draw %Terminals
+		(vcc2) to[short,-o] ++(-0.5,0) node[left] {$V_\text{CC}=5$V}
+		(vee2) to[short,-o] ++(-0.5,0) node[left] {$V_\text{EE}=-5$V}
+		(bias-.E) to[short,-o] ++(-0.5,0) node[left] {$V_\text{IN}$}
+		(vout2) to[short,-o] ++(0.5,0) node[right] {$V_\text{OUT}$}
+	;
+
+\end{circuitikz}
+\end{document}

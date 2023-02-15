@@ -1,0 +1,38 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[europeanresistors, europeanports]{circuitikz}
+\usetikzlibrary{calc,positioning}
+
+\begin{document}
+\ctikzset{resistors/scale=0.8}
+\ctikzset{capacitors/scale=0.8}
+\def\rspace{1.8}
+\begin{circuitikz}[straight voltages,american currents]
+
+	\draw
+		(0,0) coordinate (vee2)
+		to[R,l=$R_\text{C}$,a=2k$\Omega$] ++(0,2) coordinate (vout)
+		to[short] ++(0,1)
+		to[short,i^<=$\frac{I_\text{o}}{2}$] ++(0,0.5)
+		node[pnp,anchor=C,xscale=-1] (ltp-) {\ctikzflipx{$T_2$}}
+		(ltp-.E) -- ++(-2,0) coordinate[midway] (e2)
+		node[pnp,anchor=E] (ltp+) {$T_1$}
+		(e2) to[R,l=$R_\text{E}$,a=4.3k$\Omega$] ++(0,\rspace) 
+		to[short,i_<=$I_\text{o}$] ++(0,0.5) coordinate (vcc1)
+		(ltp+.B) -- ++(-1,0) coordinate (vin) node[above] {$V_{\text{IN}+}$}
+		to[sV] ++(0,-1.5) node[ground] {} coordinate(gnd)
+		(ltp-.B) -- ++(0.5,0) node[above] {$V_{\text{IN}-}$}
+		|- (gnd)
+		(ltp+.C) to[short,i^>=$\frac{I_\text{o}}{2}$] ++(0,-0.5)
+		-- (ltp+.C|-vee2) coordinate (vee1)
+		-- (vee2)
+		(vout) to[short,-o] ++(0.5,0) node[right] {$V_\text{OUT}$}
+		(vee1) to[short,-o] ++(-1,0) coordinate (vee0) node[left] {$V_\text{EE}=-5$V}
+		(vcc1) to[short,-o] (vcc1-|vee0) coordinate (vcc0) node[left] {$V_\text{CC}=5$V}
+	;
+
+
+
+\end{circuitikz}
+\end{document}
