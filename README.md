@@ -34,6 +34,12 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
   - [Section 1: Characterising a BJT](ADC/Part3/Section1.md)
   - [Section 2: Common Emitter Amplifiers](ADC/Part3/Section2.md)
   - [Section 3: Amplifiers Optimisation](ADC/Part3/Section3.md)
+- Part 4 (Spring Term weeks 7-10)
+  - [Section 1: Current Mirror and Current Source](ADC/Part4/Section1.md)
+  - [Section 2: Gain Stage](ADC/Part4/Section2.md)
+  - [Section 3: Differential Amplifier](ADC/Part4/Section3.md)
+  - [Section 4: Power Amplifier Stage](ADC/Part4/Section4.md)
+  - [Section 5: The Complete Opamp](ADC/Part4/Section5.md)
   
 ## Digital Electronics and Computer Architecture
 - Part 1 (Autumn Term Weeks 4–6)
