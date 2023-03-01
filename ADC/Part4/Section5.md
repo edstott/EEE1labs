@@ -21,14 +21,12 @@ Begin testing the opamp by configuring it as a unity-gain voltage follower:
 ![Opamp configured as a unity-gain voltage follower](graphics/voltageFollower.png)
             
 Initially, the opamp will be susceptible to oscillation.
-Test this by applying a $\pm1\text{V}$, 100KHz square wave input, which contains the high frequencies that will stimulate oscillation.
-In a physical circuit, noise would trigger the oscillation.
-            
-![Voltage source setup for 100KHz square wave](graphics/opampOsc.png)
+Simulate a small amount of input noise by connecting $V_{\text{IN}+}$ to a behavioural voltage source (bv in the component library).
+Change the function of the voltage source to `V=white(2e8*time)/1000`
                 
 Run a transient simulation for 50μs.
 The simulation runs slowly when there is a high frequency oscillation so the simulation length is kept short.
-You will see that a high-frequency oscillation overlays or dominates the square wave.
+You will see that the output oscillates, when it should follow the input.
             
 -[ ] Simulate the complete opamp as a voltage follower
             
@@ -41,29 +39,46 @@ Configure it as shown below:
             
 ![Opamp configured for open-loop analysis](graphics/openLoop.png)
             
-The feedback path provides unity gain at very low frequencies.
+The feedback path provides unity gain at DC and maximum gain at AC.
 Without this, the input offset voltage error of the opamp, which is less than 1mV, would be greatly amplified and the output would be saturated.
-The circuit isn't practical, but it ensures the biasing is correct for the AC analysis.
+The circuit isn't practical, but it ensures the biasing is correct for the AC analysis with open loop.
             
 Run the AC analysis with a maximum frequency of 100MHz and plot the magnitude and phase of the output.
 You will see the gain at low frequencies is extremely high: over 100dB.
 That is what we intended and it means we can assume infinite gain for the purpose of analysing circuits with negative feedback. As frequency increases, the gain drops off due to capacitance in the transistors.
             
-The phase plot shows why the voltage follower circuit is unstable: the phase lag increases with frequency and the gain is still greater than 0dB at the point where phase lag reaches 180° and negative feedback becomes positive feedback.
-            
 - [ ] Obtain the open loop transfer function of the opamp.
+            
+The phase plot shows why the voltage follower circuit is unstable: the phase lag increases with frequency and the gain is still greater than 0dB at the point where phase lag reaches 180° and negative feedback becomes positive feedback.
+The phase at 0dB gain is known as the *phase margin*, and a circuit with negative phase margin is unstable.
+
+$${\displaystyle \mathrm {PM} =\varphi -(-180^{\circ })}$$
             
 The capacitor in the opamp is a compensation capacitor for stabilisation.
 It acts to bypass the common emitter stage and further reduce the gain at high frequencies.
-Switch back to transient analysis and increase the value of the capacitor to make the oscillation disappear.
+Add the capacitor and adjust its value until the phase margin is small, but positive.
 Start with a value of 1nF.
-The frequency of the oscillation will change so vary the duration of the simulation and the period of the square wave to ensure that it has disappeared.
             
-Once you have removed the oscillation, check the open loop transfer function again.
-You will see that gain is now less than 0dB where phase reaches 180°.
+Confirm that the capacitor has removed the oscillation in the unity gain test with noise input.
+The output should have a similar amplitude to the noise input: $<1\text{mV}$
             
-- [ ] Use the compensation capacitor to stabalise the opamp
+- [ ] Use the compensation capacitor to stabilise the opamp
             
+### Input offset voltage
+
+In the open loop test you needed to provide a DC feedback path to compensate for the input offset voltage.
+
+The input offset voltage is an important parameter in amplifiers used for instrumentation, where small input voltages need to be measured precisely.
+Find the input offset voltage of your opamp by running a DC operating point simulation of your unity gain amplifier.
+Record the difference between the inverting and non-inverting inputs, which is also the output voltage when the input is zero at unity gain.
+That is your input offset voltage.
+
+The offset is small, but it might be significant for some kinds of sensors.
+Mutliply the offset by the open loop gain to find the voltage the opamp would like to produce if you connected the input nodes together.
+It is larger than power supply, and this explains the feedback arrangement needed for the open loop test.
+
+- [ ] Find the input offset voltage of your opamp
+
 ### Inverting amplifier
         
 Configure your opamp as an inverting amplifier:
