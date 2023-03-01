@@ -45,8 +45,7 @@ The circuit uses two additional transistors, $T_5$ and $T_6$, and two resistors.
 Consider that $V_\text{IN}$ is positive, so $T_1$ is sourcing (pushing) a positive current to the load at $V_\text{OUT}$ to maintain $V_\text{OUT}=V_\text{IN}$.
 If the output current increases, the voltage across $R_\text{CL}$ increases, and if that voltage increases enough, $T_5$ will turn on and `rob' the base current from $T_1$. Therefore, the output current cannot increase to more than approximately $0.6/R_\text{CL}$.
             
-Find the maximum collector current for each type of transistor and pick the smaller magnitude of the two.
-Choose a value of $R_\text{CL}$ that will limit current to half of this value, to allow a safety margin.
+Choose a value of $R_\text{CL}$ that will limit output current to 50mA.
 Simulate the circuit to find the output waveform with a 1Ω load resistance. Add the collector current of each output transistor to the plot.
         
 - [ ] Confirm that the output current is limited to the desired magnitude
