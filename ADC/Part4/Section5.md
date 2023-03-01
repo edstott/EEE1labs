@@ -1,5 +1,5 @@
 # Analysis and Design of Circuits Lab
-# Part 4: Spring Term weeks 7--10
+# Part 4: Spring Term weeks 7–10
 
 ## The complete opamp
     
