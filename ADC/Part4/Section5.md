@@ -29,7 +29,12 @@ The simulation runs slowly when there is a high frequency oscillation so the sim
 You will see that the output oscillates, when it should follow the input.
             
 -[ ] Simulate the complete opamp as a voltage follower
-            
+
+> **Note**
+> 
+> The small noise input prompts the opamp to start oscillating, which is what would happen in a physical circuit.
+> Noise is needed in the simulation because without it the simulation could exhibit *metastability*, where the output would appear stable but the slightest peturbation would cause instability.
+
 ### Frequency compensation
 
 The oscillation is caused by the delay of the opamp between input and output.
