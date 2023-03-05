@@ -1,7 +1,7 @@
 MOV R0, #5
 STR R0, [0x40] // direct store
 MOV R0, #10
-STR R0, [0x41] // direct store
+STR R1, [0x41] // direct store
 MOV R6, #0x40     // R6 := #0x0040
 LDR R0, [R6,#1] // load 0x0041
 LDR R1,[R6]     // load 0x0040

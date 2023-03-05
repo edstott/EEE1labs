@@ -1,0 +1,19 @@
+        // test new instructions for interrupts
+        SETI // set FFIEN.Q (enable interrupts)
+        CLRI // reset FFIEN.Q (disable interrupts)
+        MOV R0, #0xF // 0b1111
+        MOV R2, #1 // NZCV = 0000
+        MOV Flags, R0 // set NZCV to 1
+        MOV R1, Flags // save NZCV to R1
+        MOV R0, #0x45
+        MOV PCX, R0 // set PCX to TESTPCX
+        MOV R2, PCX // save PCX to R2
+        RETINT // branch back to PCX (= TESTPCX)
+        JMP 0 // this should not happen
+TESTPCX CLRI // disable interrupts (again)
+        JMP 0 // tests successfully finished
+
+
+
+
+

@@ -1,0 +1,67 @@
+        // test interrupt 0 & 1 - code for nested interrupts
+        // interrupt 1 has higher priority than interrupt 0
+        // The ISR starts with a conditional jump as 
+        // int-test2
+        //
+        // Base program
+        SETI // set FFIEN.Q (enable interrupts)
+    LOOP ADD R0, #1 // increment R0
+         JNE LOOP
+
+         ORG 0xff00 // code from here goes into address 0xff00
+         // this code assumes that base program does not use R5, R6!
+         // therefore, unlike int-test2, these registers can be used to hold
+         // temporary values. this change is made to make the demo shorter.
+         // Otherwise the extra code here would take longer to trace through.
+         // otherwise memory would need to be used for temp variables
+         // this is possible, but would require more instructions
+    ISR  MOV R5, R0 // save base program R0 temporarily
+         MOV R6, Flags // save base program flags temporarily
+         LDR R0, [0xFFFE]
+         AND R0, #2 // is IRQ1 active?
+         JNE ISR1 // if so jump to ISR1
+         // otherwise, ISR0 must be active.
+    ISR0 MOV R0, #1
+         STR R0, [0xFFFF] // Interrupt 0 reset high
+         MOV R0, #0
+         STR R1, [0xFFFF] // Interrupt 0 reset low
+         STR R5, [0xFF80] // save base program R0 somewhere else
+         STR R6, [0xFF81] // save base program Flags somewhere else
+         MOV R0, PCX 
+         STR R0, [0xFF82]
+         SETI // finally it is possible to allow a nested interrupt
+         // Payload for interrupt 0  
+         ADD R3, #1
+         // small loop to add some time to INT0 
+         MOV R0, #3
+         SUB R0, #1
+         JNE -1
+         // end of payload
+    INTEND0
+         LDR R0, [0xFF81] // restore base program Flags         
+         MOV Flags, R0 // restore base program flags
+         CLRI // can't allow INT1 after this since it changes PCX
+         LDR R0, [0xFF82]
+         MOV PCX, R0 // restore base program PCX
+         LDR R0, [0xFF80] // restore base program R0
+         RETINT
+    ISR1
+         // nothing can interrupt INT1
+         MOV R0, #2
+         STR R0, [0xFFFF] // Interrupt 1 reset high
+         MOV R0, #0
+         STR R0, [0xFFFF] // Interrupt 1 reset low
+         // Payload for interrupt 1
+         ADD R4, #1
+         // end of payload
+
+    INTEND1
+         MOV Flags, R6 // restore base program flags
+         MOV R0, R5 // restore base program R0
+         RETINT // return to base program and set FFIEN
+
+
+
+
+
+

@@ -1,0 +1,53 @@
+        // test interrupt 0 & 1
+        // interrupts are not nested.
+        // isr has conditional jump to determine which interrupt
+        // is taken.
+        // Base program
+        SETI // set FFIEN.Q (enable interrupts)
+    LOOP ADD R0, #1 // increment R0
+         JNE LOOP
+
+         ORG 0xff00 // code from here goes into address 0xff00
+    ISR  STR R0, [0xFF80] // save base program R0
+         MOV R0, Flags // save base program flags
+         LDR R0, [0xFFFE]
+         AND R0, #2 // is IRQ1 active?
+         JNE ISR1 // if so jump to ISR1
+         // otherwise, ISR0 must be active.
+    ISR0 MOV R0, #1
+         STR R0, [0xFFFF] // Interrupt 0 reset high
+         MOV R0, #0
+         STR R1, [0xFFFF] // Interrupt 0 reset low
+         LDR R0, [0xFF80]
+         STR R0, [0xFF81] // save base program R0 somewhere else
+         // Payload for interrupt 0
+         // increment mem[0xFF82] by 1         
+         ADD R3, #1
+         // small loop to add some time to INT0 
+         MOV R0, #3
+         SUB R0, #1
+         JNE -1
+         // end of payload
+    INTEND0
+         MOV Flags, R0 // restore base program flags
+         LDR R0, [0xFF81] // restore R0
+         RETINT
+    ISR1
+         MOV R0, #2
+         STR R0, [0xFFFF] // Interrupt 1 reset high
+         MOV R0, #0
+         STR R0, [0xFFFF] // Interrupt 1 reset low
+         // Payload for interrupt 1
+         ADD R4, #1
+         // end of payload
+
+    INTEND1
+         MOV Flags, R0 // restore base program flags
+         LDR R0, [0xFF80] // restore base program R0
+         RETINT // return to base program and set FFIEN
+
+
+
+
+
+

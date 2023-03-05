@@ -1,0 +1,31 @@
+        // test interrupt 0
+        // Base program
+        SETI // set FFIEN.Q (enable interrupts)
+    LOOP ADD R0, #1 // increment R1 at 1/2 the rate of R0
+         JNE LOOP
+
+         ORG 0xff00 // code from here goes into address 0xff00
+    ISR  STR R0, [0xFF80] // save base program R0
+         MOV R0, Flags // save base program flags
+         STR R1, [0xFF81] // save base program R1
+         MOV R1, 0b10
+         STR R1, [0xFFFF] // Interrupt 1 reset high
+         MOV R1, #0
+         STR R1, [0xFFFF] // Interrupt 1 reset low
+         // Payload for interrupt 1
+         // increment mem[0xFF82] by 1
+         LDR R1, [0xFF82]
+         ADD R1, #1
+         STR R1, [0xFF82]
+         ADD R2, #1 // increment R2 (it is not used by base program)
+         // end of payload
+         LDR R1, [0xFF81] // restore base program R1
+         MOV Flags, R0 // restore base program flags
+         LDR R0, [0xFF80] // restore base program R0
+         RETINT // return to base program and set FFIEN
+
+
+
+
+
+

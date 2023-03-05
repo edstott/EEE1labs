@@ -1,0 +1,7 @@
+MOV R0, #1
+STR R0, [0x0040]
+STR R0, [0x0040]
+LDR R2, [0x0040]
+MOV R3, R2
+ADD R4, #1
+JMP -1
