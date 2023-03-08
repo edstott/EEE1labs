@@ -1,4 +1,4 @@
-        // test interrupt 0
+        // test interrupt 1
         // Base program
         SETI // set FFIEN.Q (enable interrupts)
     LOOP ADD R0, #1 // increment R1 at 1/2 the rate of R0
