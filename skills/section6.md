@@ -76,7 +76,7 @@ Overall, this means that each message should consist ofthe following bytes:
 You can see the UART signal by connecting the oscilloscope to pin 1 of the Orangepip.
 A transmission occurs in a burst approximately every 100ms, as shown below.
 		
-![The UART transmission consists of a burst/message every 100ms](graphics/EEEbug-UARTbursts.PNG)
+![The UART transmission consists of a burst/message every 100ms](graphics/EEEBug-UARTbursts.png)
  
  Identify all the data in your message within the observed signal.
  You may find it helpful to fit the whole transmission into the oscilloscope screen then use the Zoom button to get a closer look at different parts.
