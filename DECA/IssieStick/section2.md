@@ -28,6 +28,9 @@ Try making some changes to the project:
 
 ## Debugging
 
+> [!NOTE]  
+> Debugging is not currently functional
+
 One advantage of loading designs onto hardware is that you can see them working in real time — it would take a very long time to step through 12 million clock ticks in a simulation.
 However, you no longer have the ability to observe any signal in the design in the waveform editor.
 You can help understand your hardware designs by using debug viewers.
