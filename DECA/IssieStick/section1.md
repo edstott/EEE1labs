@@ -21,18 +21,9 @@ These are not yet fully integrated with Issie so some setup is required:
       * On Linux, you will have downloaded a `.tgz` file. You can extract this file using a terminal with `tar -xvzf /path/to/archive.tgz`.
       * On Mac (Darwin), the download is also a `.tgz`, but can be extracted by just double-clicking it.
 
-2. (Windows only) Install the compatible USB driver for the IssieStick.
-   1. Download the [Zadig](https://github.com/pbatard/libwdi/releases/latest) USB driver configuration tool.
-   2. Connect the IssieStick to a USB port on your computer.
-   3. Run Zadig.
-   4. Select 'List All Devices' from the options menu
-   5. Open the drop down list at the top of the main window. You will see a list of every USB device connected to your computer. Select 'Dual RS232-H (Interface 0)'.
-![Selecting the correct USB device with Zadig](graphics/zadig.png)
-   6. Select the driver 'libusb-win32' in the middle box of the window.
-   7. **Warning: changing the driver for the wrong device will stop it from working. Make sure you have selected 'Dual RS232-H (Interface 0)' and the 'USB ID' fields match the screenshot above. Ask for help if you are not sure.**
-   8. Click 'Replace Driver'. The process will take a little while.
-   8. Repeat the process for the device 'Dual RS232-H (Interface 1)'. The USB ID will be `0403 6010 01` instead of the ID shown in the above image.
-   9. Close Zadig. Disconnect and reconnect the IssieStick.
+2. (Windows only) Install the IssieStick USB drivers.
+   1. Download the [driver package](https://imperiallondon-my.sharepoint.com/:f:/g/personal/estott_ic_ac_uk/EpW6CD_3qMFEvWoke3HdNNkBkpuhFE7J5IlhhqzU6c8S9w?e=xxHytz) and extract the files
+   2. Run 'InstallDriver' in both of the IssieStickInstaller directories
 
 ## Running the sample project
 
