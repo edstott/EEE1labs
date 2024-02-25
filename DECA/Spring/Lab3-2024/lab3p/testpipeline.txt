@@ -1,0 +1,8 @@
+MOV R0, #7
+STR R1, [0x0040]
+LDR R3, [0x0040]
+SUB R4, R3, R0 // should be 0
+ADD R0, #1
+STR R0, [0x0041]
+ADD R0, #1
+JMP -1
