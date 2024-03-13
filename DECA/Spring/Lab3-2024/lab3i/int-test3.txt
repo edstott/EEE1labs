@@ -24,7 +24,7 @@
     ISR0 MOV R0, #1
          STR R0, [0xFFFF] // Interrupt 0 reset high
          MOV R0, #0
-         STR R1, [0xFFFF] // Interrupt 0 reset low
+         STR R0, [0xFFFF] // Interrupt 0 reset low
          STR R5, [0xFF80] // save base program R0 somewhere else
          STR R6, [0xFF81] // save base program Flags somewhere else
          MOV R0, PCX 

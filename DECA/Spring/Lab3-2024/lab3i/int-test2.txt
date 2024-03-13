@@ -18,7 +18,7 @@
     ISR0 MOV R0, #1
          STR R0, [0xFFFF] // Interrupt 0 reset high
          MOV R0, #0
-         STR R1, [0xFFFF] // Interrupt 0 reset low
+         STR R0, [0xFFFF] // Interrupt 0 reset low
          // Payload for interrupt 0
          // increment mem[0xFF82] by 1         
          ADD R3, #1
