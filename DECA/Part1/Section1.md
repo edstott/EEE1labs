@@ -294,7 +294,7 @@ The resulting logic block is the beginnings of a CPU component called an *arithm
 ![Boolean ALU](graphics/ALU1.png)
 				 
 Create a hierarchical design that implements this functionality with components (sheets) called `NOT4`, `AND4`, `OR4`, `XOR4` and `mux4x4`.
-The inputs `A` and `B`, and the result `Y` should each have 4 bits, while the instruction input \texttt{S} should have 2 bits. Each of the logic gates shown above represent bitwise operations and you will need to create sheets for them that contain four instances of each gate to process all the bits of the input operands.
+The inputs `A` and `B`, and the result `Y` should each have 4 bits, while the instruction input `S` should have 2 bits. Each of the logic gates shown above represent bitwise operations and you will need to create sheets for them that contain four instances of each gate to process all the bits of the input operands.
 				 
 Simulate the design with a similar strategy to before: select several different test values for `A` and `B`, and for each of these try the four possible values for the instruction code `S`.
 Check that the output matches what you would expect for each bitwise operation.
