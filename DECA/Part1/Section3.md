@@ -38,7 +38,7 @@ Therefore, you do not have to wire the clock inputs up yourself.
 				
 ## Simulating a sequential circuit
 		
-We will simulate your `DFF4` block with Step Simulation. Open the Step Simulation tab and start the simulation. Now the sheet contains sequential logic you will see buttons for 'Goto' and 'Clock Tick 0'. Click 'Clock Tick 0' and the simulator will send a rising edge clock event (clock tick) to all the \texttt{clk} input ports in the design. The number advances to show you how many clock ticks have passed so far. The 'Goto' button allows you to advance multiple clock ticks. Test the functionality of your `DFF4` block by setting `D` to different values and confirming that `Q` updates after the next clock tick.
+We will simulate your `DFF4` block with Step Simulation. Open the Step Simulation tab and start the simulation. Now the sheet contains sequential logic you will see buttons for 'Goto' and 'Clock Tick 0'. Click 'Clock Tick 0' and the simulator will send a rising edge clock event (clock tick) to all the `CLK` input ports in the design. The number advances to show you how many clock ticks have passed so far. The 'Goto' button allows you to advance multiple clock ticks. Test the functionality of your `DFF4` block by setting `D` to different values and confirming that `Q` updates after the next clock tick.
 
 In additon to the ports, the simulation tab also shows you the value stored in each of the 'Stateful components', which in this case are your 4 flip-flops.
 This helps with debugging because you will need to know the state to determine if the outputs of the sheet are correct.
