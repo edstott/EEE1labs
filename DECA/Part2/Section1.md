@@ -35,8 +35,8 @@ When it receives this rising clock edge, it will output the value stored at the 
 		
 We will use a synchronous ROM for this part.
 Add a 'ROM (synchronous)' component (under the 'Memories' section of the Issie catalogue) and set it to have a 4-bit address input and 8-bit words.
-Click on the ROM to select it, and then go to the `Properties' tab.
-Click the `View/Edit memory content' button, and fill in the values of your text message in the memory editor window that appears.
+Click on the ROM to select it, and then go to the 'Properties' tab.
+Click the 'View/Edit memory content' button, and fill in the values of your text message in the memory editor window that appears.
 		
 ![A ROM placed in a sheet](graphics/IssieROM.png)
 
