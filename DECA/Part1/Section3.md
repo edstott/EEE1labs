@@ -63,7 +63,7 @@ Set the number of bits of the constant to 4 and the value to 1.
 Connect another constant to the carry input, with a width of 1 and a value of 0.
 
 In Issie, floating ports (inputs/outputs of components that are not connected to anything) are not allowed.
-To solve this, connect the `Cout` port of your full adder to either an output port, or to the `Wire Label` component from the 'Input/Output' section of the catalogue.
+To solve this, add `Not Connected` component from the 'Input/Output' section of the catalogue and then connect the `Cout` port this component to terminate the signal coming out of this port.
             
 Test your counter using the Step Simulation tab.
 Each time you click on the 'Clock Tick N' button, you will see the output value increment by one.
