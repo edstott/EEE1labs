@@ -146,7 +146,7 @@ When you measure the output of the opamp you will see the offset of 2.5V added t
 You can remove the offset by setting the oscilloscope channel to AC mode.
 Then you can measure the amplitude of the output, compare it to the input and find the gain.
 		
-- [ ] Modify the inverting amplifier so it works correctly and check that the three requirements at the start of section~\ref{s:inv} have been achieved.
+- [ ] Modify the inverting amplifier so it works correctly and check that the three requirements at the start of section [Inverting Amplifiers](https://github.com/edstott/EEE1labs/tree/main/ADC#inverting-amplifier) have been achieved.
 		
 ## Single-Supply Non-inverting Amplifier
 
