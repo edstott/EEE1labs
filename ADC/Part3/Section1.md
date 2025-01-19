@@ -14,6 +14,7 @@ You will need the following equipment:
     
 | **Item** | **Quantity** |
 | ---- | -------- |
+| Bench Power Supply Unit (PSU) | 2 channels |
 | Breadboard | 1 |
 | Oscilloscope | 1 |
 | BC547B or BC548B NPN transistor | 3 |
@@ -101,13 +102,13 @@ It is now time to characterize the transistor, plotting the collector current $I
 The only value you’ll need to change in this section is $V_\text{IN}$ and $V_\text{CC}$ in order to achieve the desired values of $I_\text{B}$ and $V_\text{CE}$.
 You may use LTspice to double-check your calculations before turning the circuit on. We will take the following measurements for three different base currents: 20µA, 50µA and 100µA. 
 
-Estimate the required value of $R_\text{B1}$ to drive 20µA of base current by assuming $V_\text{BE}$=0.7V.
-Double check your estimation by measuring the voltage drop across $R_\text{B3}$ with your Multimeter.
-Tweak $R_\text{B1}$ until $I_\text{B}=20$µA.
+Estimate the required value of $V_\text{IN}$ to drive 20µA of base current by assuming $V_\text{BE}$=0.7V.
+Double check your estimation by measuring the voltage drop across $R_\text{B2}$ with your Multimeter.
+Set $V_\text{IN}$ to relevant value on the first channel of the Bench PSU to obtain $I_\text{B}=20$µA.
         
 - [ ] Set the base current to 20µA.
         
-Now that the base current is set, we can start ramping up $V_\text{CC}$ from 0 to 10V from Bench Power Supply Unit (PSU).
+Now that the base current is set, we can start ramping up $V_\text{CC}$ from 0 to 10V from the second channel of the Bench PSU.
 You’ll need to record:
         
 - $I_\text{C}$ (calculated from the voltage drop across $R_\text{C3}$)
