@@ -1,0 +1,4 @@
+MOV R3, #64
+MOV R5, R3
+ADD R4, R5, R3
+
