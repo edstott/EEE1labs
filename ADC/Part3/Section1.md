@@ -105,7 +105,7 @@ It is now time to characterize the transistor, plotting the collector current $I
 The only components you’ll need to change in this section are $R_\text{B1}$ and $R_\text{C1}$ in order to achieve the desired values of $I_\text{B}$ and $V_\text{CE}$.
 You may use LTspice to double-check your calculations before turning the circuit on. We will take the following measurements for three different base currents: 20µA, 50µA and 100µA. 
 
-Estimate the required value of $R_\text{B1}$ to drive 20µA of base current by assuming $V_\text{BE}=0.7$V.
+Estimate the required value of $R_\text{B1}$ to drive 20µA of base current by assuming $V_\text{BE}$=0.7V.
 Double check your estimation by measuring the voltage drop across $R_\text{B3}$ with your Multimeter.
 Tweak $R_\text{B1}$ until $I_\text{B}=20$µA.
         
