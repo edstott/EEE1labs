@@ -87,15 +87,15 @@ Build the circuit below for characterising a BJT.
             
 | **Component** | **Value** |
 | ------------- | --------- |
-| $V_\text{IN}$ |	5V |
-| $V_\text{CC}$ |	0-10V |
+| $V_\text{IN}$ |	Varied (0-5V) |
+| $V_\text{CC}$ |	Varied (0-10V) |
 | $Q_\text{1}$ | BC547B or BC548B |
 | $R_\text{B2}$ |	3.3 kΩ |
 | $R_\text{B3}$ |	33 kΩ |
 | $R_\text{C3}$ |	100 kΩ |
 
 Look at the table of 'Absolute Maximum Ratings' in the datasheet and find the maximum collector current that the device can tolerate.
-Assuming you use a $V_\text{IN}$ of 5V, are you likely to exceed the transistor’s ratings in the lab?
+Assuming you use $V_\text{IN}$ of 5V in maximum case, are you likely to exceed the transistor’s ratings in the lab?
         
 It is now time to characterize the transistor, plotting the collector current $I_\text{C}$ against the collector-emitter voltage $V_\text{CE}$.
         
