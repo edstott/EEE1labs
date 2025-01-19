@@ -89,20 +89,18 @@ Build the circuit below for characterising a BJT.
 | **Component** | **Value** |
 | ------------- | --------- |
 | $V_\text{IN}$ |	5V |
+| $V_\text{CC}$ |	0-10V |
 | $Q_\text{1}$ | BC547B or BC548B |
-| $R_\text{B1}$ | 10 kΩ Potentiometer |
 | $R_\text{B2}$ |	3.3 kΩ |
 | $R_\text{B3}$ |	33 kΩ |
-| $R_\text{C1}$ |	10 kΩ Potentiometer |
-| $R_\text{C2}$ |	100 Ω |
-| $R_\text{C3}$ |	100 Ω |
+| $R_\text{C3}$ |	100 kΩ |
 
 Look at the table of 'Absolute Maximum Ratings' in the datasheet and find the maximum collector current that the device can tolerate.
-Assuming you use a $V_\text{IN}$ of 5V and both $R_\text{B1}$ and $R_\text{C1}$ are $0\Omega$ (permitting the maximum current), are you likely to exceed the transistor’s ratings in the lab?
+Assuming you use a $V_\text{IN}$ of 5V, are you likely to exceed the transistor’s ratings in the lab?
         
 It is now time to characterize the transistor, plotting the collector current $I_\text{C}$ against the collector-emitter voltage $V_\text{CE}$.
         
-The only components you’ll need to change in this section are $R_\text{B1}$ and $R_\text{C1}$ in order to achieve the desired values of $I_\text{B}$ and $V_\text{CE}$.
+The only value you’ll need to change in this section is $V_\text{IN}$ and $V_\text{CC}$ in order to achieve the desired values of $I_\text{B}$ and $V_\text{CE}$.
 You may use LTspice to double-check your calculations before turning the circuit on. We will take the following measurements for three different base currents: 20µA, 50µA and 100µA. 
 
 Estimate the required value of $R_\text{B1}$ to drive 20µA of base current by assuming $V_\text{BE}$=0.7V.
@@ -111,7 +109,7 @@ Tweak $R_\text{B1}$ until $I_\text{B}=20$µA.
         
 - [ ] Set the base current to 20µA.
         
-Now that the base current is set, we can start ramping up $V_\text{CC}$ from 0 to 5V by changing $R_\text{C1}$ while keeping $R_\text{B1}$ fixed.
+Now that the base current is set, we can start ramping up $V_\text{CC}$ from 0 to 10V from Bench Power Supply Unit (PSU).
 You’ll need to record:
         
 - $I_\text{C}$ (calculated from the voltage drop across $R_\text{C3}$)
@@ -119,8 +117,7 @@ You’ll need to record:
 - $V_\text{CC}$
         
 Make measurements at closer intervals for low values of $V_\text{CC}$. 
-It will not be possible to obtain exactly 0V since we are deriving $V_\text{CC}$ through a potential divider.
-Also make sure that your base current keeps constant during your measurements and tweak $R_\text{B1}$ if necessary.
+Also make sure that your base current keeps constant during your measurements.
         
 - [ ] Characterise the transistor over a sweep of $V_\text{CC}$ while $I_\text{B}=20$µA.
         
