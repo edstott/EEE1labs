@@ -15,10 +15,8 @@ You will need the following equipment:
 | **Item** | **Quantity** |
 | ---- | -------- |
 | Breadboard | 1 |
-| Orangepip (for 5V power) | 1 |
 | Oscilloscope | 1 |
 | BC547B or BC548B NPN transistor | 3 |
-| 10 kΩ potentiometer | 2 |
 | Multimeter | 1 |
 | Wire | |	
 | Wire strippers | 1 |
