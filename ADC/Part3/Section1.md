@@ -111,7 +111,7 @@ Set $V_\text{IN}$ to relevant value on the first channel of the Bench PSU to obt
 Now that the base current is set, we can start ramping up $V_\text{CC}$ from 0 to 10V from the second channel of the Bench PSU.
 You’ll need to record:
         
-- $I_\text{C}$ (calculated from the voltage drop across $R_\text{C3}$)
+- $I_\text{C}$ (calculated from the voltage drop across $R_\text{C}$)
 - The collector-emitter voltage $V_\text{CE}$
 - $V_\text{CC}$
         
