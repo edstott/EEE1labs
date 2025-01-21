@@ -90,9 +90,9 @@ Build the circuit below for characterising a BJT.
 | $V_\text{IN}$ |	Varied (0-5V) |
 | $V_\text{CC}$ |	Varied (0-10V) |
 | $Q_\text{1}$ | BC547B or BC548B |
-| $R_\text{B2}$ |	3.3 kΩ |
-| $R_\text{B3}$ |	33 kΩ |
-| $R_\text{C3}$ |	100 kΩ |
+| $R_\text{B1}$ |	3.3 kΩ |
+| $R_\text{B2}$ |	33 kΩ |
+| $R_\text{C}$ |	100 Ω |
 
 Look at the table of 'Absolute Maximum Ratings' in the datasheet and find the maximum collector current that the device can tolerate.
 Assuming you use $V_\text{IN}$ of 5V in maximum case, are you likely to exceed the transistor’s ratings in the lab?
