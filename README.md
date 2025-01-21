@@ -49,9 +49,4 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
 - Part 2 (Autumn Term Weeks 8–10)
   - [Section 1: Memory](DECA/Part2/Section1.md)
   - [Section 2: State Machines](DECA/Part2/Section2.md)
-- Part 3 (Spring Term Weeks 3-5)
-  - [Lab 1: CPU Datapath](https://intranet.ee.ic.ac.uk/t.clarke/arch/deca/images/Lab1_2024.pdf)
-  - [Lab 2: CPU Control path](https://intranet.ee.ic.ac.uk/t.clarke/arch/deca/images/Lab2_2024.pdf)
-- Part 4 (Spring Term weeks 7-10)
-  - [ Lab 2: CPU Control path](https://intranet.ee.ic.ac.uk/t.clarke/arch/deca/images/Lab2_2024.pdf)
-  - [ Lab 3: CPU Interrupts and pipelining](https://intranet.ee.ic.ac.uk/t.clarke/arch/deca/images/Lab3_2024.pdf)
+- See [DECA Spring web pages](https://intranet.ee.ic.ac.uk/t.clarke/arch/deca/) for Spring Term labs
