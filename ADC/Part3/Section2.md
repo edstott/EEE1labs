@@ -28,7 +28,7 @@ You should have a basic understanding of the operation of this circuit from the 
 As you have seen in the lectures, operating the amplifier at the correct biasing point is important: we need to get a high gain, and we need to avoid saturation of the BJT.
 Our general aim therefore is to place the quiescent operating point (i.e. when $V_\text{in}$ is open circuit) such that $V_\mathrm{C} = V_\mathrm{CC}/2$.
 Using a single rail supply ($V_\text{CC}=5$V and connecting emitter node E to GND), we can bias the output of the amplifier at a quiescent voltage of about 2.5V.
-Thus 2.5V will be dropped across resistor $R_\text{C}$, so chose \$R_\text{C}=10$kΩ to get 0.25mA of quiescent collector bias current. 
+Thus 2.5V will be dropped across resistor $R_\text{C}$, so chose \$R_\text{C}$=10kΩ to get 0.25mA of quiescent collector bias current. 
             
 Given the values of $R_\text{B1}$ and $R_\text{B2}$, estimate an expected value for the potentiometer $R_\text{B3}$ to bias your CE amplifier around a quiescent output voltage of 2.5V.
 This depends on the actual $\beta$ of your transistor, the chosen collector current and the temperature. β should be in the range you found in the datasheet.
