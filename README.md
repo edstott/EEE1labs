@@ -4,7 +4,7 @@ This repository contains documentation and downloads for Year 1 labs in Electric
 
 ## General information
 The lab pairs and seating plan can be viewed on [Canvas](https://canvas.imperial.ac.uk/courses/9593/modules).
-You can post questions about the lab on Edstem ([ADC](https://edstem.org/us/courses/105555/discussion), [DECA](https://edstem.org/us/courses/107150/discussion/8374043))
+You can post questions about the lab on Ed Discussion ([ADC](https://edstem.org/us/courses/105555/discussion), [DECA](https://edstem.org/us/courses/107150/discussion/8374043))
 
 ### Oscilloscopes
 Remind yourself about using the Rohde and Schwarz oscilloscope with [this video](https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=9507f2f9-77a8-4b19-80d2-aada00cc383d).
