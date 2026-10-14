@@ -83,7 +83,7 @@ You will explore $\beta$ further in the next section.
 
 Build the circuit below for characterising a BJT.
 
-![Circuit for BJT characterisation](graphics/circuit3U.jpg)
+![Circuit for BJT characterisation](graphics/circuit3.jpg)
             
 | **Component** | **Value** |
 | ------------- | --------- |
