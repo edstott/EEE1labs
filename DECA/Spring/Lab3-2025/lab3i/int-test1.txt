@@ -1,7 +1,7 @@
         // test interrupt 1
         // Base program
         SETI // set FFIEN.Q (enable interrupts)
-    LOOP ADD R0, #1 // increment R1 at 1/2 the rate of R0
+    LOOP ADD R0, #1 // increment R0 at 1/2 the rate of R1
          JNE LOOP
 
          ORG 0xff00 // code from here goes into address 0xff00
