@@ -1,5 +1,5 @@
-[!NOTE]
-Please don't start this section, yet. It will be updated next week.
+>[!NOTE]
+>Please don't start this section, yet. It will be updated next week.
 
 # Analysis and Design of Circuits Lab
 # Part 1: Autumn Term weeks 4--6
