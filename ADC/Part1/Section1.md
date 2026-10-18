@@ -1,5 +1,5 @@
 # Analysis and Design of Circuits Lab
-# Part 1: Autumn Term weeks 4–6
+# Part 1: Passive Components - Autumn Term weeks 4–6
 
 This laboratory explores passive components: resistors, capacitors and inductors, and how they can be combined to make frequency-dependent circuits. In Section 1, you will learn how to measure impedance using a known resistor and an oscilloscope. [Section 2](Section2.md) explores reactive components and first-order filters. [Section 3](Section3.md) investigates resonance and second-order filters.
 
