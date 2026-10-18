@@ -3,9 +3,9 @@
 
 ## Section 3: Resonance and Second-Order Filters
 
-In Section 2, you investigated individual capacitors and inductors and used them to build first-order filters. You will now connect an inductor and capacitor together and investigate **series and parallel resonance**. The final challenges extend the filter work to second-order circuits, including a two-stage RC low-pass filter and a Twin-T notch filter.
+In Section 2, you investigated individual capacitors and inductors and used them to build first-order filters. You will now connect an inductor and capacitor together and investigate **series and parallel resonance**. You will then build a second-order RLC low-pass filter. The final challenges compare it with a two-stage RC low-pass filter and investigate a Twin-T notch filter.
 
-Complete the resonance measurements first. The tasks labelled **Challenge** extend the main investigation. Keep your measurements and analysis together: do not repeat a complete sweep simply to produce a second plot.
+Complete the resonance measurements and RLC low-pass experiment first. The tasks labelled **Challenge** extend the main investigation. Keep your measurements and analysis together: do not repeat a complete sweep simply to produce a second plot.
 
 ### Before the lab
 
@@ -13,7 +13,7 @@ Complete the resonance measurements first. The tasks labelled **Challenge** exte
 2. Calculate the ideal resonant frequency for $L=100\,\mathrm{mH}$ and $C=100\,\mathrm{nF}$ using the equation below.
 3. Sketch the expected series and parallel impedance trends and identify which should have a minimum and which should have a maximum.
 4. Prepare the measurement table below in your spreadsheet.
-5. If attempting a filter challenge, calculate its expected response before building it. Use LTspice once it has been introduced in the problem classes.
+5. For the RLC low-pass experiment, calculate the ideal natural frequency and critical-damping resistance for 100 mH and 100 nF. Use LTspice to predict its response once it has been introduced in the problem classes.
 
 ### What is resonance?
 
@@ -33,7 +33,9 @@ $$
 
 Remember that $\omega_0$ is in radians per second and $f_0$ is in hertz. For 100 mH and 100 nF, the ideal prediction is approximately **1.59 kHz**.
 
-In an ideal series connection the impedances cancel, giving zero impedance at resonance. In an ideal parallel connection the branch admittances cancel, giving an unbounded impedance magnitude. Real components have losses, so the measured minimum is not zero and the maximum is not infinite.
+In an ideal series connection the impedances cancel, giving zero impedance at resonance. In an ideal parallel connection the branch admittances cancel, giving an unbounded impedance magnitude. Real components have losses, so the measured minimum is not zero and the maximum is not infinite. **Both the series and parallel networks therefore depart from their ideal responses.** The inductor has winding resistance and inter-winding capacitance, while the capacitor has equivalent series resistance (ESR) and parasitic inductance. These properties can change the height and shape of the resonance feature and shift its frequency. Component tolerances also mean that the actual $L$ and $C$ may differ from their nominal values.
+
+Use the ideal curves as a starting prediction, then explain the measured differences using the real component models from Section 2. Do not assume that every discrepancy is an oscilloscope error; equally, check measurement quality before attributing a discrepancy to a parasitic effect.
 
 This resonance comes from connecting the separate capacitor and inductor together. It is different from an individual inductor's **self-resonance**, which involves its unwanted inter-winding capacitance.
 
@@ -63,7 +65,7 @@ $$
 Z_\mathrm{series}=R_s+j\left(\omega L-\frac{1}{\omega C}\right).
 $$
 
-The impedance magnitude reaches a minimum close to $R_s$. This gives a physical explanation for the non-zero minimum: reactance can cancel, but the resistance of the wire and component losses remain.
+The impedance magnitude reaches a minimum close to $R_s$. This gives a physical explanation for the non-zero minimum: reactance can cancel, but the resistance of the wire and component losses remain. Here, $R_s$ includes both the inductor winding resistance and the capacitor ESR. Other parasitic properties can further alter the curve, so this simple series-resistance model may not explain the entire measured frequency range.
 
 #### Measuring the series network
 
@@ -124,7 +126,7 @@ As frequency approaches the ideal resonant frequency, the denominator approaches
 
 Another way to understand this is to add the branch admittances. At resonance the ideal capacitive and inductive branch currents are equal and opposite, so their sum at the input is zero, even though current can circulate between the two branches.
 
-Real losses prevent complete cancellation of the input current, limiting the impedance peak. Probe loading can also lower the measured peak. The frequency of the real peak may differ slightly from the ideal prediction and from the series-network minimum.
+In the parallel network, the inductor winding resistance and capacitor ESR likewise prevent the ideal response: they introduce loss, prevent complete cancellation of the input current and limit the impedance peak. Their effect is not identical to simply adding a resistance to the ideal parallel impedance; include the losses within their respective component branches when modelling the circuit. Probe loading can also lower the measured peak. The frequency of the real peak may differ slightly from the ideal prediction and from the series-network minimum.
 
 Below resonance, the ideal parallel network is predominantly inductive. Above resonance, it is predominantly capacitive—the opposite ordering to the series network.
 
@@ -140,6 +142,7 @@ Below resonance, the ideal parallel network is predominantly inductive. Above re
 - [ ] Identify the maximum impedance magnitude and explain why it is finite.
 - [ ] Compare the measured resonant frequencies with each other and the ideal prediction.
 - [ ] Explain why one connection gives an impedance minimum while the other gives a maximum.
+- [ ] Explain how parasitic properties in both the inductor and capacitor cause the measured series and parallel responses to depart from the ideal predictions.
 
 ### From resonance to second-order filters
 
@@ -155,9 +158,63 @@ The first-order filter explanations and experiments are in Section 2. The follow
 
 A circuit containing two reactive components does not automatically have the same response as every other second-order circuit. Their connection and damping determine the shape.
 
-### Challenge: second-order RC low-pass filter
+### Second-order RLC low-pass filter
 
-Build the two-stage RC ladder investigated in Adam's measurements, using:
+This is a **main experiment**. Build the RLC low-pass circuit below using $L=100\,\mathrm{mH}$ and $C=100\,\mathrm{nF}$. Begin with an external resistance of approximately $2\,\mathrm{k}\Omega$.
+
+<p align="center">
+  <img src="graphics/RLClow.png" alt="Second-order RLC low-pass filter" width="650">
+</p>
+
+Connect the resistor and inductor in series from the input to the output. Connect the capacitor from the output to ground. Measure the output across the capacitor.
+
+At low frequency the capacitor has a large impedance, so the output approaches the input. At high frequency the inductor impedes current and the capacitor shunts the output towards ground. Together, they produce a steeper roll-off than a first-order filter.
+
+For ideal components:
+
+$$
+T(s)=\frac{1}{LCs^2+RCs+1},
+\qquad s=j\omega.
+$$
+
+The natural frequency and damping ratio are:
+
+$$
+\omega_n=\frac{1}{\sqrt{LC}},
+\qquad
+\zeta=\frac{R}{2}\sqrt{\frac{C}{L}}.
+$$
+
+Critical damping, $\zeta=1$, requires:
+
+$$
+R_\mathrm{total}=2\sqrt{\frac{L}{C}}.
+$$
+
+For these values, the ideal result is $R_\mathrm{total}=2\,\mathrm{k}\Omega$. The real inductor's winding resistance contributes to this total. Use your earlier estimate of winding resistance to assess the damping; if adjusting towards critical damping, subtract it from the required total when choosing the external resistor. Measure the actual input voltage on CH1 so that generator loading is accounted for in the transfer-function ratio.
+
+**Natural frequency and corner frequency are different.** Here, $f_n\approx1.59\,\mathrm{kHz}$. For an ideal critically damped low-pass, the −3 dB corner is approximately $0.644f_n$, or **1.02 kHz**. Critical damping produces a monotonic response without a resonant gain peak, even though the circuit contains an inductor and capacitor.
+
+1. Predict the complete response in LTspice, including the estimated winding resistance.
+2. With the generator output off, build the circuit and connect CH1 to the input and CH2 to the output. Both probe ground clips go to common ground.
+3. Apply a sine wave with 0 V offset and initially 1 V peak amplitude. Check that the input remains sinusoidal.
+4. Use the filter measurement table below. Add readings near the −3 dB point if needed, and record phase directly in the table.
+5. Plot magnitude in dB and phase against logarithmic frequency. Compare the measured corner, stopband slope and phase with the prediction.
+6. Explain differences using component tolerances, winding resistance and measurement limitations.
+
+- [ ] Build and characterise the RLC low-pass filter.
+- [ ] Identify its −3 dB corner and explain why it differs from the natural frequency.
+- [ ] Compare its roll-off and phase with the first-order filters from Section 2.
+
+The complementary high-pass topology is shown below for reference. Building it is an optional extension; it is not required for the main low-pass investigation.
+
+<p align="center">
+  <img src="graphics/RLChigh.png" alt="Second-order RLC high-pass filter for optional comparison" width="650">
+</p>
+
+### Challenge: compare the RLC filter with a cascaded RC filter
+
+Build the two-stage RC ladder below and compare it with your RLC low-pass filter. Use:
 
 $$
 R_1=R_2=1\,\mathrm{k}\Omega,
@@ -192,11 +249,12 @@ The component time constant gives $1/(2\pi RC)\approx1.59\,\mathrm{kHz}$, but th
 2. Build the ladder and connect CH1 to its input and CH2 to its output.
 3. Measure at the frequencies in the filter table below, adding points around the measured transition if needed.
 4. Plot magnitude in dB and phase against logarithmic frequency, following Section 2's measurement method.
-5. Compare with the simulation and explain the loading effect. At high frequency, mark readings that approach the noise floor rather than assuming their phase is reliable.
+5. Overlay its magnitude and phase measurements with those of the RLC low-pass filter. Both should approach a second-order roll-off, but their corners and transition shapes need not match. The RC ladder has a predicted −3 dB corner near 596 Hz, compared with about 1.02 kHz for the critically damped RLC circuit.
+6. Compare with the simulation and explain the loading effect. At high frequency, mark readings that approach the noise floor rather than assuming their phase is reliable.
 
 ### Filter measurement table
 
-Use this table for the RC ladder. It can also be adapted for the RLC and notch challenges. There is no separate time-delay column; record the calculated phase directly.
+Make one copy of this table for the main RLC low-pass experiment and another if attempting the RC comparison challenge. Adapt the frequencies as instructed for the notch challenge. There is no separate time-delay column; record the calculated phase directly.
 
 | Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Phase (°) |
 | --- | --- | --- | --- | --- | --- |
@@ -212,31 +270,8 @@ Use this table for the RC ladder. It can also be adapted for the RLC and notch c
 | 20000 | | | | | |
 | 40000 | | | | | |
 
-- [ ] Compare the second-order roll-off with the first-order filters from Section 2.
+- [ ] Compare the RLC and RC filters: low-frequency gain, −3 dB corner, stopband slope and phase. Explain which features are shared and which differ.
 - [ ] Explain why cascading unbuffered stages changes the response compared with two isolated stages.
-
-### Challenge: design and test a second-order RLC filter
-
-A resistor, capacitor and inductor can form a second-order low-pass or high-pass filter. In the appropriate stopband, their transfer-function magnitudes vary as $1/f^2$ or $f^2$, respectively.
-
-<p align="center">
-  <img src="graphics/RLClow.png" alt="Second-order RLC low-pass filter" width="650">
-</p>
-
-<p align="center">
-  <img src="graphics/RLChigh.png" alt="Second-order RLC high-pass filter" width="650">
-</p>
-
-This retains the existing RLC design challenge. Use the type and target frequency listed for your pair at the end of this handout. Choose components from the available-parts tables and use the lecture notes to select resistance for critical damping, $\zeta=1$. Include winding resistance in your assessment of the real damping.
-
-Be clear which frequency your design calculation describes. The natural frequency $f_n=1/(2\pi\sqrt{LC})$ is not generally the −3 dB frequency. For an ideal critically damped low-pass, $f_{-3\mathrm{dB}}\approx0.644f_n$; for its high-pass counterpart, $f_{-3\mathrm{dB}}\approx1.554f_n$. For this challenge, interpret the table's target $f_c$ as the **−3 dB corner frequency**.
-
-1. Select the circuit topology and calculate values that place the −3 dB corner within 10% of your assigned target.
-2. Simulate the complete circuit in LTspice and check both magnitude and phase.
-3. Build it and measure selected frequencies below, near and above the target, within 10 Hz–40 kHz. Choose extra points where needed to identify its roll-off.
-4. Plot the measurements with the simulation and explain discrepancies, including component tolerances, winding resistance and measurement limits.
-
-- [ ] Present your circuit, component choices, predicted response and measured comparison.
 
 ### Challenge: build a Twin-T notch filter
 
@@ -280,22 +315,18 @@ Design for a notch frequency of approximately **1.6 kHz**, choosing components f
 
 **Resistors ( $\times10^0\Omega$ to $\times10^6\Omega$ )**
 
-|    |    |    |    |
-| -- | -- | -- | -- |
-| 1.0 | 1.1 | 1.2 | 1.3 |
-| 1.5 | 1.6 | 1.8 | 2.0 |
-| 2.2 | 2.4 | 2.7 | 3.0 |
-| 3.3 | 3.6 | 3.9 | 4.3 |
-| 4.7 | 5.1 | 5.6 | 6.2 |
-| 6.8 | 7.5 | 8.2 | 9.1 |
+| | | | | | | | |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1.0 | 1.1 | 1.2 | 1.3 | 1.5 | 1.6 | 1.8 | 2.0 |
+| 2.2 | 2.4 | 2.7 | 3.0 | 3.3 | 3.6 | 3.9 | 4.3 |
+| 4.7 | 5.1 | 5.6 | 6.2 | 6.8 | 7.5 | 8.2 | 9.1 |
 
 **Capacitors (multilayer ceramic)**
 
-|    |    |    |    |
-| -- | -- | -- | -- |
-| 1nF | 2.2nF | 4.7nF | 10nF |
-| 22nF | 33nF | 47nF | 68nF |
-| 100nF | 220nF | 470nF | 1μF |
+| | | | | | |
+| --- | --- | --- | --- | --- | --- |
+| 1 nF | 2.2 nF | 4.7 nF | 10 nF | 22 nF | 33 nF |
+| 47 nF | 68 nF | 100 nF | 220 nF | 470 nF | 1 µF |
 
 **Inductors**
 
@@ -304,123 +335,3 @@ Design for a notch frequency of approximately **1.6 kHz**, choosing components f
 | 1mH | 2.2mH | 3.3mH |
 | 4.7mH | 10mH | 22mH |
 | 33mH | 47mH | 100mH |
-
-
-## Specifications for the RLC design challenge
-
-Each lab pair has a specified filter type and corner frequency for their RLC filter.
-
-| Pair | Type | $f_c$ (Hz) |
-| -- | -- | -- |    			
-A01|	LP|	1900
-A02|	HP|	8700
-A03|	HP|	7400
-A04|	HP|	1800
-A05|	HP|	8800
-A06|	HP|	1900
-A07|	HP|	8800
-A08|	HP|	5000
-A09|	HP|	2800
-A10|	LP|	2700
-A11|	HP|	2300
-A12|	LP|	1900
-A13|	HP|	4900
-A14|	HP|	5000
-A15|	HP|	5300
-A16|	LP|	5900
-A17|	LP|	7400
-A18|	LP|	7300
-A19|	HP|	4100
-A20|	HP|	1700
-A21|	LP|	7400
-A22|	HP|	5900
-A23|	LP|	3400
-A24|	LP|	1600
-A25|	HP|	8700
-A26|	HP|	8800
-A27|	HP|	3400
-A28|	LP|	8800
-A29|	LP|	8700
-A30|	LP|	970
-A31|	HP|	730
-A32|	LP|	3400
-A33|	HP|	3400
-A34|	HP|	5900
-A35|	LP|	4000
-A36|	HP|	3400
-A37|	LP|	1700
-A38|	LP|	8700
-A39|	LP|	5100
-A40|	HP|	4000
-A41|	LP|	3400
-A42|	HP|	5900
-A43|	HP|	4000
-A44|	HP|	1900
-A45|	HP|	4900
-A46|	HP|	5900
-A47|	LP|	2800
-A48|	LP|	6600
-A49|	HP|	2300
-A50|	HP|	6100
-A51|	LP|	5000
-A52|	LP|	5900
-A53|	LP|	7300
-A54|	HP|	8900
-A55|	LP|	2800
-B01|	LP|	4500
-B02|	LP|	7400
-B03|	LP|	3400
-B04|	HP|	1400
-B05|	LP|	6100
-B06|	LP|	1900
-B07|	HP|	1600
-B08|	LP|	1600
-B09|	LP|	4400
-B10|	HP|	1700
-B11|	HP|	1100
-B12|	LP|	4900
-B13|	LP|	5900
-B14|	LP|	1900
-B15|	LP|	2300
-B16|	HP|	2300
-B17|	LP|	4400
-B18|	HP|	5900
-B19|	HP|	8900
-B20|	HP|	7400
-B21|	HP|	8800
-B22|	LP|	5300
-B23|	HP|	1100
-B24|	HP|	4900
-B25|	HP|	7300
-B26|	LP|	2800
-B27|	LP|	4400
-B28|	LP|	2000
-B29|	LP|	2300
-B30|	LP|	5000
-B31|	HP|	1500
-B32|	HP|	5100
-B33|	HP|	2300
-B34|	LP|	2300
-B35|	LP|	3400
-B36|	LP|	4900
-B37|	HP|	3400
-B38|	HP|	3300
-B39|	LP|	2400
-B40|	LP|	3300
-B41|	HP|	2300
-B42|	LP|	5100
-B43|	LP|	2700
-B44|	LP|	5000
-B45|	LP|	3400
-B46|	LP|	4800
-B47|	LP|	5900
-B48|	HP|	8700
-B49|	HP|	1100
-B50|	HP|	7300
-B51|	HP|	7300
-B52|	LP|	2100
-B53|	LP|	8800
-B54|	LP|	1400
-B55|	HP|	5900
-
-*HP: High-pass, LP: Low-pass*
