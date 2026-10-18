@@ -147,7 +147,7 @@ Start with a 1 kΩ test resistor. As frequency changes, choose $R$ of a similar 
 - If both impedances are small, check that the signal generator is not heavily loaded and that its output remains sinusoidal.
 - Record every change of $R$ and use the correct value in your calculation.
 
-The approximate 5 mV RMS and one-division checks described in Section 1 can help identify poor readings, but waveform quality is more important than a numerical threshold alone.
+Use Section 1's examples to check waveform smoothness, stability and voltage scales. A CH2 signal below about 5 mV RMS may be difficult to resolve, but no single amplitude threshold guarantees accuracy. Magnifying a blocky math trace does not improve the acquired data.
 
 #### Measurement procedure and recording table
 
@@ -179,6 +179,10 @@ Make **one copy of the following table for each of the four known components**: 
 | 40000 | | | | | |
 
 Use $2\pi fL$ for the ideal inductor prediction and $1/(2\pi fC)$ for the ideal capacitor prediction. Record any poor-quality readings and the reason; do not invent a value when the signal cannot be measured reliably.
+
+**Limits at very low frequency:** the ideal impedance of a 33 nF capacitor is approximately 4.8 MΩ at 1 Hz. The probe's finite input resistance can then load the component appreciably, and the math-channel voltage may be difficult to resolve. A different test resistor may improve signal balance but cannot remove probe loading. Attempt the listed frequencies, but mark a reading as unreliable if necessary, explain the limitation and continue. You are not required to obtain an accurate value at every frequency.
+
+For the component-characterisation tasks, measure **impedance magnitude only**. The predicted phase plots explain the expected behaviour; you do not need an additional measured phase sweep for each component. For the filter tasks, measure **both magnitude and phase**.
 
 The starting table contains 11 frequencies per component. Do not repeat the sweep for model fitting: use the recorded data. Approximately straight trends between the starting points suggest smooth behaviour, but cannot rule out a narrow feature. Take extra readings when the shape of the graph gives you a reason to do so.
 
@@ -403,6 +407,8 @@ $$
 
 At this corner frequency, the magnitude is $1/\sqrt{2}$ of the ideal passband gain, approximately −3 dB. The low-pass phase is −45° and the high-pass phase is +45°.
 
+To identify a measured −3 dB corner, first find the passband gain. Look for a magnitude ratio equal to **0.707 times that passband gain**, or a gain **3 dB below the passband level**. Use the low-frequency passband for a low-pass filter and the high-frequency passband for a high-pass filter. This allows for a passband gain slightly below unity. If a real high-pass filter has a substantial low-frequency floor, a −3 dB crossing may be altered or absent; explain the measured response rather than forcing a corner estimate.
+
 Far into the stopband, the low-pass magnitude falls by approximately 20 dB per decade as frequency increases. The high-pass magnitude rises by approximately 20 dB per decade towards its passband.
 
 <p align="center">
@@ -499,7 +505,7 @@ $$
 T(\infty)=\frac{R_2}{R_1+R_3+R_2}=0.2.
 $$
 
-These limits illustrate how the DC and high-frequency behaviour of reactive components can simplify a circuit before any algebra is needed.
+These limits illustrate how the DC and high-frequency behaviour of reactive components can simplify a circuit before any algebra is needed. At the finite frequencies available in the experiment, the measured gains should approach these ideal limits; they need not equal them exactly. Winding resistance and other parasitic properties may also shift the measured plateaus.
 
 The parallel combination has impedance:
 
@@ -536,6 +542,7 @@ The phase is negative through the transition and approaches zero at both frequen
 </p>
 
 - [ ] Derive the transfer function from the parallel-impedance and potential-divider equations, and check the limiting gains.
+
 Before measuring:
 
 1. Turn off the generator output and build the circuit shown, checking the parallel connection of $R_1$ and $L_1$.
