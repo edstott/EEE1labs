@@ -67,7 +67,9 @@ $$
 
 Here, $R_s$ represents the component's series resistance. It is different from the external test resistor $R$ used in the measurement circuit.
 
-<!-- Figure to update: LCeq.png. Consistent diagrams of an ideal inductor and capacitor with series resistance Rs. -->
+<p align="center">
+  <img src="graphics/LCeq.png" alt="LCeq" width="700">
+</p>
 
 This model helps explain departures from ideal behaviour, but it is an approximation. An inductor's inter-winding capacitance and a capacitor's parasitic inductance can become important near self-resonance. Do not assume that these effects lie outside the measurement range for every component.
 
@@ -106,13 +108,15 @@ Most of these frequencies are separated by approximately half a decade. Equal st
 
 Plot magnitude against frequency with both axes logarithmic. Plot phase against frequency with a logarithmic frequency axis and a linear phase axis. State whether phase is in radians or degrees and convert consistently.
 
-<!-- Figure to redraw after text review: two aligned qualitative plots comparing a lower-value and a higher-value inductor. Main plot: impedance magnitude versus frequency, both logarithmic, no numerical tick values. Use consistent colours for the two inductors and dashed ideal predictions with +1 gradient. Show low-frequency resistive plateaus and intermediate inductive regions. Extend the higher-value example to show a finite self-resonance peak followed by a falling, predominantly capacitive region. Do not imply that its peak must lie within 1 Hz–40 kHz. Optional phase panel: approximately 0 degrees in resistive region, positive in inductive region, crossing zero near the resonance peak, negative beyond it. Use the Section 1 visual style. -->
+<p align="center">
+  <img src="graphics/ZL_vs_f_excel.png" alt="ZL vs f excel" width="700">
+</p>
 
-The expected graph will compare a lower-value and a higher-value inductor. In the ideal inductive region, the higher inductance gives a larger impedance at the same frequency. Each real inductor may also have a different winding resistance, so the heights of their low-frequency plateaus need not be the same.
+The graph above compares a lower-value and a higher-value inductor. In the ideal inductive region, the higher inductance gives a larger impedance at the same frequency. Each real inductor may also have a different winding resistance, so the heights of their low-frequency plateaus need not be the same.
 
 At sufficiently high frequency, capacitance between the turns of the coil can interact with its inductance and produce **self-resonance**. In a simple model, this gives a peak in impedance magnitude; above resonance, the component can behave predominantly capacitively and its impedance magnitude can fall as frequency increases. Losses keep the peak finite.
 
-The illustrative higher-value inductor will show this possible behaviour. Its position depends on both inductance and parasitic capacitance: a larger inductance alone does not determine the self-resonant frequency. The illustration shows the trend, not a guaranteed result for the supplied components or measurement range. If no resonance appears in your measurements, report that it was not observed within the range tested.
+The illustrative higher-value inductor shows this possible behaviour. Its position depends on both inductance and parasitic capacitance: a larger inductance alone does not determine the self-resonant frequency. The illustration shows the trend, not a guaranteed result for the supplied components or measurement range. If no resonance appears in your measurements, report that it was not observed within the range tested.
 
 Prepare columns for the measured data as well. You will compare measurements and predictions on the same plots, rather than making a separate set of plots for each stage of the analysis.
 
@@ -226,7 +230,9 @@ $$
 
 The capacitors may remain close to ideal throughout the usable measurement range. **You are not required to observe an ESR floor.** If a measured curve appears to flatten, first check the signal quality and test resistance: a measurement limit can resemble a physical plateau.
 
-<!-- Qualitative figure: ideal and non-ideal capacitor magnitude and phase. Explain that the ESR floor may be outside the measured range. -->
+<p align="center">
+  <img src="graphics/capacitor_impedance_trends.png" alt="capacitor impedance trends" width="700">
+</p>
 
 In the capacitive region, estimate capacitance from:
 
@@ -333,7 +339,9 @@ Use **$R_1=1\,\mathrm{k}\Omega$ and $L_1=100\,\mathrm{mH}$**.
 
 Connect the inductor between the input and output, and the resistor between the output and ground. The output is measured across the resistor.
 
-<!-- New circuit figure: RL low-pass using Adam's topology and values. -->
+<p align="center">
+  <img src="graphics/rl_lowpass.png" alt="rl lowpass" width="700">
+</p>
 
 At low frequency, an ideal inductor has a small impedance, so most of the input voltage appears across the resistor. As frequency increases, the inductor's impedance increases and the output falls.
 
@@ -345,7 +353,9 @@ $$
 
 Swap the positions of the resistor and inductor, so that the inductor connects from the output to ground.
 
-<!-- New circuit figure: RL high-pass using Adam's topology and values. -->
+<p align="center">
+  <img src="graphics/rl_highpass.png" alt="rl highpass" width="700">
+</p>
 
 At low frequency, an ideal inductor has a small impedance, so the output is small. At higher frequencies, more of the input voltage appears across the inductor.
 
@@ -363,7 +373,9 @@ At this corner frequency, the magnitude is $1/\sqrt{2}$ of the ideal passband ga
 
 Far into the stopband, the low-pass magnitude falls by approximately 20 dB per decade as frequency increases. The high-pass magnitude rises by approximately 20 dB per decade towards its passband.
 
-<!-- Qualitative paired low-pass and high-pass magnitude/phase graphs, without numerical component values. -->
+<p align="center">
+  <img src="graphics/first_order_filter_trends.png" alt="first order filter trends" width="700">
+</p>
 
 A real inductor has winding resistance. The low-pass gain at low frequency may therefore be less than one, while the high-pass output may approach a non-zero low-frequency floor. Use the series resistance estimated earlier to explain these effects. The ideal transfer functions above do not include winding resistance.
 
@@ -392,7 +404,13 @@ $$
 T_\mathrm{HP}(j\omega)=\frac{j\omega RC}{1+j\omega RC}.
 $$
 
-<!-- Redraw RClow.png and RChi.png with Adam's 10 kΩ and 10 nF values and the Section 1 style. -->
+<p align="center">
+  <img src="graphics/RClow.png" alt="RClow" width="700">
+</p>
+
+<p align="center">
+  <img src="graphics/RChi.png" alt="RChi" width="700">
+</p>
 
 At low frequency, the capacitor approaches an open circuit; at high frequency its impedance becomes small. Use these limiting cases to explain each response before taking measurements.
 
@@ -420,7 +438,9 @@ Use the following circuit from Adam's work:
 - $R_3=1\,\mathrm{k}\Omega$ connects this parallel combination to the output.
 - $R_2=1\,\mathrm{k}\Omega$ connects the output to ground.
 
-<!-- New circuit figure: Adam's gain_floor_L topology, redrawn consistently. -->
+<p align="center">
+  <img src="graphics/gain_floor_L.png" alt="gain floor L" width="550">
+</p>
 
 At low frequency, an ideal inductor behaves approximately as a short circuit, bypassing $R_1$. The limiting gain is:
 
@@ -466,7 +486,9 @@ For these component values, $f_p\approx1.91\,\mathrm{kHz}$ and $f_z\approx4.77\,
 
 The phase is negative through the transition and approaches zero at both frequency extremes in the ideal model.
 
-<!-- Qualitative shelving magnitude and phase graphs: symbolic plateaus and break frequencies, no original numerical values. -->
+<p align="center">
+  <img src="graphics/gain_floor_trends.png" alt="gain floor trends" width="700">
+</p>
 
 - [ ] Derive the transfer function from the parallel-impedance and potential-divider equations, and check the limiting gains.
 - [ ] Build the circuit and measure its magnitude and phase response from 10 Hz to 40 kHz.
