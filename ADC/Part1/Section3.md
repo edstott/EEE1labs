@@ -3,9 +3,9 @@
 
 ## Section 3: Resonance and Second-Order Filters
 
-In Section 2, you investigated individual capacitors and inductors and used them to build first-order filters. You will now connect an inductor and capacitor together and investigate **series and parallel resonance**. You will then build a second-order RLC low-pass filter. The final challenges compare it with a two-stage RC low-pass filter and investigate a Twin-T notch filter.
+In Section 2, you investigated individual capacitors and inductors and used them to build first-order filters. You will now connect an inductor and capacitor together and investigate **series and parallel resonance**. You will then design and build a second-order RLC filter using your group's assigned type and corner frequency. The final challenges investigate a two-stage RC low-pass filter for comparison and a Twin-T notch filter.
 
-Complete the resonance measurements and RLC low-pass experiment first. The tasks labelled **Challenge** extend the main investigation. Keep your measurements and analysis together: do not repeat a complete sweep simply to produce a second plot.
+Complete the resonance measurements and your assigned RLC filter experiment first. The tasks labelled **Challenge** extend the main investigation. Keep your measurements and analysis together: do not repeat a complete sweep simply to produce a second plot.
 
 ### Before the lab
 
@@ -13,7 +13,7 @@ Complete the resonance measurements and RLC low-pass experiment first. The tasks
 2. Calculate the ideal resonant frequency for $L=100\,\mathrm{mH}$ and $C=100\,\mathrm{nF}$ using the equation below.
 3. Sketch the expected series and parallel impedance trends and identify which should have a minimum and which should have a maximum.
 4. Prepare the measurement table below in your spreadsheet.
-5. For the RLC low-pass experiment, calculate the ideal natural frequency and critical-damping resistance for 100 mH and 100 nF. Use LTspice to predict its response once it has been introduced in the problem classes.
+5. Find your group's assigned RLC filter type and −3 dB corner frequency in the table at the end. Use the design procedure below to select components and predict the response in LTspice once it has been introduced in the problem classes.
 
 ### What is resonance?
 
@@ -154,30 +154,59 @@ $$
 
 Its magnitude is the voltage-amplitude ratio and its phase is the output phase relative to the input. Measure CH1 at the input and CH2 at the output, both relative to common ground. For these filter measurements, the math-channel impedance calculation is no longer needed.
 
-The first-order filter explanations and experiments are in Section 2. The following challenges extend those ideas. A second-order low-pass or high-pass response can have a stopband slope of 40 dB per decade, compared with 20 dB per decade for a first-order response. A second-order low-pass phase can approach −180°.
+The first-order filter explanations and experiments are in Section 2. The following experiments extend those ideas. A second-order low-pass or high-pass response can have a stopband slope of 40 dB per decade, compared with 20 dB per decade for a first-order response. A second-order low-pass phase can approach −180°.
 
 A circuit containing two reactive components does not automatically have the same response as every other second-order circuit. Their connection and damping determine the shape.
 
-### Second-order RLC low-pass filter
+### Main experiment: design and build your assigned RLC filter
 
-This is a **main experiment**. Build the RLC low-pass circuit below using $L=100\,\mathrm{mH}$ and $C=100\,\mathrm{nF}$. Begin with an external resistance of approximately $2\,\mathrm{k}\Omega$.
+Use the **numerical part of your group identifier**, following the same allocation as Section 2:
+
+| Group number | Assigned RLC response |
+| --- | --- |
+| Odd, for example A01 or B03 | Low-pass |
+| Even, for example A02 or B04 | High-pass |
+
+**Retain your group's individual corner frequency from the allocation table at the end of this section.** The group numbers determine the filter type; the frequency is separately specified for each group. Each group builds one RLC configuration, not both.
+
+The table specifies the **−3 dB corner frequency**, not the natural frequency. Choose $L$, $C$ and $R$ to achieve that corner within **10%** of the target, with approximately critical damping.
+
+#### Low-pass circuit: odd-numbered groups
+
+Connect $R$ and $L$ in series from the input to the output, and connect $C$ from the output to ground. Measure the output across the capacitor.
 
 <p align="center">
-  <img src="graphics/RLClow.png" alt="Second-order RLC low-pass filter" width="650">
+  <img src="graphics/RLClow.png" alt="RLC low-pass topology; any component values shown are a worked example" width="650">
 </p>
 
-Connect the resistor and inductor in series from the input to the output. Connect the capacitor from the output to ground. Measure the output across the capacitor.
+**Any component values shown in this diagram are a worked example. Choose your own values for your assigned corner frequency.**
 
-At low frequency the capacitor has a large impedance, so the output approaches the input. At high frequency the inductor impedes current and the capacitor shunts the output towards ground. Together, they produce a steeper roll-off than a first-order filter.
-
-For ideal components:
+At low frequency, the capacitor has a large impedance and the output approaches the input. At high frequency, the inductor impedes current and the capacitor shunts the output towards ground. The ideal transfer function is:
 
 $$
-T(s)=\frac{1}{LCs^2+RCs+1},
+T_\mathrm{LP}(s)=\frac{1}{LCs^2+RCs+1},
 \qquad s=j\omega.
 $$
 
-The natural frequency and damping ratio are:
+#### High-pass circuit: even-numbered groups
+
+Connect $R$ and $C$ in series from the input to the output, and connect $L$ from the output to ground. Measure the output across the inductor.
+
+<p align="center">
+  <img src="graphics/RLChigh.png" alt="RLC high-pass topology for even-numbered groups" width="650">
+</p>
+
+At low frequency, the series capacitor has a large impedance and the inductor has a small impedance, so the output is small. At high frequency, the capacitor's impedance decreases and the inductor's increases, so the output approaches the input. The ideal transfer function is:
+
+$$
+T_\mathrm{HP}(s)=\frac{LCs^2}{LCs^2+RCs+1}.
+$$
+
+These expressions assume ideal reactive components. Include winding resistance in the inductor branch when simulating the real circuit; it can affect the numerator as well as the damping of the high-pass circuit.
+
+#### Selecting component values
+
+Both ideal circuits have natural frequency and damping ratio:
 
 $$
 \omega_n=\frac{1}{\sqrt{LC}},
@@ -185,36 +214,74 @@ $$
 \zeta=\frac{R}{2}\sqrt{\frac{C}{L}}.
 $$
 
-Critical damping, $\zeta=1$, requires:
+For critical damping, $\zeta=1$:
 
 $$
 R_\mathrm{total}=2\sqrt{\frac{L}{C}}.
 $$
 
-For these values, the ideal result is $R_\mathrm{total}=2\,\mathrm{k}\Omega$. The real inductor's winding resistance contributes to this total. Use your earlier estimate of winding resistance to assess the damping; if adjusting towards critical damping, subtract it from the required total when choosing the external resistor. Measure the actual input voltage on CH1 so that generator loading is accounted for in the transfer-function ratio.
+Critical damping gives a monotonic ideal response without a resonant gain peak. **The natural frequency is different from the −3 dB corner.** For critical damping:
 
-**Natural frequency and corner frequency are different.** Here, $f_n\approx1.59\,\mathrm{kHz}$. For an ideal critically damped low-pass, the −3 dB corner is approximately $0.644f_n$, or **1.02 kHz**. Critical damping produces a monotonic response without a resonant gain peak, even though the circuit contains an inductor and capacitor.
+$$
+f_{c,\mathrm{LP}}\approx0.644f_n,
+\qquad
+f_{c,\mathrm{HP}}\approx1.554f_n.
+$$
 
-1. Predict the complete response in LTspice, including the estimated winding resistance.
-2. With the generator output off, build the circuit and connect CH1 to the input and CH2 to the output. Both probe ground clips go to common ground.
-3. Apply a sine wave with 0 V offset and initially 1 V peak amplitude. Check that the input remains sinusoidal.
-4. Use the filter measurement table below. Add readings near the −3 dB point if needed, and record phase directly in the table.
-5. Plot magnitude in dB and phase against logarithmic frequency. Compare the measured corner, stopband slope and phase with the prediction.
-6. Explain differences using component tolerances, winding resistance and measurement limitations.
+1. Read your assigned −3 dB corner $f_c$ from the table.
+2. Calculate the required natural frequency: $f_n=f_c/0.644$ for low-pass, or $f_n=f_c/1.554$ for high-pass.
+3. Calculate the required product $LC=1/(2\pi f_n)^2$.
+4. Select available $L$ and $C$ values, using sensible series or parallel combinations where needed. Recalculate the predicted corner from your actual choices.
+5. Calculate the critical-damping total resistance. Use the inductor winding resistance estimated in Section 2 to choose an external resistor approximately equal to the required total minus that winding resistance. If this would require a negative resistance, choose a different combination of $L$ and $C$.
+6. Simulate the complete circuit with your chosen values, including winding resistance, and check the predicted corner and response shape.
 
-- [ ] Build and characterise the RLC low-pass filter.
-- [ ] Identify its −3 dB corner and explain why it differs from the natural frequency.
-- [ ] Compare its roll-off and phase with the first-order filters from Section 2.
+As a **worked example only**, 100 mH and 100 nF give $f_n\approx1.59\,\mathrm{kHz}$ and an ideal critical-damping total resistance of 2 kΩ. The corresponding low-pass corner is approximately **1.02 kHz**, while the high-pass corner is approximately **2.47 kHz**. This illustrates why the same component values do not give the same −3 dB corner for the two critically damped configurations.
 
-The complementary high-pass topology is shown below for reference. Building it is an optional extension; it is not required for the main low-pass investigation.
+The resistance adjustment is a starting approximation. In a real high-pass circuit, winding resistance changes the low-frequency response as well as the damping. Use the simulated and measured response to assess the result.
 
-<p align="center">
-  <img src="graphics/RLChigh.png" alt="Second-order RLC high-pass filter for optional comparison" width="650">
-</p>
+#### Building and measuring your assigned filter
+
+1. Record your assigned type and target frequency, chosen component values and predicted corner in your lab book.
+2. With the generator output off, build the appropriate circuit. Connect CH1 to the input and CH2 to the output; both probe ground clips go to common ground.
+3. Apply a sine wave with 0 V offset and initially 1 V peak amplitude. Check that the actual input remains sinusoidal.
+4. Use a copy of the measurement table below. Add readings at approximately **0.5, 0.8, 1.0, 1.2 and 2 times your assigned corner**, keeping the overall sweep within 10 Hz–40 kHz. Merge duplicate or very close frequencies rather than repeating them.
+5. Find the measured passband gain: low-frequency gain for low-pass, or high-frequency gain for high-pass. Locate the frequency where the magnitude is **0.707 times that gain**, or 3 dB below its level. Add intermediate readings if necessary.
+6. Plot magnitude in dB and phase against logarithmic frequency. Compare the corner, roll-off and phase with the simulation, and explain discrepancies using tolerances, winding resistance and measurement limits.
+
+At high frequency, an RLC high-pass filter approaches unity gain, but its ideal phase approaches **0°**, not +180°. At low frequency its ideal phase approaches +180°. For the low-pass circuit, phase moves from approximately 0° towards −180°. When readings wrap between +180° and −180°, describe the same continuous phase trend consistently.
+
+- [ ] Build and characterise your assigned RLC filter.
+- [ ] Compare the measured −3 dB corner with your assigned target and explain why it differs from the natural frequency.
+- [ ] Compare the second-order roll-off with the first-order response from Section 2.
+
+### Filter measurement table
+
+Use one copy for the main RLC experiment and another for the RC comparison challenge. Add frequencies around your assigned RLC corner as instructed above. For the notch challenge, use its separately specified frequencies with these same columns. Record phase directly; a separate delay column is not required.
+
+| Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Phase (°) |
+| --- | --- | --- | --- | --- | --- |
+| 10 | | | | | |
+| 100 | | | | | |
+| 300 | | | | | |
+| 600 | | | | | |
+| 1000 | | | | | |
+| 1600 | | | | | |
+| 3000 | | | | | |
+| 6000 | | | | | |
+| 10000 | | | | | |
+| 20000 | | | | | |
+| 40000 | | | | | |
 
 ### Challenge: compare the RLC filter with a cascaded RC filter
 
-Build the two-stage RC ladder below and compare it with your RLC low-pass filter. Use:
+All groups attempting this challenge build the **RC low-pass ladder** below.
+
+- **Odd-numbered groups:** compare it with your own RLC low-pass measurements.
+- **Even-numbered groups:** compare it with the RLC low-pass measurements of an odd-numbered group. Identify the group supplying the comparison data and keep your own RC readings clearly labelled.
+
+The RLC groups have different assigned corners, so compare both the actual frequency plots and the response shapes relative to each circuit's own −3 dB corner. Identical corners are not expected.
+
+Use:
 
 $$
 R_1=R_2=1\,\mathrm{k}\Omega,
@@ -247,28 +314,10 @@ The component time constant gives $1/(2\pi RC)\approx1.59\,\mathrm{kHz}$, but th
 
 1. Predict the response in LTspice using the complete connected circuit.
 2. Build the ladder and connect CH1 to its input and CH2 to its output.
-3. Measure at the frequencies in the filter table below, adding points around the measured transition if needed.
+3. Measure at the frequencies in a fresh copy of the filter table above, adding points around the measured transition if needed.
 4. Plot magnitude in dB and phase against logarithmic frequency, following Section 2's measurement method.
-5. Overlay its magnitude and phase measurements with those of the RLC low-pass filter. Both should approach a second-order roll-off, but their corners and transition shapes need not match. The RC ladder has a predicted −3 dB corner near 596 Hz, compared with about 1.02 kHz for the critically damped RLC circuit.
+5. Overlay its magnitude and phase measurements with the selected RLC low-pass results. Both should approach a second-order roll-off, but their corners and transition shapes need not match. The RC ladder has a predicted −3 dB corner near 596 Hz; the RLC target is group-specific. For a shape comparison, you may additionally plot against normalised frequency $f/f_c$, using each circuit's own measured corner.
 6. Compare with the simulation and explain the loading effect. At high frequency, mark readings that approach the noise floor rather than assuming their phase is reliable.
-
-### Filter measurement table
-
-Make one copy of this table for the main RLC low-pass experiment and another if attempting the RC comparison challenge. Adapt the frequencies as instructed for the notch challenge. There is no separate time-delay column; record the calculated phase directly.
-
-| Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Phase (°) |
-| --- | --- | --- | --- | --- | --- |
-| 10 | | | | | |
-| 100 | | | | | |
-| 300 | | | | | |
-| 600 | | | | | |
-| 1000 | | | | | |
-| 1600 | | | | | |
-| 3000 | | | | | |
-| 6000 | | | | | |
-| 10000 | | | | | |
-| 20000 | | | | | |
-| 40000 | | | | | |
 
 - [ ] Compare the RLC and RC filters: low-frequency gain, −3 dB corner, stopband slope and phase. Explain which features are shared and which differ.
 - [ ] Explain why cascading unbuffered stages changes the response compared with two isolated stages.
@@ -277,7 +326,7 @@ Make one copy of this table for the main RLC low-pass experiment and another if 
 
 A notch, or band-stop, filter rejects a band around a particular frequency while passing lower and higher frequencies. It is useful for suppressing an unwanted tone. This differs from a band-pass filter, which passes frequencies around its centre and attenuates those away from it.
 
-Use the **Twin-T topology from Adam's work**: two T networks connected in parallel between input and output. One T has two series resistors and a midpoint capacitor to ground; the other has two series capacitors and a midpoint resistor to ground.
+Use the **Twin-T topology shown below**: two T networks connected in parallel between input and output. One T has two series resistors and a midpoint capacitor to ground; the other has two series capacitors and a midpoint resistor to ground.
 
 <p align="center">
   <img src="graphics/twin_t_notch.png" alt="twin t notch" width="700">
@@ -336,45 +385,49 @@ Design for a notch frequency of approximately **1.6 kHz**, choosing components f
 | 4.7mH | 10mH | 22mH |
 | 33mH | 47mH | 100mH |
 
+### Group allocations for the main RLC experiment
+
+The frequency in this table is the target **−3 dB corner**, in hertz. Odd-numbered groups build low-pass (LP); even-numbered groups build high-pass (HP). Use the assigned frequency even if it differs from another group with the same filter type.
+
 | Pair | Type | Frequency (Hz) | Pair | Type | Frequency (Hz) | Pair | Type | Frequency (Hz) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| A01 | LP | 1900 | A38 | LP | 8700 | B20 | HP | 7400 |
-| A02 | HP | 8700 | A39 | LP | 5100 | B21 | HP | 8800 |
-| A03 | HP | 7400 | A40 | HP | 4000 | B22 | LP | 5300 |
-| A04 | HP | 1800 | A41 | LP | 3400 | B23 | HP | 1100 |
-| A05 | HP | 8800 | A42 | HP | 5900 | B24 | HP | 4900 |
-| A06 | HP | 1900 | A43 | HP | 4000 | B25 | HP | 7300 |
-| A07 | HP | 8800 | A44 | HP | 1900 | B26 | LP | 2800 |
-| A08 | HP | 5000 | A45 | HP | 4900 | B27 | LP | 4400 |
-| A09 | HP | 2800 | A46 | HP | 5900 | B28 | LP | 2000 |
-| A10 | LP | 2700 | A47 | LP | 2800 | B29 | LP | 2300 |
-| A11 | HP | 2300 | A48 | LP | 6600 | B30 | LP | 5000 |
-| A12 | LP | 1900 | A49 | HP | 2300 | B31 | HP | 1500 |
-| A13 | HP | 4900 | A50 | HP | 6100 | B32 | HP | 5100 |
-| A14 | HP | 5000 | A51 | LP | 5000 | B33 | HP | 2300 |
-| A15 | HP | 5300 | A52 | LP | 5900 | B34 | LP | 2300 |
-| A16 | LP | 5900 | A53 | LP | 7300 | B35 | LP | 3400 |
-| A17 | LP | 7400 | A54 | HP | 8900 | B36 | LP | 4900 |
-| A18 | LP | 7300 | A55 | LP | 2800 | B37 | HP | 3400 |
-| A19 | HP | 4100 | B01 | LP | 4500 | B38 | HP | 3300 |
-| A20 | HP | 1700 | B02 | LP | 7400 | B39 | LP | 2400 |
-| A21 | LP | 7400 | B03 | LP | 3400 | B40 | LP | 3300 |
-| A22 | HP | 5900 | B04 | HP | 1400 | B41 | HP | 2300 |
-| A23 | LP | 3400 | B05 | LP | 6100 | B42 | LP | 5100 |
-| A24 | LP | 1600 | B06 | LP | 1900 | B43 | LP | 2700 |
-| A25 | HP | 8700 | B07 | HP | 1600 | B44 | LP | 5000 |
-| A26 | HP | 8800 | B08 | LP | 1600 | B45 | LP | 3400 |
-| A27 | HP | 3400 | B09 | LP | 4400 | B46 | LP | 4800 |
-| A28 | LP | 8800 | B10 | HP | 1700 | B47 | LP | 5900 |
-| A29 | LP | 8700 | B11 | HP | 1100 | B48 | HP | 8700 |
-| A30 | LP | 970 | B12 | LP | 4900 | B49 | HP | 1100 |
-| A31 | HP | 730 | B13 | LP | 5900 | B50 | HP | 7300 |
-| A32 | LP | 3400 | B14 | LP | 1900 | B51 | HP | 7300 |
-| A33 | HP | 3400 | B15 | LP | 2300 | B52 | LP | 2100 |
+| A01 | LP | 1900 | A38 | HP | 8700 | B20 | HP | 7400 |
+| A02 | HP | 8700 | A39 | LP | 5100 | B21 | LP | 8800 |
+| A03 | LP | 7400 | A40 | HP | 4000 | B22 | HP | 5300 |
+| A04 | HP | 1800 | A41 | LP | 3400 | B23 | LP | 1100 |
+| A05 | LP | 8800 | A42 | HP | 5900 | B24 | HP | 4900 |
+| A06 | HP | 1900 | A43 | LP | 4000 | B25 | LP | 7300 |
+| A07 | LP | 8800 | A44 | HP | 1900 | B26 | HP | 2800 |
+| A08 | HP | 5000 | A45 | LP | 4900 | B27 | LP | 4400 |
+| A09 | LP | 2800 | A46 | HP | 5900 | B28 | HP | 2000 |
+| A10 | HP | 2700 | A47 | LP | 2800 | B29 | LP | 2300 |
+| A11 | LP | 2300 | A48 | HP | 6600 | B30 | HP | 5000 |
+| A12 | HP | 1900 | A49 | LP | 2300 | B31 | LP | 1500 |
+| A13 | LP | 4900 | A50 | HP | 6100 | B32 | HP | 5100 |
+| A14 | HP | 5000 | A51 | LP | 5000 | B33 | LP | 2300 |
+| A15 | LP | 5300 | A52 | HP | 5900 | B34 | HP | 2300 |
+| A16 | HP | 5900 | A53 | LP | 7300 | B35 | LP | 3400 |
+| A17 | LP | 7400 | A54 | HP | 8900 | B36 | HP | 4900 |
+| A18 | HP | 7300 | A55 | LP | 2800 | B37 | LP | 3400 |
+| A19 | LP | 4100 | B01 | LP | 4500 | B38 | HP | 3300 |
+| A20 | HP | 1700 | B02 | HP | 7400 | B39 | LP | 2400 |
+| A21 | LP | 7400 | B03 | LP | 3400 | B40 | HP | 3300 |
+| A22 | HP | 5900 | B04 | HP | 1400 | B41 | LP | 2300 |
+| A23 | LP | 3400 | B05 | LP | 6100 | B42 | HP | 5100 |
+| A24 | HP | 1600 | B06 | HP | 1900 | B43 | LP | 2700 |
+| A25 | LP | 8700 | B07 | LP | 1600 | B44 | HP | 5000 |
+| A26 | HP | 8800 | B08 | HP | 1600 | B45 | LP | 3400 |
+| A27 | LP | 3400 | B09 | LP | 4400 | B46 | HP | 4800 |
+| A28 | HP | 8800 | B10 | HP | 1700 | B47 | LP | 5900 |
+| A29 | LP | 8700 | B11 | LP | 1100 | B48 | HP | 8700 |
+| A30 | HP | 970 | B12 | HP | 4900 | B49 | LP | 1100 |
+| A31 | LP | 730 | B13 | LP | 5900 | B50 | HP | 7300 |
+| A32 | HP | 3400 | B14 | HP | 1900 | B51 | LP | 7300 |
+| A33 | LP | 3400 | B15 | LP | 2300 | B52 | HP | 2100 |
 | A34 | HP | 5900 | B16 | HP | 2300 | B53 | LP | 8800 |
-| A35 | LP | 4000 | B17 | LP | 4400 | B54 | LP | 1400 |
-| A36 | HP | 3400 | B18 | HP | 5900 | B55 | HP | 5900 |
-| A37 | LP | 1700 | B19 | HP | 8900 |  |  |  |
+| A35 | LP | 4000 | B17 | LP | 4400 | B54 | HP | 1400 |
+| A36 | HP | 3400 | B18 | HP | 5900 | B55 | LP | 5900 |
+| A37 | LP | 1700 | B19 | LP | 8900 |  |  |  |
 
 LP: low-pass; HP: high-pass.
 
