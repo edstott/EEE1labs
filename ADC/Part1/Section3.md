@@ -37,7 +37,9 @@ In an ideal series connection the impedances cancel, giving zero impedance at re
 
 This resonance comes from connecting the separate capacitor and inductor together. It is different from an individual inductor's **self-resonance**, which involves its unwanted inter-winding capacitance.
 
-<!-- Qualitative figure to redraw: series impedance minimum and parallel impedance maximum, using the same symbolic resonant-frequency guide and consistent graph style. -->
+<p align="center">
+  <img src="graphics/resonance_trends.png" alt="resonance trends" width="700">
+</p>
 
 ### Series LC network
 
@@ -163,11 +165,13 @@ R_1=R_2=1\,\mathrm{k}\Omega,
 C_1=C_2=100\,\mathrm{nF}.
 $$
 
-These are the corrected resistor values in the measurement report. The earlier repository diagram shows 10 kΩ; we will redraw it with **1 kΩ**.
+Use these component values for the experiment; they give the intended frequency range for the comparison.
 
 Connect $R_1$ from the input to the first node and $C_1$ from that node to ground. Connect $R_2$ from the first node to the output, and $C_2$ from the output to ground.
 
-<!-- New figure: second_order_rc_lowpass.png, using 1 kΩ resistors and 100 nF capacitors. Match Section 1 style. -->
+<p align="center">
+  <img src="graphics/second_order_rc_lowpass.png" alt="second order rc lowpass" width="700">
+</p>
 
 At low frequency, both capacitors have large impedances, little current flows through the resistors, and the output approaches the input. At high frequency, the capacitors increasingly shunt the signal to ground and the output falls.
 
@@ -180,7 +184,9 @@ $$
 
 The component time constant gives $1/(2\pi RC)\approx1.59\,\mathrm{kHz}$, but this is **not the −3 dB frequency of the loaded ladder**. Its −3 dB point is approximately 0.374 times this value, about 596 Hz.
 
-<!-- Qualitative magnitude/phase graph: second-order RC response compared with first-order trend; no original numerical values. -->
+<p align="center">
+  <img src="graphics/second_order_filter_trends.png" alt="second order filter trends" width="700">
+</p>
 
 1. Predict the response in LTspice using the complete connected circuit.
 2. Build the ladder and connect CH1 to its input and CH2 to its output.
@@ -238,7 +244,9 @@ A notch, or band-stop, filter rejects a band around a particular frequency while
 
 Use the **Twin-T topology from Adam's work**: two T networks connected in parallel between input and output. One T has two series resistors and a midpoint capacitor to ground; the other has two series capacitors and a midpoint resistor to ground.
 
-<!-- New figure: twin_t_notch.png. Show topology with R, R, R/2 and C, C, 2C so students choose values. Match Section 1 style. -->
+<p align="center">
+  <img src="graphics/twin_t_notch.png" alt="twin t notch" width="700">
+</p>
 
 For the balanced ideal circuit:
 
@@ -254,7 +262,9 @@ $$
 
 Design for a notch frequency of approximately **1.6 kHz**, choosing components from the available-parts list. The two paths cancel at the ideal notch frequency. Component mismatch, source and load effects, and measurement noise limit the depth of a real notch.
 
-<!-- Qualitative notch magnitude/phase figure: symbolic notch frequency and finite measured-style minimum; no original measured values. -->
+<p align="center">
+  <img src="graphics/notch_filter_trends.png" alt="notch filter trends" width="700">
+</p>
 
 1. Choose $R$ and $C$ and obtain the balancing values $R/2$ and $2C$. Use series or parallel combinations where they improve the match.
 2. Calculate the predicted notch frequency and simulate the circuit.
