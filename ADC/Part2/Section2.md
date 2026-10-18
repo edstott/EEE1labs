@@ -1,17 +1,17 @@
 # Analysis and Design of Circuits Lab
-# Part 2: Op-Amp Circuits - Autumn Term weeks 8–10
+# Part 2: Autumn Term weeks 8–10
 
 ## Section 2: Gain–Bandwidth Product and Active Filtering
 
-In Section 1 you used negative feedback to set an amplifier's gain. That gain cannot remain constant at arbitrarily high frequencies: a real op-amp responds less strongly as frequency increases. First you will measure this bandwidth limitation. Then you will deliberately shape the frequency response by adding a capacitor to the feedback network, building an **active low-pass filter**.
+In Section 1 you used negative feedback to set an amplifier's gain. That gain cannot remain constant at arbitrarily high frequencies: a real op-amp responds less strongly as frequency increases. First you will measure this bandwidth limitation. Then you will deliberately shape the frequency response by adding a capacitor to the feedback network, building **first- and second-order active low-pass filters**.
 
-Complete Activities 1 and 2 before attempting the challenges. The main filter is based on the inverting low-pass topology investigated by Adam. You will measure its electrical response and listen to its effect on a noisy music signal. The Filter Wizard challenge explores more selective designs **within the online tool only**.
+Activities 1–4 are **compulsory**: measure gain–bandwidth product, build and measure both active filters, compare their sound, and simulate the ideal second-order response in LTspice. Both filters have a low-frequency gain **magnitude of 1.5** and corners near 1.5 kHz. The final Filter Wizard task is a challenge conducted within the online tool only.
 
 ### Before the lab
 
 1. Find the gain–bandwidth product (GBW, also called GBP), slew rate and open-loop gain-versus-frequency plot in the [LT1366 datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/1366fb.pdf).
 2. Calculate the signal gain and noise gain for an inverting amplifier with 1.5 kΩ input resistance and 68 kΩ feedback resistance.
-3. Calculate the passband gain and corner frequency of the low-pass filter in Activity 2.
+3. Calculate the passband gain and corner frequency of the first-order filter in Activity 2. Read the second-order circuit description and identify its two capacitors.
 4. Prepare the measurement tables in your lab book. Predict the main features of each response before taking measurements.
 
 ### Supply, reference and measurement connections
@@ -80,56 +80,53 @@ At very high frequencies the output may be small enough for noise and scope reso
 - [ ] Plot the response, identify the upper −3 dB bandwidth and estimate GBW.
 - [ ] Distinguish the input coupling transition from the op-amp bandwidth limit.
 
-## Activity 2: build an active low-pass filter
+## Activity 2: build a first-order active low-pass filter
 
 ### From amplifier to filter
 
-A capacitor's impedance decreases as frequency increases. Putting a capacitor **in parallel with the feedback resistor** makes the feedback impedance frequency dependent, so the amplifier gain becomes frequency dependent too.
+Putting a capacitor **in parallel with the feedback resistor** makes the feedback impedance frequency dependent. At low frequency the capacitor has high impedance and the feedback resistor sets the gain. At high frequency the capacitor provides a lower-impedance path, reducing the gain. This is the inverting low-pass topology investigated by Adam, with values chosen for modest gain and an audio-frequency corner.
 
-At low frequency, the capacitor has high impedance and the feedback resistor sets the gain. At high frequency, the capacitor provides a lower-impedance feedback path, reducing the gain. This is Adam's inverting active low-pass topology, adapted for a single supply and a suitable bias point.
+Active filters can provide passband gain and avoid inductors, which can be bulky and have significant parasitic effects. A powered op-amp can also reduce output-loading effects within its bandwidth, current and voltage limits. Adding an op-amp alone does not make a first-order roll-off steeper.
 
-Active filters use a powered amplifier with resistors and capacitors to shape the response. They can provide passband gain and avoid inductors, which can be bulky and have significant parasitic effects. More complex active-filter circuits can produce higher-order responses, but require additional components and careful design.
-
-<p align="center"><img src="graphics/active_lowpass.png" alt="Single-supply inverting low-pass filter with a capacitor in parallel with the feedback resistor" width="800"></p>
-
-Use the following values. Adam's 100 nF feedback capacitor gave a corner near 159 Hz; here **10 nF** moves it to approximately **1.59 kHz**.
+<p align="center"><img src="graphics/active_lowpass.png" alt="First-order inverting active low-pass filter with low-frequency gain minus 1.5" width="800"></p>
 
 | Component or property | Value |
 | --- | --- |
-| Input resistance, $R_\mathrm{in}$ | 1 kΩ |
-| Feedback resistance, $R_\mathrm{fb}$ | 10 kΩ |
-| Feedback capacitance, $C_\mathrm{fb}$ | 10 nF |
-| Passband signal gain | −10; magnitude 10 or 20 dB |
-| Predicted corner frequency | Approximately 1.59 kHz |
+| Input resistance, $R_\mathrm{in}$ | 10 kΩ |
+| Feedback resistance, $R_\mathrm{fb}$ | 15 kΩ |
+| Feedback capacitance, $C_\mathrm{fb}$ | 6.8 nF |
+| Low-frequency signal gain | −1.5; magnitude 1.5, approximately 3.52 dB |
+| Predicted corner frequency | Approximately 1.56 kHz |
 | Non-inverting input reference | Approximately 2.5 V |
 
-For the AC signal, assuming the op-amp behaves approximately ideally:
+For the AC signal, assuming an approximately ideal op-amp:
 
 $$
-T(j\omega)=-\frac{R_\mathrm{fb}}{R_\mathrm{in}}\frac{1}{1+j\omega R_\mathrm{fb}C_\mathrm{fb}},\qquad
-f_c=\frac{1}{2\pi R_\mathrm{fb}C_\mathrm{fb}}.
+T_1(j\omega)=-\frac{R_\mathrm{fb}}{R_\mathrm{in}}\frac{1}{1+j\omega R_\mathrm{fb}C_\mathrm{fb}},\qquad
+f_{c1}=\frac{1}{2\pi R_\mathrm{fb}C_\mathrm{fb}}.
 $$
 
-At the corner the magnitude is 0.707 of the passband value: approximately **7.07**, or **17 dB** for this circuit. A −3 dB corner means 3 dB below the passband level, not necessarily an absolute gain of −3 dB.
+At the corner, the magnitude is 0.707 of the passband value: approximately **1.06**, or **0.51 dB**. A −3 dB corner means 3 dB **below the passband**, not necessarily an absolute gain of −3 dB.
 
-### DC bias matters
+### DC bias and input signal
 
-There is **no input coupling capacitor** in the main filter shown. Set the AWG's DC offset to **+2.5 V**, matching Vref, so that the input and output are both centred near mid-supply. At DC the feedback capacitor is open, and:
+There is no input coupling capacitor in the main measurement circuit. Set the AWG input to a **100 mV peak sine wave (200 mV peak-to-peak), with +2.5 V DC offset**, matching Vref. The output should also be centred near 2.5 V. At DC:
 
 $$
 V_\mathrm{out,DC}=V_\mathrm{ref}-\frac{R_\mathrm{fb}}{R_\mathrm{in}}(V_\mathrm{in,DC}-V_\mathrm{ref}).
 $$
 
-Connecting a zero-centred source directly would demand an output outside the supply range. An offset added only to the scope display cannot fix the physical circuit. Small differences between AWG offset and Vref are also amplified; check the measured DC output before sweeping.
+A zero-centred source connected directly would demand an output outside the supply range. A display offset on the scope does not fix the physical circuit. Check the actual input and output DC levels before measuring.
 
 ### Build and measure
 
 1. Power off and build the filter, keeping the buffered reference and +5 V/0 V supplies. Leave earphones disconnected.
-2. Set the AWG to **100 mV peak (200 mV peak-to-peak), +2.5 V offset**, initially at 100 Hz. Check the actual input and output DC voltages. Adjust the source offset towards measured Vref if necessary.
-3. Confirm an unclipped output. If necessary, reduce the input amplitude and record the value used.
-4. Connect CH1 to the filter input and CH2 to the output, with both probe ground clips at 0 V. Use DC coupling.
-5. Measure the frequencies below, calculate gain and phase, and plot the response. Add readings around the corner to locate it more accurately.
-6. Identify the passband gain, −3 dB corner and approximate stopband slope. Compare with the predictions and with a passive low-pass filter from Part 1.
+2. Apply the AWG signal specified above, initially at 100 Hz. Check the output DC level and an unclipped, inverted sine wave. Allow the voltages to settle after changes.
+3. Connect CH1 to the input and CH2 to the output, with both probe ground clips at 0 V. Use DC coupling.
+4. Measure the frequencies below. Calculate gain magnitude and gain in dB, and measure phase using crossings of each waveform's own centre line.
+5. Plot gain and phase against logarithmic frequency. Identify the passband gain, −3 dB corner and approximate stopband slope. Add readings around the corner where needed.
+
+Use this same frequency list for the second-order filter; add columns to one table or make a second copy. **Both filters must be measured.**
 
 | Frequency (Hz) | Input p-p (V) | Output p-p (V) | Gain magnitude | Gain (dB) | Phase (°) |
 | --- | --- | --- | --- | --- | --- |
@@ -137,63 +134,120 @@ Connecting a zero-centred source directly would demand an output outside the sup
 | 300 | | | | | |
 | 600 | | | | | |
 | 1000 | | | | | |
-| 1600 | | | | | |
+| 1500 | | | | | |
 | 2000 | | | | | |
 | 3000 | | | | | |
 | 6000 | | | | | |
 | 8000 | | | | | |
-| 10000 | | | | | |
-| 20000 | | | | | |
+| 15000 | | | | | |
 
-<p align="center"><img src="graphics/active_lowpass_trend.png" alt="Qualitative first-order active low-pass magnitude response" width="750"></p>
+<p align="center"><img src="graphics/active_lowpass_trend.png" alt="Qualitative first-order active low-pass response" width="750"></p>
 
-The ideal stopband slope is **−20 dB per decade**, the same as a first-order passive low-pass filter. The op-amp provides gain and can reduce output-loading effects; it does not make a first-order transition sharper. Those advantages remain limited by its bandwidth, output-current capability and output swing. The filter also loads its source through an input resistance of approximately 1 kΩ.
+The ideal stopband slope is **−20 dB per decade**, the same as a first-order passive low-pass filter. The output is inverted: its phase may be plotted from +180° towards +90°, or continuously from −180° towards −270°. State your convention. The op-amp introduces further phase shift at sufficiently high frequency. The input resistance is approximately 10 kΩ in the intended operating region, so source loading is not eliminated.
 
-The low-frequency output is inverted. Its phase can be shown from +180° towards +90°, or continuously unwrapped from −180° towards −270°; either convention is acceptable if used consistently. The real op-amp adds further phase shift at sufficiently high frequency.
+- [ ] Build and characterise the first-order active low-pass filter.
+- [ ] Distinguish its deliberate feedback-capacitor response from the op-amp bandwidth limitation measured in Activity 1.
 
-- [ ] Build and characterise the active low-pass filter.
-- [ ] Explain how changing feedback impedance produces the response and why it differs from the bandwidth limitation in Activity 1.
+## Activity 3: build a second-order active low-pass filter
 
-### Listen to the low-pass filter removing an unwanted tone
+A second-order filter has two energy-storage elements and can provide a steeper stopband roll-off. Simply adding another capacitor anywhere in the first circuit does not guarantee the required response: the arrangement and component ratios matter.
 
-Use the **signal-source module in mode 8: melody with an unwanted whine near 8 kHz**. This is the small source module used in Section 1, rather than a setting on the oscilloscope AWG. Power it from +5 V and 0 V.
+Build the **Sallen–Key low-pass filter** below. Its non-inverting amplifier has gain 1.5. One capacitor connects the junction of the two filter resistors to the output; the other connects the non-inverting input node to Vref. Check these connections carefully.
 
-<p align="center"><img src="graphics/active_lowpass_audio.png" alt="Mode-8 source connected through a coupling capacitor to the biased active low-pass filter and earphone adapter" width="850"></p>
+<p align="center"><img src="graphics/active_lowpass_second_order.png" alt="Biased second-order Sallen-Key low-pass with gain 1.5 and two equal capacitors" width="850"></p>
 
-1. Disconnect the AWG output before connecting the source module. Keep the filter's +5 V/0 V supplies, 2.5 V reference, 10 kΩ feedback resistor and 10 nF feedback capacitor.
-2. For this listening test, change the **input resistor to 10 kΩ**. This reduces the nominal passband gain magnitude from 10 to 1, giving more headroom for the source module's signal. The feedback time constant—and hence the predicted low-pass corner—remains unchanged.
-3. Connect source OUT through a **10 µF coupling capacitor**, then through the input resistor to the inverting node. This capacitor is needed because the source signal is centred near 0 V, whereas the filter operates around 2.5 V. If using a polarised capacitor, its positive terminal faces the input resistor/op-amp, and its negative terminal faces source OUT. Connect source ground to circuit 0 V.
-4. Check that the output settles near 2.5 V and that the music waveform is not clipped. Increase the input resistance further if necessary to reduce the gain; note the value used. Leave the feedback components unchanged.
-5. First listen to the **unfiltered mode-8 source** through the earphone adapter. Then move the adapter to the **filter output**, as shown. Power off while moving connections and begin listening at a low, comfortable level. Always use the adapter to block DC from the earphones.
-6. Compare the unwanted high-pitched whine and the melody. The whine should be less prominent, although the sound may also become quieter and lose some higher-frequency musical content. Compare the sound balance rather than interpreting an overall fall in volume alone as selective noise removal.
-7. Observe input and output on the scope and describe the change in your lab book. If connecting the earphones changes the output waveform or causes distortion, investigate output loading with the demonstrator.
+| Component or property | Value |
+| --- | --- |
+| First filter resistor, $R_1$, nearest the input | 15 kΩ |
+| Second filter resistor, $R_2$, nearest the non-inverting input | 7.5 kΩ; two 15 kΩ resistors in parallel may be used |
+| Feedback-path filter capacitor, $C_1$, from the R1/R2 junction to output | 10 nF |
+| Shunt filter capacitor, $C_2$, from non-inverting input to Vref | 10 nF |
+| Amplifier feedback resistor, $R_\mathrm{f}$ | 15 kΩ |
+| Amplifier lower gain resistor, $R_\mathrm{g}$, returned to Vref | 30 kΩ; two 15 kΩ resistors in series may be used |
+| Low-frequency gain, $K=1+R_\mathrm{f}/R_\mathrm{g}$ | +1.5 |
+| Predicted −3 dB corner | Approximately 1.50 kHz |
 
-This first-order filter **reduces rather than completely removes** the 8 kHz tone. Its corner near 1.59 kHz also attenuates wanted notes near 2 kHz. That compromise motivates the higher-order filter-design challenge below. The added input coupling capacitor introduces a much lower high-pass transition; this listening circuit is approximately low-pass over the wanted audio band, rather than all the way down to DC.
+For the equal capacitors $C_1=C_2=C$, the natural frequency and quality factor are:
 
-| Observation | Unfiltered mode-8 source | Filtered output |
+$$
+f_0=\frac{1}{2\pi C\sqrt{R_1R_2}},\qquad
+Q=\frac{\sqrt{R_1R_2}}{R_2+(2-K)R_1}.
+$$
+
+These values give $Q=1/\sqrt{2}\approx0.707$: a **second-order Butterworth response**, with a flat passband and no ideal gain peak. For this response, $f_0$ equals the −3 dB corner. In general, a second-order natural frequency need not be its −3 dB frequency.
+
+The small-signal transfer function is:
+
+$$
+T_2(s)=\frac{K}{1+s/(Q\omega_0)+(s/\omega_0)^2},\qquad \omega_0=2\pi f_0.
+$$
+
+Changing the amplifier gain changes the damping as well as the passband gain. Keep the stated resistor ratios rather than changing the gain resistors independently. See [TI's active low-pass filter design guide](https://www.ti.com/lit/an/sloa049d/sloa049d.pdf) for the Sallen–Key design equations.
+
+### Build, measure and compare
+
+1. Power off and replace the first-order experimental stage with the second-order circuit. Keep the same buffered Vref and +5 V/0 V supplies. Build the two filters **in turn**; they are not cascaded.
+2. Keep the earphones disconnected. Apply the same **100 mV peak, +2.5 V offset AWG sine wave**, initially at 100 Hz. At DC, the filter capacitors are open; an input equal to Vref gives an output near Vref. Both signal inputs and the output should be close to 2.5 V.
+3. Measure the second-order filter at the frequencies in Activity 2. Use CH1 at the input and CH2 at the output, both referenced to 0 V.
+4. Plot both magnitude responses on the same axes. Identify the passband gains and corners. The nominal corners differ slightly (1.56 kHz and 1.50 kHz); allow for this when comparing them.
+5. Compare gains at 8 kHz and slopes between 1.5 kHz and 15 kHz. The ultimate slopes are −20 and −40 dB per decade, but a measurement starting at the corner is still partly in the transition region.
+6. Compare phase. The first-order circuit inverts; the second-order circuit does not invert at low frequency and its ideal phase moves from approximately 0° towards −180°. Account for that difference before comparing phase curves.
+
+<p align="center"><img src="graphics/active_lowpass_comparison.png" alt="Qualitative first- and second-order low-pass magnitude responses with equal passband gain" width="750"></p>
+
+| Comparison | First order | Second order |
 | --- | --- | --- |
-| Prominence of the high-pitched whine | | |
-| Clarity and brightness of the melody | | |
-| Overall listening level | | |
-| Output clipping or distortion | | |
+| Measured passband gain magnitude | | |
+| Measured −3 dB corner (Hz) | | |
+| Attenuation at 8 kHz relative to passband (dB) | | |
+| Observed stopband trend (dB/decade) | | |
+| Low-frequency inversion? | | |
 
-- [ ] Demonstrate the filter's effect on the sound and explain both the improvement and the compromise.
+### Listen to both filters with source mode 8
 
-### Challenge: compare the measured filter with LTspice
+Use the **signal-source module in mode 8: melody with an unwanted whine near 8 kHz**. This is the small source module used in Section 1, not a setting on the oscilloscope AWG. Power it from +5 V and 0 V.
 
-Simulate the circuit you have built using the LT1366 model and the actual component values. Include the +5 V/0 V supplies and bias reference. Check the DC operating point first. For AC analysis, give the input source **DC 2.5 V and AC amplitude 1 V**; AC amplitude is a small-signal normalisation, not a physical 1 V transient applied to the circuit.
+<p align="center"><img src="graphics/active_lowpass_audio.png" alt="Mode-8 source AC-coupled to the first-order filter and earphone adapter" width="850"></p>
 
-Plot the ratio $V(\mathrm{out})/V(\mathrm{in})$ and compare it with your measured response. Use a small sine wave with the correct DC offset for a separate transient check. Explain differences rather than expecting an ideal op-amp to reproduce every measured feature.
+<p align="center"><img src="graphics/active_lowpass_second_order_audio.png" alt="Mode-8 source AC-coupled and biased for the second-order filter and earphone adapter" width="850"></p>
 
-### Challenge: build an active high-pass filter
+1. Disconnect the AWG before connecting the source module. Keep the filter values unchanged: both circuits retain a nominal low-frequency gain magnitude of **1.5**.
+2. For the **first-order filter**, connect source OUT through a **10 µF coupling capacitor**, then through its 10 kΩ input resistor. The capacitor blocks the source DC while the inverting node remains biased near 2.5 V.
+3. For the **second-order filter**, connect source OUT through a **10 µF coupling capacitor** to a new input-bias node. Connect **100 kΩ from that node to buffered Vref**, then connect the node to $R_1$. This resistor establishes the DC input level when the capacitor blocks DC. Do not leave this input floating.
+4. If the coupling capacitor is polarised, its positive terminal faces the biased filter and its negative terminal faces source OUT. Connect all source and scope grounds to 0 V. Allow the capacitor to charge, then verify an output near 2.5 V and no clipping before listening.
+5. Listen first to the unfiltered mode-8 source, then to each filter output through the **DC-blocking earphone adapter**. Power off while moving connections. Begin at a low, comfortable listening level.
+6. Compare the prominence of the whine and the clarity of the melody. An overall change in loudness alone is not evidence of selective noise removal: source loading and amplification also affect level.
+7. Check the output waveform with and without the earphone load. If the load changes the response significantly or causes distortion, ask the demonstrator to help add a separate output buffer using an additional amplifier channel. Do not change the Sallen–Key gain resistors to control volume, because this also changes its damping.
 
-If time permits, build Adam's non-inverting high-pass topology with the single-supply biasing shown below.
+The second-order filter should provide greater suppression of the 8 kHz tone. Both filters also attenuate wanted notes near 2 kHz; the second-order filter can make this upper part of the melody duller. Listen for this compromise rather than assuming a steeper filter always improves every aspect of the sound.
 
-<p align="center"><img src="graphics/active_highpass.png" alt="Biased non-inverting active high-pass filter referenced to buffered Vref" width="800"></p>
+The source's output impedance and added coupling/bias network can alter the complete audio response, particularly the Sallen–Key component ratios seen by the signal. The AWG measurements are the main comparison with the calculated filter response. The coupling capacitor also introduces a low-frequency transition, so the listening circuits are approximately low-pass over the wanted audio band, rather than down to DC.
 
-Use a **10 nF input capacitor**, **10 kΩ from the non-inverting input to Vref**, **62 kΩ feedback resistance** and **3.3 kΩ from the inverting input to Vref**. The ideal high-pass corner is approximately **1.59 kHz**, and the passband gain is approximately $1+62/3.3=19.8$.
+| Listening observation | Unfiltered source | First-order filter | Second-order filter |
+| --- | --- | --- | --- |
+| Prominence of the high-pitched whine | | | |
+| Clarity/brightness of melody | | | |
+| Overall listening level | | | |
+| Clipping or distortion | | | |
 
-Use a **10 mV peak AWG sine wave with 0 V offset**; the input capacitor blocks DC and the reference resistor establishes the internal bias. Check a 2.5 V output operating point. Take selected readings from the Activity 2 table. The op-amp bandwidth eventually causes the gain to fall at high frequency, so the ideal high-pass plateau does not extend indefinitely.
+- [ ] Build and characterise both filter orders and compare their sound using mode 8.
+
+## Activity 4: obtain the ideal second-order response in LTspice
+
+This simulation is **compulsory**. Use the same component values as the second-order hardware circuit so that the ideal prediction can be compared with measurements.
+
+1. Draw the Sallen–Key circuit in LTspice, including its 2.5 V reference and input DC operating point. For the first run, use an **ideal op-amp** or an approximation with sufficiently large gain and bandwidth that its limitations do not affect this frequency range. Ask the demonstrator which ideal model is available. An ideal voltage-controlled voltage source with very large differential gain is another suitable small-signal model.
+2. Set the input source to **DC 2.5 V and AC amplitude 1 V**. For this ideal baseline, use the main AWG measurement circuit without the audio coupling capacitor, source-module impedance or earphones.
+3. Run an operating-point analysis first. Then run an AC sweep, for example **100 points per decade from 10 Hz to 1 MHz**.
+4. Plot the magnitude in dB and phase of **$V(\mathrm{out})/V(\mathrm{in})$**. Locate the passband gain, −3 dB corner and approximately −40 dB/decade stopband trend.
+5. Overlay or compare the measured second-order response with the ideal prediction. Compare attenuation at 8 kHz and explain differences, considering tolerances, source impedance and real op-amp behaviour.
+6. Replace the ideal model with **LT1366**, including its +5 V/0 V supplies, and repeat the operating-point and AC analyses. Compare the ideal, realistic-model and measured results. High-frequency departures from the ideal filter can arise from finite op-amp gain and bandwidth.
+
+A [companion ideal SPICE file](Part2_Section2_Ideal_Filters.cir) provides an ideal SPICE reference for both filter orders. Open it in LTspice, run it, and add traces `dB(V(out1)/V(in))` and `dB(V(out2)/V(in))` for the magnitude comparison. The ideal models deliberately omit supply clipping and output-current limits; they represent the ideal mathematical baseline, not a complete hardware model.
+
+**AC analysis uses linearisation about the DC operating point.** Its 1 V AC setting is a normalisation, not a physical 1 V sine wave applied in a transient test. For transient analysis, use a small sine wave with the correct DC offset. Scope measurements use physical amplitudes and must remain unclipped.
+
+- [ ] Present the ideal second-order curve, the LT1366-model curve and measured points, with an explanation of their differences.
 
 ## Challenge: explore sharper low-pass filters using Filter Wizard
 
@@ -229,7 +283,7 @@ For an all-pole low-pass response, the ultimate roll-off is approximately **−2
 
 - Compare A, B and C: how does demanding stronger rejection change the order, slope and op-amp count? Order changes in whole-number steps, so a small specification change does not always add another stage.
 - Compare B and D: why does moving the stopband closer to the passband require a more selective filter?
-- Which design would be appropriate for the mode-8 music and 8 kHz whine? Explain why the first-order filter you built cannot match its combination of wanted-band preservation and unwanted-tone rejection.
+- Which design would be appropriate for the mode-8 music and 8 kHz whine? Explain why the first- and second-order filters you built cannot match its combination of wanted-band preservation and unwanted-tone rejection.
 - If time permits, compare one design with another response family. Does a sharper transition come with passband ripple or another change in the response?
 
 Save the tool's response plots and complete the table in your lab book. The aim is to demonstrate that a tighter filtering specification generally needs a higher order and a more complex circuit with more op-amp stages.
