@@ -31,7 +31,7 @@ $$
 Z=R_s+jX,
 $$
 
-where $R_s$ is its resistive part and $X$ is its reactance. Both are measured in ohms. Reactance is a real, signed quantity: positive for an ideal inductor and negative for an ideal capacitor. It is $jX$ that forms the imaginary part of the impedance.
+where $R_s$ is its resistive part and $X$ is its reactance. Both are measured in ohms. Reactance is a real, signed quantity: positive for an ideal inductor and negative for an ideal capacitor. The reactance $X$ is the imaginary part of the impedance; $jX$ is its imaginary term.
 
 For example, at 1 kHz, an ideal 1 mH inductor has $Z_L\approx j6.3\,\Omega$, while an ideal 1 µF capacitor has $Z_C\approx-j159\,\Omega$.
 
