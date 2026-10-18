@@ -236,12 +236,14 @@ The source's output impedance and added coupling/bias network can alter the comp
 
 This simulation is **compulsory**. Use the same component values as the second-order hardware circuit so that the ideal prediction can be compared with measurements.
 
-1. Draw the Sallen–Key circuit in LTspice, including its 2.5 V reference and input DC operating point. For the first run, use an **ideal op-amp** or an approximation with sufficiently large gain and bandwidth that its limitations do not affect this frequency range. Ask the demonstrator which ideal model is available. An ideal voltage-controlled voltage source with very large differential gain is another suitable small-signal model.
+1. Draw the Sallen–Key circuit in LTspice, including its 2.5 V reference and input DC operating point. For the ideal baseline, replace the op-amp with a **voltage-dependent voltage source (SPICE E element)** with gain **`1e8`**. Connect its positive control terminal to the circuit's non-inverting-input node and its negative control terminal to the inverting-input node. Connect its positive output terminal to the filter output and its negative output terminal to ground. This gives $V_\mathrm{out}=10^8(V_\mathrm{noninv}-V_\mathrm{inv})$. The two control terminals represent signal inputs, not supply pins; this ideal element has no supply pins or built-in bandwidth, clipping or output-current limits.
 2. Set the input source to **DC 2.5 V and AC amplitude 1 V**. For this ideal baseline, use the main AWG measurement circuit without the audio coupling capacitor, source-module impedance or earphones.
 3. Run an operating-point analysis first. Then run an AC sweep, for example **100 points per decade from 10 Hz to 1 MHz**.
 4. Plot the magnitude in dB and phase of **$V(\mathrm{out})/V(\mathrm{in})$**. Locate the passband gain, −3 dB corner and approximately −40 dB/decade stopband trend.
 5. Overlay or compare the measured second-order response with the ideal prediction. Compare attenuation at 8 kHz and explain differences, considering tolerances, source impedance and real op-amp behaviour.
 6. Replace the ideal model with **LT1366**, including its +5 V/0 V supplies, and repeat the operating-point and AC analyses. Compare the ideal, realistic-model and measured results. High-frequency departures from the ideal filter can arise from finite op-amp gain and bandwidth.
+
+For this ideal baseline, use an ideal **2.5 V DC voltage source** for Vref so that you are comparing the filter itself. When replacing the ideal E element with the LT1366 model, restore the **buffered reference circuit** and connect the LT1366 supply pins to +5 V and 0 V. The ideal source output terminals and the real op-amp supply pins serve different purposes.
 
 **AC analysis uses linearisation about the DC operating point.** Its 1 V AC setting is a normalisation, not a physical 1 V sine wave applied in a transient test. For transient analysis, use a small sine wave with the correct DC offset. Scope measurements use physical amplitudes and must remain unclipped.
 
