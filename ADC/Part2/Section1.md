@@ -1,183 +1,232 @@
 # Analysis and Design of Circuits Lab
-# Part 2: Autumn Term weeks 8--10
+# Part 2: Autumn Term weeks 8–10
 
-## Section 1: Biasing and amplification
+## Section 1: Amplification, Supply Rails and Biasing
 
-## Introduction
+### Why do we need an amplifier?
 
-Opamps are used for amplifying and processing analogue signals.
-In this experiment you will build some of the most common opamp circuits.
-There are two parts to the experiment and you should allow approximately one lab session for each part, leaving one session for catchup and oral preparation.
-				
-![Non-passive components in this experiment](graphics/opamp-components.png)
-		
-### LT1366 opamp
+A signal source can produce a clearly visible voltage on an oscilloscope but still give a very quiet sound when connected to earphones. The important question is not only **how much voltage the source produces without a load**, but also **whether it can maintain that voltage while supplying current to the load**.
 
-Opamps are produced by manufacturers to different specification to suit a range of applications.
-Since the ideal behaviour of an opamp is a universal concept, these specifications generally define how a particular opamp deviates from the ideal model.
-			
-You will use the LT1366 opamp module in this experiment (shown in the table above).
-The opamp itself is an *integrated circuit* soldered to the bottom of the module.
-The module contains some extra components that protect the opamp from damage.
-There are two opamps in the LT1366, which have independent inputs and outputs but share the same power supply.
-			
-The positive power supply to the opamp module should be connected to the V+ pin and the negative supply or ground to V−.
-Refer to the diagram printed on the module to connect to the opamp inputs and outputs.
-			
-The full datasheet for the LT1366 can be found on the [manufacturers website](https://www.analog.com/media/en/technical-documentation/data-sheets/1366fb.pdf) — you will need to refer to it for parts of the experiment.
-Refer to the appendix for details about why the LT1366 was selected for this experiment.
-			
-### Signal source
+An oscilloscope probe has a high input impedance and draws very little current. Earphones have a much lower impedance and draw more current. The signal-source module is not an ideal voltage source: its internal output impedance forms a potential divider with the earphones. Once the earphones are connected, some of the source voltage is dropped inside the source, so less voltage appears across the earphones.
 
-Opamps usually carry out some sort of signal amplification or processing.
-In this experiment you are given a pair of signal source modules (shown in the table above) that can be included on your breadboard to introduce a variety of signals.
-			
-The module requires a power supply of 5–15V, supplied in the experiment by connections to the positive power rail (V+) and ground (GND).
-The output signal is generated on the OUT pin and a SYN pin is used to synchronise the signals from two modules or to provide an oscilloscope trigger.
-A rotary switch on the top selects which signal is generated; the options are:			
+For example, an approximately 64 Ω earphone load connected to a source with 1 kΩ internal resistance receives only about $64/(1000+64)\approx0.06$ of the internal source voltage when coupling-capacitor reactances are negligible. A small output voltage does not necessarily mean that the source generates a weak signal internally; it may mean that the source is being heavily loaded.
+
+An amplifier placed between the source and the earphones can help in three ways:
+
+1. **Reduce loading of the source.** An input impedance appreciably higher than the earphone impedance draws less current from the source and allows more of its voltage to reach the amplifier input. The input impedance depends on the amplifier circuit; an inverting amplifier does not have an infinite input impedance just because the op-amp itself draws very little signal-input current.
+2. **Supply the load current.** A sufficiently low output impedance and adequate output-current capability allow the amplifier to maintain a useful voltage across the earphones.
+3. **Provide voltage gain if needed.** The output signal can have a larger voltage amplitude than the signal at the amplifier input, within the limits set by its supply rails, bandwidth and load.
+
+The additional output energy comes from the **amplifier's power supply**. The input signal controls that energy; the amplifier does not create energy from the signal. A voltage follower can help drive a load even with a voltage gain of one, showing that amplification is not only about increasing voltage.
+
+In the first activity, you will observe the loading effect directly. You will then build an amplifier and investigate how its power supply determines the output voltages it can reproduce.
+
+### What you will do
+
+1. Compare the signal source with and without the earphone load.
+2. Set up +5 V, 0 V and −5 V using the desk supply.
+3. Build and measure a dual-supply inverting amplifier, which can reproduce both halves of a zero-centred signal.
+4. Change to a single +5 V/0 V supply and observe why the same unbiased circuit clips.
+5. Add a 2.5 V bias and input coupling capacitor so that the single-supply inverting circuit works correctly.
+6. Build the biased single-supply non-inverting circuit and explain its DC and AC behaviour separately.
+7. If time permits, build the single-supply audio mixer as a challenge.
+
+Allow approximately one session for this section and one for Section 2, leaving the remaining session for catch-up and oral preparation. Complete the numbered activities before the challenge. Record circuits, measurements and explanations in your lab book.
+
+<p align="center"><img src="graphics/opamp-components.png" alt="Components, circuit symbols and hardware" width="800"></p>
+
+### Recognising the symbols and module connections
+
+The op-amp symbol is the triangle shown in the middle column above. The **− input** is the inverting signal input; the **+ input** is the non-inverting signal input. These are different from the supply pins, **V+ and V−**, shown separately on the redrawn circuits. All circuits use this same symbol convention.
+
+The LT1366 module contains two op-amps sharing the same supply rails. Use the markings on the module to identify its inputs, outputs and supplies; a schematic symbol is not a physical pin layout. Keep the circuit unpowered while changing connections.
+
+An ideal op-amp draws no signal-input current. With negative feedback and an output operating within its limits, it drives its output so that its two signal inputs are approximately equal. This approximation does not hold when the output is clipped or the feedback is incorrectly connected.
+
+Real op-amps have finite bandwidth, output-current capability and output swing. Refer to the [LT1366 datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/1366fb.pdf). The available output swing depends on load; do not assume that an output can reach either supply rail exactly. Use the module's existing supply decoupling; if using a bare IC, ask the demonstrator about the required bypass capacitors and unused amplifier connection.
+
+### Signal source and earphones
+
+The signal-source module needs **+5 V and ground** in this experiment, even when the op-amp uses ±5 V. Its OUT pin provides the signal, and SYN synchronises two modules when required. Use the yellow source module for tasks requiring one source.
 
 | Mode | Signal |
-| ---- | ------ |
-| 0   |	Sine wave |
-| 1   |	Noisy sine wave |
-| 2   |	Music melody |
-| 3   |	Music bass |
-| 4   |	Unused |
-| 5   |	Unused |
-| 6   |	Unused |
-| 7   |	Unused |
-| 8   |	Melody with whine |
-| 9   |	Ground |
-			
-The SYN pin is used in certain modes to synchronise two signal source modules.
-You will be shown when to use it.
-Most experiment kits contain one green and one yellow signal source module.
-Use the yellow version for all tasks that require just one signal source.
-			
-## Before the lab
+| --- | --- |
+| 0 | Sine wave |
+| 1 | Noisy sine wave |
+| 2 | Music melody |
+| 3 | Music bass |
+| 4–7 | Unused |
+| 8 | Melody with unwanted whine |
+| 9 | Ground |
 
-1. Examine the [inverting amplifier](#inverting-amplifier) below. Determine a value of feedback resistor $R_\text{fb}$ to produce a voltage gain of $-1.5\pm5\%$.
-2. An idealised amplifier circuit can be represented as an input impedance to ground and a voltage source and is shown here connected to a signal source:
+The earphone adapter connects the two nominal 32 Ω earphones in series, giving approximately 64 Ω, and includes output coupling capacitors (approximately 50 µF equivalent series capacitance). Use its **L and R terminals as shown**; its separate GND terminal is unused in this series connection. The adapter blocks amplifier DC bias from reaching the earphones. Never substitute a direct connection that applies the 2.5 V bias across the earphones.
 
-![Ideal equivalent](graphics/opamp-miceq.png)
+Begin electrical measurements with the earphones disconnected. Check the output waveform before connecting them, and start listening at low signal amplitude. A load can change the gain or cause current-limited distortion even if the unloaded waveform is correct.
 
-Determine the theoretical input impedance $Z_\text{input}$ of the single supply [inverting amplifier](#single-supply-inverting-amplifier) and [non-inverting amplifier](#single-supply-non-inverting-amplifier).
-  Remember that the opamp itself has an (ideally) infinite impedance at the input pins so any finite impedance must originate from resistors connected to ground.
-  Use the virtual ground approximation in the case of the inverting amplifier.
-  A voltage source such as the 5V power supply can be considered as short circuit to ground.
+### Before the lab
 
-## Signal source
+1. Revise the inverting gain $A_v=-R_\mathrm{fb}/R_\mathrm{in}$ and the non-inverting gain $A_v=1+R_\mathrm{fb}/R_g$.
+2. For $R_\mathrm{in}=1.5\,\mathrm{k}\Omega$, choose an available feedback resistance giving an inverting gain within 5% of −1.5.
+3. Calculate the unloaded midpoint voltage of two equal resistors connected between +5 V and ground.
+4. Explain why a voltage near −1 V can be reproduced with ±5 V supplies but cannot be reproduced with +5 V and 0 V supplies.
 
-This experiment uses opamps to process signals generated by signal source modules and amplify them so they can be heard on pairs of earphones.
-First, find out what happens if the signal source module is connected directly to the earphones.
-The diagram below shows how to make the connection between the two modules.
-Note that the earphone adapter has a GND connection that is unused in this experiment; just use L and R. 
+### Activity 1: observe signal-source loading
 
-![Signal source connected directly to earphones](graphics/opamp-phonedirect.png)
-			
-Use the 5V voltage source in the Orangepip to power the signal source module.
-Move the rotary switch on the signal source module to position 0, which generates a sine wave.
-Plug the earphones into the socket on the adapter module, power the circuit and listen carefully.
-			
-- [ ] Test the performance of the signal source module without amplification.
-			
-Clearly some amplification is needed to make the sound louder.
-Measure the signal amplitude from the signal source at $V_\text{in}$ with and without the earphones connected.
-Without the earphones the amplitude is reasonably large (500mV amplitude is sufficient to drive the earphones loudly) but the signal source cannot provide enough current and the amplitude drops when the circuit is complete.
-			
-The next diagram shows an equivalent circuit for what you have built.
-The earphones have a predominantly resistive impedance of 64Ω (32Ω per channel, connected in series) and the adapter module contains 50µF of series capacitance to prevent the earphones being damaged by DC current.
-The signal source module has an equivalent circuit made of $V_\text{source}$, $R_\text{source}$ and $C_\text{source}$. $R_\text{source}$ and $C_\text{source}$ form the *output impedance* of the signal source.
+<p align="center"><img src="graphics/opamp-phonedirect.png" alt="Signal source driving the earphone adapter" width="700"></p>
 
-![Equivalent circuit of earphones connected to signal source](graphics/opamp-phonedirecteq.png)
+1. Power the signal-source module from +5 V and ground. Select mode 0.
+2. With the earphones disconnected, measure its OUT voltage peak-to-peak at CH1.
+3. Connect the earphones through the adapter as shown, measure the voltage again and listen briefly at low level.
+4. Record the change and explain it using the equivalent circuit below.
 
-When the earphone is connected, the current flowing in the earphones results in a voltage drop across $V_\text{source}$ and $C_\text{source}$.
-This results in the reduction that you can measure at $V_\text{in}$ and the quiet sound.
-Put another way, most of the power produced by the signal source is dissipated in its own internal resistance and not the earphone.
-			
-Confirm that the change in $V_\text{in}$ when the earphones are connected is consistent with the values of $R_\text{source}$ and $R_\text{load}$, assuming the frequency is high and the impedance of both capacitors in negligible.
-			
-- [ ] Test the performance of the signal source module without amplification.	Confirm the effect of the earphone load on the amplitude of $V_\text{in}$.
+| Condition | Source-output peak-to-peak voltage (V) | Observation |
+| --- | --- | --- |
+| Earphones disconnected | | |
+| Earphones connected through adapter | | |
 
-## Inverting Amplifier
+<p align="center"><img src="graphics/opamp-phonedirecteq.png" alt="Equivalent source impedance and earphone load" width="800"></p>
 
-An amplifier can help make the signal louder in three ways:
-1. It adds gain so that output voltage amplitude is larger than the input amplitude.
-2. It has a higher input or load impedance than the earphones, so there is a smaller reduction in $V_\text{in}$ when it is connected.
-3. It has a lower output or source impedance than the signal source module, so it can supply the current required by the earphones without a reduction in amplitude.
+The source is modelled by an internal voltage source, a 1 kΩ source resistance and a 3.3 µF series capacitor. Current drawn by the earphones causes voltage drops across the **source resistance and source capacitor**, reducing the terminal voltage. At frequencies where both coupling-capacitor reactances are negligible, the resistive divider predicts a loaded-to-unloaded voltage ratio of approximately $64/(1000+64)$.
 
-Use the opamp module to build an inverting amplifier, shown in the circuit below.
-Place the opamp module in the centre of the breadboard and observe the markings to find how the pins connect to the opamps.
-		    
-![Inverting amplifier circuit](graphics/opamp-cct2.png)
-			
-Your circuit should look similar to this:
-			
-![Inverting amplifier built on a breadboard](graphics/opamp-cct2-photo.jpg)
-			
-Connect Oscilloscope CH1 to $V_\text{in}$ and CH2 to $V_\text{out}$ to observe the effect of the amplifier.
-You will see that positive parts of the output waveform are amplified by $1.5\times$ but the negative parts are missing and the sound is louder but distorted.
-We will address this in the next section.
-		
-- [ ] Build the inverting amplifier and check the output waveform
-		
-## Single Supply Inverting Amplifier
+Compare the measured loaded-to-unloaded ratio with the resistive-divider prediction. If they differ, consider capacitor reactance, the approximate earphone impedance and measurement uncertainty. This loading result motivates the amplifier you will build next.
 
-The original inverting amplifier circuit does not work correctly and the lower part of the output signal is missing.
-The reason is that the opamp can't produce an output lower than the negative power supply (V− pin), which is 0V in this circuit.
-			
-It is possible to use a second power supply with a negative voltage to fix this problem.
-However, you do not have a second power supply so another solution is needed.
-This is a common scenario because it would be expensive to add a second power supply to many systems.
-			
-The circuit below has two modifications from the original inverting amplifier.
-First, the non-inverting input of the opamp is connected to a 2.5V reference voltage created by a potential divider.
-This introduces a 2.5V DC bias to the circuit, which the opamp matches by driving the inverting input at node A to 2.5V.
-In effect, the virtual ground node has become a virtual 2.5V source.
-			
-The second modification is the addition of a series capacitor between the signal source and the amplifier.
-This blocks the DC voltage of the signal source and allows the AC part of the signal to pass.
-It acts a barrier between the signal source with its DC offset of 0V and the opamp circuit with its DC offset of 2.5V.
-The time constant of the 1μF capacitor and the 1.5kΩ resistor (the input impedance of the circuit) is 1.5ms, which creates a high-pass filter with a corner frequency of around 100Hz — this is the lower range of the frequencies generated by the signal source.
-			
-![Inverting amplifier for single power supply](graphics/opamp-cct-invsingle.png)
-				
-When you measure the output of the opamp you will see the offset of 2.5V added to the signal.
-You can remove the offset by setting the oscilloscope channel to AC mode.
-Then you can measure the amplitude of the output, compare it to the input and find the gain.
-		
-- [ ] Modify the inverting amplifier so it works correctly and check that the three requirements at the start of [inverting amplifier](#inverting-amplifier) have been achieved.
-		
-## Single-Supply Non-inverting Amplifier
+### Activity 2: set up a dual ±5 V supply
 
-Build a non-inverting amplifier according to this circuit:
+The desk supply must provide **two isolated outputs that can be connected in series**, or a supported ± tracking arrangement. Ask the demonstrator to identify the correct terminals and mode on your bench model. Do not assume that every terminal marked “−” is a −5 V output or that the earth terminal is the midpoint.
 
-![Non-inverting amplifier](graphics/opamp-cct-noninvsingle.png)
-			
-This circuit also has some features that allow it to work with a single 5V power supply.
-There are two 10kΩ resistors used as a potential divider to bias the input signal at node Y to 2.5V and, like before, a 1μF capacitor is used to isolate the 0V offset of the signal input and the 2.5V offset of the amplifier.
-			
-The 470nF capacitor is used to preserve the 2.5V DC offset at the output.
-If the 33kΩ resistor connected directly to ground then the offset would be amplified along with the signal, which would be unhelpful because the peak of the signal might exceed the 5V supply.
-The capacitor acts like an open circuit for a DC voltage, so the amplifier has a gain of $15/33+1=1.45$ for the AC signal and a gain of $15/\infty+1=1$ for the DC offset.
-The circuit is linear because output is directly proportional to input for a given ω, which means that it's valid to use superposition to consider AC and DC sepeartely, and sum the results together.
-			
-Both capacitors in the circuit block DC and pass AC, so they form high-pass filters.
-The values are chosen to place the corner frequency at or below 100Hz.
-				
-- [ ]	Build and test the single-supply, non-inverting amplifier.
+<!-- Figure to redraw: bench_dual_supply.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
 
-## Challenge: Audio Mixer
+1. Turn the supply outputs off and disconnect the op-amp.
+2. Set each isolated output to **5.0 V**. The two individual displays can both read positive 5 V.
+3. Join the **negative terminal of output A** to the **positive terminal of output B**. This junction is the circuit's **0 V common ground**.
+4. Output A's remaining positive terminal is **+5 V** relative to the junction. Output B's remaining negative terminal is **−5 V** relative to it.
+5. With the circuit still disconnected, turn the outputs on and verify both rails with a multimeter: black lead at common ground, red lead at each rail in turn. Check approximately +5 V, −5 V and 10 V between the outer rails.
+6. Turn the outputs off. Connect +5 V to op-amp V+, −5 V to op-amp V−, and the circuit ground to the midpoint. Ask the demonstrator to check the setup before powering the circuit.
+7. Connect the signal generator ground and both oscilloscope probe ground clips to **0 V**, never to the −5 V rail. Power the signal-source module from **+5 V and 0 V only**.
 
-Modes 2 and 3 of the signal source play the left and right hand parts of a piece of piano music.
-Listen to them by using your amplifier and changing the mode switch.
-The inverting amplifier can be extended with additional inputs to sum the two parts together, as shown below.
+| Measurement | Expected voltage (V) | Measured voltage (V) |
+| --- | --- | --- |
+| Positive rail relative to common | +5 | |
+| Negative rail relative to common | −5 | |
+| Positive rail relative to negative rail | +10 | |
 
-![Summing amplifier](graphics/opamp-cct3.png)
-				
-Build a summing amplifier with two signal sources, one in mode 2 and the other in mode 3.
-Note the wire making the SYN connection between the two source modules, which is used to synchronise the two parts of the music.
-				
-Potentiometers $R_\text A$ and $R_\text B$ set the gain independently for each input.
-Choose the values so that the overall amplitude of $V_\text{out}$ is around 1V and the mix of the music sounds good.
+### Activity 3: measure the dual-supply inverting amplifier
 
+Use $R_\mathrm{in}=1.5\,\mathrm{k}\Omega$ and $R_\mathrm{fb}=2.2\,\mathrm{k}\Omega$, giving an ideal gain of approximately **−1.47**, within 5% of −1.5. Connect the non-inverting input to 0 V.
+
+<!-- Figure to redraw: opamp-cct2.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+
+The inverting input is approximately at 0 V through negative feedback: a **virtual ground**. It is not directly connected to ground. With negligible input current into the op-amp, current through the input resistor also flows through the feedback resistor, giving the inverting gain.
+
+1. Build the circuit with the power off, initially without the earphone load.
+2. Use the oscilloscope AWG at **1 kHz, 100 mV peak (200 mV peak-to-peak), 0 V offset**. Connect CH1 to the input and CH2 to the output; use DC coupling.
+3. Measure input and output peak-to-peak voltages, output mean voltage and phase. Confirm a complete, approximately zero-centred inverted sine wave.
+4. Calculate gain magnitude from the amplitude ratio and include the negative sign because of inversion. A phase difference of approximately ±180° is expected.
+5. Replace the AWG input with source-module mode 0 and check its waveform. If suitable, connect the earphones through the adapter and observe any loading effect. Do not connect two source outputs together. Measure the actual amplifier-input voltage again after changing sources: the input resistor loads the source module, so the overall source-to-output ratio is not necessarily equal to the amplifier's terminal-to-terminal gain.
+
+| Supply | Input peak-to-peak (V) | Output peak-to-peak (V) | Output mean (V) | Signed voltage gain | Phase (°) | Clipping? |
+| --- | --- | --- | --- | --- | --- | --- |
+| +5 V / −5 V, unloaded | | | | | | |
+| +5 V / −5 V, earphone load | | | | | | |
+
+Use the AWG for the unloaded numerical gain measurement. For the earphone-loaded row, record the source actually used and its measured input amplitude so that the ratios remain meaningful.
+
+### Activity 4: understand the single-supply problem
+
+<!-- Figure to redraw: opamp-cct2-single.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+
+1. Disconnect the earphones. With the power off, disconnect the op-amp V− pin from −5 V and connect it to **0 V**. Retain +5 V at V+ and ground at the non-inverting input.
+2. Apply the same zero-offset AWG sine wave and observe the output with DC coupling.
+3. Sketch or capture the waveform. Explain which requested output voltages lie outside the available supply range.
+
+| Circuit | Input peak-to-peak (V) | Output minimum (V) | Output maximum (V) | Waveform observation |
+| --- | --- | --- | --- | --- |
+| Unbiased +5 V / 0 V amplifier | | | | |
+
+Do not interpret the amplitude ratio of this clipped waveform as the linear amplifier gain.
+
+The input's positive half-cycle requests a negative output from the inverting amplifier. A +5 V/0 V amplifier cannot produce that negative voltage, so the negative part of the output clips near its lower rail. Reducing the amplitude does not create a negative supply. We need to move the signal's operating point away from ground.
+
+### Activity 5: biased single-supply inverting amplifier
+
+Keep the op-amp on **+5 V and 0 V**. Two 10 kΩ resistors create a reference $V_\mathrm{ref}\approx2.5\,\mathrm{V}$ at the non-inverting input. Add a 1 µF input coupling capacitor, retaining the 1.5 kΩ input and 2.2 kΩ feedback resistors.
+
+<!-- Figure to redraw: opamp-cct-invsingle.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+
+The capacitor blocks the source's DC level while passing its changing component. The reference sets the non-inverting input to about 2.5 V; negative feedback holds the inverting input close to the same value. With the input capacitor open at DC, no ideal DC current flows through the input resistor, so the output also settles near 2.5 V.
+
+For frequencies where the input capacitor has a small impedance:
+
+$$
+v_\mathrm{out}(t)\approx V_\mathrm{ref}-\frac{R_\mathrm{fb}}{R_\mathrm{in}}v_\mathrm{in,AC}(t).
+$$
+
+The signal now swings above and below **2.5 V**, rather than above and below ground. It must still stay within the op-amp's output limits.
+
+The input capacitor and resistance form a high-pass response. Ignoring source resistance, $f_c=1/(2\pi R_\mathrm{in}C)\approx106\,\mathrm{Hz}$. The source module's own output impedance can alter the complete response.
+
+1. Build the biased circuit with the power off. Restore the 1 kHz, 100 mV peak, zero-offset AWG signal.
+2. With DC coupling, measure the divider midpoint, both op-amp input DC voltages and the output DC voltage. They should be close to 2.5 V.
+3. Measure input and output peak-to-peak voltages and confirm inversion without lower-rail clipping.
+4. Compare with the dual-supply result. Record the offset separately from the AC amplitude.
+5. If listening, connect the earphones only through the DC-blocking adapter.
+
+Use DC coupling for phase and low-frequency work. AC coupling can hide the displayed offset, but it also introduces its own high-pass response; it does not remove the bias in the physical circuit.
+
+| Circuit | Reference (V) | Inverting-input DC (V) | Output DC (V) | Input peak-to-peak (V) | Output peak-to-peak (V) | AC gain magnitude |
+| --- | --- | --- | --- | --- | --- | --- |
+| Biased inverting | | | | | | |
+| Biased non-inverting | | | | | | |
+
+### Activity 6: biased single-supply non-inverting amplifier
+
+<!-- Figure to redraw: opamp-cct-noninvsingle.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+
+Use the existing component values: two 10 kΩ bias resistors, a 1 µF input capacitor, a 15 kΩ feedback resistor, and a 33 kΩ resistor in series with a 470 nF capacitor in the lower feedback branch.
+
+Understand the circuit in two steps:
+
+**At DC:** both capacitors act as open circuits. The input coupling capacitor isolates the source's DC voltage, and the two 10 kΩ resistors set node Y to about 2.5 V. The 470 nF capacitor opens the lower feedback branch, so no ideal DC current flows through the 15 kΩ feedback resistor. The output follows the non-inverting input at approximately 2.5 V: the DC gain is one.
+
+**For the AC signal:** the 1 µF capacitor passes the changing input onto node Y, superimposed on its 2.5 V bias. At sufficiently high frequency, the 470 nF capacitor has a small impedance, so the lower feedback branch is approximately 33 kΩ. The AC gain approaches:
+
+$$
+A_\mathrm{AC}=1+\frac{15\,\mathrm{k}\Omega}{33\,\mathrm{k}\Omega}\approx1.45.
+$$
+
+The 470 nF capacitor therefore lets the circuit amplify the changing signal while leaving the DC operating point near 2.5 V. Without it, a 2.5 V DC level at the non-inverting input would also be multiplied by approximately 1.45, shifting the output towards 3.64 V and reducing symmetrical signal headroom.
+
+The input divider also loads the source: its two 10 kΩ resistors give approximately **5 kΩ AC input resistance** when the supply is treated as AC ground. With the 1 µF coupling capacitor and an ideal source, that gives an input high-pass corner near 32 Hz. The feedback branch has its own frequency-dependent transition; it is not a separate input coupling filter.
+
+More generally, the gain from node Y to the output is:
+
+$$
+A_Y(j\omega)=1+\frac{R_\mathrm{fb}}{R_g+1/(j\omega C_g)}.
+$$
+
+It tends to one at DC and about 1.45 at frequencies where $C_g$ behaves approximately as a short. Superposition allows us to analyse DC bias and small AC changes separately while the amplifier remains linear.
+
+1. Build the circuit with the power off and use the same 1 kHz AWG input.
+2. Measure the DC voltages at Y, the inverting input and the output. Record them in the table above.
+3. Measure the input and output amplitudes and verify that the output is **in phase** with the input.
+4. To check the op-amp stage gain itself, measure the AC amplitude at Y as well as the output. Source-to-output gain may differ because the input network loads and filters the source.
+5. Explain the roles of the divider, 1 µF capacitor and 470 nF capacitor in your own words.
+
+### Challenge: single-supply audio mixer
+
+<!-- Figure to redraw: opamp-cct3.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+
+Use two source modules, one in mode 2 and one in mode 3, both powered from +5 V and ground. Connect their SYN pins as shown. Each source feeds the inverting summing node through its own 1 µF coupling capacitor and adjustable input resistance. A 4.7 kΩ feedback resistor and a 2.5 V reference give a biased summing amplifier.
+
+For frequencies well above the input coupling corners:
+
+$$
+v_\mathrm{out}\approx V_\mathrm{ref}-\frac{R_\mathrm{fb}}{R_A}v_{A,\mathrm{AC}}-\frac{R_\mathrm{fb}}{R_B}v_{B,\mathrm{AC}}.
+$$
+
+1. Start with large input resistances and check the DC output near 2.5 V.
+2. Adjust the two gains independently, measuring one input at a time before combining them. Avoid setting an input resistance near zero.
+3. Aim for an overall output of about **1 V peak-to-peak**, centred near 2.5 V, without clipping. The two signals can add, so checking them individually is not sufficient.
+4. Listen through the adapter and explain how the resistor ratios set the mix.
+
+[Continue to Section 2: Bandwidth and Filtering](Section2.md).
