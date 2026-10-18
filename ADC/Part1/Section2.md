@@ -3,6 +3,8 @@
 
 ## Section 2: Reactive Components and First-Order Filters
 
+Complete the main investigations first, then attempt the tasks labelled **Challenge**. All circuit designs are included; the challenge tasks apply the same principles to similar circuits.
+
 In [Section 1](Section1.md), you measured an unknown impedance by comparing its voltage with the voltage across a known resistor. You will now use that method to investigate two capacitors and two inductors, explain the different regions of their impedance curves, and estimate one unknown inductance from a few readings.
 
 You will then use these frequency-dependent impedances to build filters, including a filter whose gain approaches different non-zero values at low and high frequency.
@@ -311,25 +313,25 @@ An output that occurs later than the input has a positive delay and a negative p
 
 Use the following starting frequencies for a **full filter sweep from 10 Hz to 40 kHz**. Make one copy of this table for each RL configuration and for the inductive gain-floor circuit. The denser points between 1 kHz and 5 kHz help resolve the transitions in these circuits.
 
-| Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Signed delay $\Delta t$ (s) | Phase (°) |
-| --- | --- | --- | --- | --- | --- | --- |
-| 10 | | | | | | |
-| 100 | | | | | | |
-| 500 | | | | | | |
-| 1000 | | | | | | |
-| 1600 | | | | | | |
-| 2000 | | | | | | |
-| 3000 | | | | | | |
-| 5000 | | | | | | |
-| 10000 | | | | | | |
-| 20000 | | | | | | |
-| 40000 | | | | | | |
+| Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Phase (°) |
+| --- | --- | --- | --- | --- | --- |
+| 10 | | | | | |
+| 100 | | | | | |
+| 500 | | | | | |
+| 1000 | | | | | |
+| 1600 | | | | | |
+| 2000 | | | | | |
+| 3000 | | | | | |
+| 5000 | | | | | |
+| 10000 | | | | | |
+| 20000 | | | | | |
+| 40000 | | | | | |
 
 Add frequencies around a transition only if the starting measurements do not show its shape clearly. Calculate phase using the frequency in hertz and delay in seconds. At low frequencies, adjust the timebase so that complete cycles are visible. When the output approaches the noise floor, its phase may be unreliable; mark such readings rather than treating them as precise results.
 
 Plot magnitude in dB on a linear vertical axis and frequency on a logarithmic horizontal axis. Use a second plot for phase, with the same frequency axis. This differs from the earlier impedance-magnitude plots, where both axes were logarithmic.
 
-Use this procedure for all the filters below.
+Use this procedure for all the filters below. Record the calculated phase directly in the table; a separate time-delay column is not required.
 
 ### First-order RL filters
 
@@ -382,9 +384,9 @@ A real inductor has winding resistance. The low-pass gain at low frequency may t
 - [ ] Build both RL configurations and plot their magnitude and phase responses.
 - [ ] Compare the responses with the ideal predictions and explain the effect of the inductor's resistance.
 
-### First-order RC filters
+### Challenge: reproduce the RL responses with RC filters
 
-The same ideal low-pass and high-pass transfer functions can be obtained using a resistor and capacitor. Because capacitive impedance decreases with frequency, the output component is different from that in the corresponding RL circuit.
+**Challenge task:** build the RC low-pass and high-pass circuits below and compare them with the RL filters. The same ideal low-pass and high-pass transfer functions can be obtained using a resistor and capacitor. Because capacitive impedance decreases with frequency, the output component is different from that in the corresponding RL circuit.
 
 Use **$R=10\,\mathrm{k}\Omega$ and $C=10\,\mathrm{nF}$**, giving:
 
@@ -416,13 +418,13 @@ At low frequency, the capacitor approaches an open circuit; at high frequency it
 
 Test each RC configuration at **100 Hz, 1 kHz, 1.6 kHz, 3 kHz and 10 kHz**. These points cover frequencies below, near and above the nominal corner. Use the table below for each circuit and add the measurements to the matching RL plots. Take extra readings only where they help explain a discrepancy.
 
-| Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Signed delay (s) | Phase (°) |
-| --- | --- | --- | --- | --- | --- | --- |
-| 100 | | | | | | |
-| 1000 | | | | | | |
-| 1600 | | | | | | |
-| 3000 | | | | | | |
-| 10000 | | | | | | |
+| Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Phase (°) |
+| --- | --- | --- | --- | --- | --- |
+| 100 | | | | | |
+| 1000 | | | | | |
+| 1600 | | | | | |
+| 3000 | | | | | |
+| 10000 | | | | | |
 
 
 - [ ] Build the RC low-pass and high-pass circuits and compare selected magnitude and phase measurements with the matching RL responses.
