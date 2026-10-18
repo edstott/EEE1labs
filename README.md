@@ -29,7 +29,7 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
   - [Section 3: Resonance and Second-Order Filters](ADC/Part1/Section3.md)
 - Part 2 (Autumn Term Weeks 8–10)
   - [Section 1: Amplification, Supply Rails and Biasing](ADC/Part2/Section1.md)
-  - [Section 2: Bandwidth and Filtering](ADC/Part2/Section2.md)
+  - [Section 2: Gain–Bandwidth Product and Active Filtering](ADC/Part2/Section2.md)
 - Part 3 (Spring Term Weeks 3-5)
   - [Section 1: Characterising a BJT](ADC/Part3/Section1.md)
   - [Section 2: Common Emitter Amplifiers](ADC/Part3/Section2.md)
