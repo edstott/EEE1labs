@@ -1,5 +1,5 @@
 # Analysis and Design of Circuits Lab
-# Part 1: Autumn Term weeks 4–6
+# Part 1: Passive Components - Autumn Term weeks 4–6
 
 ## Section 2: Reactive Components and First-Order Filters
 
