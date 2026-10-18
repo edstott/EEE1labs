@@ -3,13 +3,9 @@
 
 ## Section 2: Reactive Components and First-Order Filters
 
-Complete the main investigations first, then attempt the tasks labelled **Challenge**. All circuit designs are included; the challenge tasks apply the same principles to similar circuits.
+Complete the main investigations first, then attempt the tasks labelled **Challenge**. All circuit designs are included; the challenge tasks apply the same principles to similar circuits. In [Section 1](Section1.md), you measured an unknown impedance by comparing its voltage with the voltage across a known resistor. You will now use that method to investigate two capacitors and two inductors, explain the different regions of their impedance curves, and estimate one unknown inductance from a few readings.
 
-In [Section 1](Section1.md), you measured an unknown impedance by comparing its voltage with the voltage across a known resistor. You will now use that method to investigate two capacitors and two inductors, explain the different regions of their impedance curves, and estimate one unknown inductance from a few readings.
-
-You will then use these frequency-dependent impedances to build filters, including a filter whose gain approaches different non-zero values at low and high frequency.
-
-You will study capacitors and inductors in lectures this week; if you have not covered them yet, do not worry—the basic equations you need for this experiment are provided below.
+You will then use these frequency-dependent impedances to build filters, including a filter whose gain approaches different non-zero values at low and high frequency. You will study capacitors and inductors in lectures this week; if you have not covered them yet, do not worry—the basic equations you need for this experiment are provided below.
 
 ### Impedance and reactance
 
