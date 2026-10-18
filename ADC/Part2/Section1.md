@@ -94,7 +94,7 @@ Compare the measured loaded-to-unloaded ratio with the resistive-divider predict
 
 The desk supply must provide **two isolated outputs that can be connected in series**, or a supported ± tracking arrangement. Ask the demonstrator to identify the correct terminals and mode on your bench model. Do not assume that every terminal marked “−” is a −5 V output or that the earth terminal is the midpoint.
 
-<!-- Figure to redraw: bench_dual_supply.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+<p align="center"><img src="graphics/bench_dual_supply.png" alt="bench_dual_supply" width="800"></p>
 
 1. Turn the supply outputs off and disconnect the op-amp.
 2. Set each isolated output to **5.0 V**. The two individual displays can both read positive 5 V.
@@ -114,7 +114,7 @@ The desk supply must provide **two isolated outputs that can be connected in ser
 
 Use $R_\mathrm{in}=1.5\,\mathrm{k}\Omega$ and $R_\mathrm{fb}=2.2\,\mathrm{k}\Omega$, giving an ideal gain of approximately **−1.47**, within 5% of −1.5. Connect the non-inverting input to 0 V.
 
-<!-- Figure to redraw: opamp-cct2.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+<p align="center"><img src="graphics/opamp-cct2.png" alt="opamp cct2" width="800"></p>
 
 The inverting input is approximately at 0 V through negative feedback: a **virtual ground**. It is not directly connected to ground. With negligible input current into the op-amp, current through the input resistor also flows through the feedback resistor, giving the inverting gain.
 
@@ -133,7 +133,7 @@ Use the AWG for the unloaded numerical gain measurement. For the earphone-loaded
 
 ### Activity 4: understand the single-supply problem
 
-<!-- Figure to redraw: opamp-cct2-single.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+<p align="center"><img src="graphics/opamp-cct2-single.png" alt="opamp cct2 single" width="800"></p>
 
 1. Disconnect the earphones. With the power off, disconnect the op-amp V− pin from −5 V and connect it to **0 V**. Retain +5 V at V+ and ground at the non-inverting input.
 2. Apply the same zero-offset AWG sine wave and observe the output with DC coupling.
@@ -151,7 +151,7 @@ The input's positive half-cycle requests a negative output from the inverting am
 
 Keep the op-amp on **+5 V and 0 V**. Two 10 kΩ resistors create a reference $V_\mathrm{ref}\approx2.5\,\mathrm{V}$ at the non-inverting input. Add a 1 µF input coupling capacitor, retaining the 1.5 kΩ input and 2.2 kΩ feedback resistors.
 
-<!-- Figure to redraw: opamp-cct-invsingle.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+<p align="center"><img src="graphics/opamp-cct-invsingle.png" alt="opamp cct invsingle" width="800"></p>
 
 The capacitor blocks the source's DC level while passing its changing component. The reference sets the non-inverting input to about 2.5 V; negative feedback holds the inverting input close to the same value. With the input capacitor open at DC, no ideal DC current flows through the input resistor, so the output also settles near 2.5 V.
 
@@ -180,7 +180,7 @@ Use DC coupling for phase and low-frequency work. AC coupling can hide the displ
 
 ### Activity 6: biased single-supply non-inverting amplifier
 
-<!-- Figure to redraw: opamp-cct-noninvsingle.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+<p align="center"><img src="graphics/opamp-cct-noninvsingle.png" alt="opamp cct noninvsingle" width="800"></p>
 
 Use the existing component values: two 10 kΩ bias resistors, a 1 µF input capacitor, a 15 kΩ feedback resistor, and a 33 kΩ resistor in series with a 470 nF capacitor in the lower feedback branch.
 
@@ -214,7 +214,7 @@ It tends to one at DC and about 1.45 at frequencies where $C_g$ behaves approxim
 
 ### Challenge: single-supply audio mixer
 
-<!-- Figure to redraw: opamp-cct3.png. Use the agreed symbol style and the supply, bias and component values specified in this text. -->
+<p align="center"><img src="graphics/opamp-cct3.png" alt="opamp cct3" width="800"></p>
 
 Use two source modules, one in mode 2 and one in mode 3, both powered from +5 V and ground. Connect their SYN pins as shown. Each source feeds the inverting summing node through its own 1 µF coupling capacitor and adjustable input resistance. A 4.7 kΩ feedback resistor and a 2.5 V reference give a biased summing amplifier.
 
