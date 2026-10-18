@@ -1,5 +1,5 @@
 # Analysis and Design of Circuits Lab
-# Part 2: Autumn Term weeks 8–10
+# Part 2: Op-Amp Circuits - Autumn Term weeks 8–10
 
 ## Section 1: Amplification, Supply Rails and Biasing
 
