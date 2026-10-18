@@ -31,7 +31,7 @@ In the first activity, you will observe the loading effect directly. You will th
 6. Build the biased single-supply non-inverting circuit and explain its DC and AC behaviour separately.
 7. If time permits, build the single-supply audio mixer as a challenge.
 
-Allow approximately one session for this section and one for Section 2, leaving the remaining session for catch-up and oral preparation. Complete the numbered activities before the challenge. Record circuits, measurements and explanations in your lab book.
+Aim to complete Section 1 in the first session. Use the remaining sessions for Section 2, completing the compulsory activities before attempting the challenges. Record circuits, measurements and explanations in your lab book.
 
 <p align="center"><img src="graphics/opamp-components.png" alt="Components, circuit symbols and hardware" width="800"></p>
 
@@ -219,6 +219,10 @@ It tends to one at DC and about 1.45 at frequencies where $C_g$ behaves approxim
 <p align="center"><img src="graphics/opamp-cct3.png" alt="opamp cct3" width="800"></p>
 
 Use two source modules: **source A in mode 2 (melody)** and **source B in mode 3 (bass)**, both powered from +5 V and ground. Connect their SYN pins as shown. Each source feeds the inverting summing node through its own 1 µF coupling capacitor and adjustable input resistance. A 4.7 kΩ feedback resistor and a 2.5 V reference give a biased summing amplifier.
+
+**Connecting the adjustable resistors:** if you are using three-terminal potentiometers, wire each as a two-terminal variable resistor. Connect one outer terminal to its input coupling capacitor. Join the **wiper terminal** (usually the centre terminal) to the remaining outer terminal, and connect that joined pair to the amplifier's inverting summing node. The joined pair counts as one circuit connection. Repeat for the other input. Do not assume the wiper is identified by physical position alone; check the component markings or use a multimeter.
+
+With the power off, measure the resistance between the two circuit connections while turning each control. Identify the maximum-resistance setting, record the available range in your lab book, and start at maximum resistance. Measure resistance only with the circuit unpowered and the component isolated from parallel paths. Do not turn either input resistance down to zero during operation. Use the potentiometers supplied for the experiment; their measured ranges determine the achievable mix.
 
 For frequencies well above the input coupling corners:
 
