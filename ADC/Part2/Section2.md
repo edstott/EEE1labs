@@ -1,11 +1,11 @@
 # Analysis and Design of Circuits Lab
-# Part 2: Autumn Term weeks 8–10
+# Part 2: Op-Amp Circuits - Autumn Term weeks 8–10
 
 ## Section 2: Gain–Bandwidth Product and Active Filtering
 
 In Section 1 you used negative feedback to set an amplifier's gain. That gain cannot remain constant at arbitrarily high frequencies: a real op-amp responds less strongly as frequency increases. First you will measure this bandwidth limitation. Then you will deliberately shape the frequency response by adding a capacitor to the feedback network, building an **active low-pass filter**.
 
-Complete Activities 1 and 2 before attempting the extensions. The main filter is based on the inverting low-pass topology investigated by Adam. LTspice is an optional supporting activity for these experiments; the Filter Wizard challenge includes simulation before construction.
+Complete Activities 1 and 2 before attempting the challenges. The main filter is based on the inverting low-pass topology investigated by Adam. You will measure its electrical response and listen to its effect on a noisy music signal. The Filter Wizard challenge explores more selective designs **within the online tool only**.
 
 ### Before the lab
 
@@ -18,9 +18,7 @@ Complete Activities 1 and 2 before attempting the extensions. The main filter is
 
 Use the **same LT1366 module as Section 1**, powered from **+5 V and 0 V**. Connect V+ to +5 V and V− to 0 V. All oscilloscope and AWG ground connections go to **0 V**.
 
-Make a 2.5 V reference with two 10 kΩ resistors between +5 V and ground. Use the module's second op-amp as a voltage follower to buffer this midpoint, as shown. Both op-amps share the module's supply pins.
-
-<p align="center"><img src="graphics/bias_reference_buffer.png" alt="Two equal resistors and a voltage follower producing a buffered 2.5 V reference" width="800"></p>
+Make a 2.5 V reference with two 10 kΩ resistors between +5 V and ground. Use the module's second op-amp as a voltage follower to buffer this midpoint: connect the midpoint to its non-inverting input and connect its output directly to its inverting input. The buffer output is Vref. Both op-amps share the module's supply pins.
 
 The buffer supplies a low-impedance reference without appreciably loading the divider. Check its output is approximately 2.5 V before connecting the experiment. **Vref is a bias node, not ground:** do not attach a probe ground clip to it. Keep this reference circuit while changing the experimental amplifier around the first op-amp.
 
@@ -156,13 +154,38 @@ The low-frequency output is inverted. Its phase can be shown from +180° towards
 - [ ] Build and characterise the active low-pass filter.
 - [ ] Explain how changing feedback impedance produces the response and why it differs from the bandwidth limitation in Activity 1.
 
-### Optional LTspice comparison
+### Listen to the low-pass filter removing an unwanted tone
+
+Use the **signal-source module in mode 8: melody with an unwanted whine near 8 kHz**. This is the small source module used in Section 1, rather than a setting on the oscilloscope AWG. Power it from +5 V and 0 V.
+
+<p align="center"><img src="graphics/active_lowpass_audio.png" alt="Mode-8 source connected through a coupling capacitor to the biased active low-pass filter and earphone adapter" width="850"></p>
+
+1. Disconnect the AWG output before connecting the source module. Keep the filter's +5 V/0 V supplies, 2.5 V reference, 10 kΩ feedback resistor and 10 nF feedback capacitor.
+2. For this listening test, change the **input resistor to 10 kΩ**. This reduces the nominal passband gain magnitude from 10 to 1, giving more headroom for the source module's signal. The feedback time constant—and hence the predicted low-pass corner—remains unchanged.
+3. Connect source OUT through a **10 µF coupling capacitor**, then through the input resistor to the inverting node. This capacitor is needed because the source signal is centred near 0 V, whereas the filter operates around 2.5 V. If using a polarised capacitor, its positive terminal faces the input resistor/op-amp, and its negative terminal faces source OUT. Connect source ground to circuit 0 V.
+4. Check that the output settles near 2.5 V and that the music waveform is not clipped. Increase the input resistance further if necessary to reduce the gain; note the value used. Leave the feedback components unchanged.
+5. First listen to the **unfiltered mode-8 source** through the earphone adapter. Then move the adapter to the **filter output**, as shown. Power off while moving connections and begin listening at a low, comfortable level. Always use the adapter to block DC from the earphones.
+6. Compare the unwanted high-pitched whine and the melody. The whine should be less prominent, although the sound may also become quieter and lose some higher-frequency musical content. Compare the sound balance rather than interpreting an overall fall in volume alone as selective noise removal.
+7. Observe input and output on the scope and describe the change in your lab book. If connecting the earphones changes the output waveform or causes distortion, investigate output loading with the demonstrator.
+
+This first-order filter **reduces rather than completely removes** the 8 kHz tone. Its corner near 1.59 kHz also attenuates wanted notes near 2 kHz. That compromise motivates the higher-order filter-design challenge below. The added input coupling capacitor introduces a much lower high-pass transition; this listening circuit is approximately low-pass over the wanted audio band, rather than all the way down to DC.
+
+| Observation | Unfiltered mode-8 source | Filtered output |
+| --- | --- | --- |
+| Prominence of the high-pitched whine | | |
+| Clarity and brightness of the melody | | |
+| Overall listening level | | |
+| Output clipping or distortion | | |
+
+- [ ] Demonstrate the filter's effect on the sound and explain both the improvement and the compromise.
+
+### Challenge: compare the measured filter with LTspice
 
 Simulate the circuit you have built using the LT1366 model and the actual component values. Include the +5 V/0 V supplies and bias reference. Check the DC operating point first. For AC analysis, give the input source **DC 2.5 V and AC amplitude 1 V**; AC amplitude is a small-signal normalisation, not a physical 1 V transient applied to the circuit.
 
 Plot the ratio $V(\mathrm{out})/V(\mathrm{in})$ and compare it with your measured response. Use a small sine wave with the correct DC offset for a separate transient check. Explain differences rather than expecting an ideal op-amp to reproduce every measured feature.
 
-### Optional extension: active high-pass filter
+### Challenge: build an active high-pass filter
 
 If time permits, build Adam's non-inverting high-pass topology with the single-supply biasing shown below.
 
@@ -172,61 +195,45 @@ Use a **10 nF input capacitor**, **10 kΩ from the non-inverting input to Vref**
 
 Use a **10 mV peak AWG sine wave with 0 V offset**; the input capacitor blocks DC and the reference resistor establishes the internal bias. Check a 2.5 V output operating point. Take selected readings from the Activity 2 table. The op-amp bandwidth eventually causes the gain to fall at high frequency, so the ideal high-pass plateau does not extend indefinitely.
 
-## Challenge: design and build a sharper audio low-pass filter
+## Challenge: explore sharper low-pass filters using Filter Wizard
 
-Source-module mode 8 produces music with an unwanted tone near **8 kHz**. The wanted notes extend from **200 Hz to 2 kHz**. The first-order filter demonstrates low-pass behaviour, but its gradual transition cannot preserve the whole wanted band while strongly rejecting the whine.
-
-Use the [Analog Devices Filter Wizard](https://tools.analog.com/en/filterwizard/) to design a more selective filter, then **build and test it using LT1366 op-amps**.
+Use the [Analog Devices Filter Wizard](https://tools.analog.com/en/filterwizard/) to investigate how sharper filtering changes the required filter order and number of op-amps. **Analyse these designs in Filter Wizard only: you do not need to build them on a breadboard or simulate them in LTspice.**
 
 ### Why does a sharper cut-off need more stages?
 
-A real filter does not change abruptly from passing signals to blocking them. Its gain decreases through a **transition band**. Asking for little attenuation of the wanted music but much greater rejection of a nearby unwanted tone generally requires a **higher-order filter**.
+A real filter does not change abruptly from passing signals to blocking them. Its gain decreases through a **transition band**. Asking for little attenuation of wanted music but much greater rejection of a nearby unwanted tone generally requires a **higher-order filter**.
 
-Higher-order active filters are commonly built by cascading second-order stages. Each second-order stage typically uses one op-amp, so a fourth-order filter normally uses **two op-amp filter stages**. A higher-order all-pole low-pass response also has a steeper ultimate roll-off: approximately −40 dB per decade for second order and −80 dB per decade for fourth order. The precise transition shape depends on the chosen response, including any passband ripple.
+Higher-order active filters are commonly built by cascading second-order stages. Each second-order stage typically uses one op-amp, so a fourth-order filter normally uses two op-amp filter stages. Odd orders may include a first-order stage; inspect the tool's circuit to count the actual op-amps rather than assuming every design follows exactly the same arrangement.
+
+For an all-pole low-pass response, the ultimate roll-off is approximately **−20 dB per decade per order**: first order gives −20 dB/decade, second order −40 dB/decade and fourth order −80 dB/decade. The slope close to the corner need not equal this ultimate slope. Response families also differ in passband flatness, ripple and transition shape.
 
 <p align="center"><img src="graphics/filter_order_trends.png" alt="Qualitative comparison of first-, second- and fourth-order low-pass roll-off" width="750"></p>
 
-In Filter Wizard, tighten the passband and stopband requirements and observe how the required order and number of stages change. Explain the trade-off between selectivity, circuit complexity and component sensitivity.
+### Compare designs in the tool
 
-### Design requirements
+1. Choose a **low-pass** filter and keep the nominal passband gain the same for every comparison. Set the passband edge to **2 kHz** and the maximum passband loss to **1 dB**. The wanted music band is 200 Hz–2 kHz.
+2. Use the **same response family** for all four designs below, preferably Butterworth, so that you can identify the effect of changing the requirements. Keep automatic order selection enabled where available, or increase the order until each specification is met.
+3. First keep the stopband frequency at **8 kHz** and request progressively stronger rejection: **20 dB, 40 dB and 60 dB**, relative to the nominal passband gain.
+4. Then keep the rejection at **40 dB** but move the stopband frequency closer to the wanted band, to **4 kHz**. This asks for the same rejection over a narrower transition band.
+5. For each design, inspect the predicted response and generated circuit. Record the filter order, number of filter stages and actual number of op-amps. Do not count a separate bias or output buffer as a filter stage. There is no two-op-amp limit in this exploration: discovering when more stages are needed is part of the task.
+6. Calculate the expected ultimate roll-off from the order. Inspect a sufficiently high-frequency part of the tool's response to see whether the slope is approaching that trend; do not estimate the ultimate slope only from the corner region. Keep the tool's assumed op-amp settings consistent across designs.
 
-| Requirement | Target |
-| --- | --- |
-| Wanted music band | 200 Hz–2 kHz |
-| Maximum passband loss/ripple relative to nominal passband gain | 1 dB throughout the wanted band |
-| Attenuation at 8 kHz relative to nominal passband gain | At least 40 dB |
-| Filter stages | No more than two op-amp filter stages, up to fourth order |
-| Op-amp | LT1366 |
-| Supply | +5 V and 0 V, with suitable biasing |
-| Output | Unclipped at the chosen test amplitude |
+| Design | Passband edge / maximum loss | Stopband frequency | Required rejection | Filter order | Filter stages | Op-amps in tool circuit | Expected ultimate slope (dB/decade) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | 2 kHz / 1 dB | 8 kHz | 20 dB | | | | |
+| B | 2 kHz / 1 dB | 8 kHz | 40 dB | | | | |
+| C | 2 kHz / 1 dB | 8 kHz | 60 dB | | | | |
+| D | 2 kHz / 1 dB | 4 kHz | 40 dB | | | | |
 
-A fourth-order response may meet these targets with a suitable response family; do not assume every fourth-order design does. Compare the tool's predicted curves with all the requirements.
+### Explain what you find
 
-### Design, simulate, build and listen
+- Compare A, B and C: how does demanding stronger rejection change the order, slope and op-amp count? Order changes in whole-number steps, so a small specification change does not always add another stage.
+- Compare B and D: why does moving the stopband closer to the passband require a more selective filter?
+- Which design would be appropriate for the mode-8 music and 8 kHz whine? Explain why the first-order filter you built cannot match its combination of wanted-band preservation and unwanted-tone rejection.
+- If time permits, compare one design with another response family. Does a sharper transition come with passband ripple or another change in the response?
 
-1. Select a low-pass response in Filter Wizard and explore its order and stage count. Choose a design meeting the table and save the predicted response and circuit in your lab book.
-2. Inspect the component values. Use available capacitors where possible, then obtain suitable resistances using available values or series/parallel combinations. The tool's component-selection options can help trade resistance against capacitance. Check the updated response after substitutions: allowing ±10% component changes does not guarantee that the filter still meets its specification.
-3. Draw your complete circuit, including every supply, reference and coupling connection. Use a suitable mid-supply bias, approximately 2.5 V. Do not assume an AWG offset alone correctly biases every internal node or that a different op-amp selected by the tool is interchangeable with the LT1366.
-4. **Simulate this challenge before building.** Use the LT1366 model in LTspice, check the DC operating point, then inspect gain and phase with the actual chosen values. Check that the LT1366's finite bandwidth supports the proposed response, particularly stages with peaking. Revise the design if needed.
-5. Build with the power off. Use the two op-amps in one module for the two filter stages. A separate reference buffer or output buffer requires another available amplifier channel; ask the demonstrator for an additional module if required. The two-stage limit applies to the signal-filter stages.
-6. Test electrically with an AWG, starting with a small sine wave and the DC offset required by your design. Check all DC operating points before sweeping. Measure the wanted band and rejection at 8 kHz, adding points wherever the passband has peaks or dips.
-7. Calculate attenuation relative to the nominal passband gain, rather than reading an absolute gain as attenuation. For example, a filter with a passband gain of 20 dB needs a gain at 8 kHz no higher than −20 dB to provide 40 dB rejection.
-8. Replace the AWG with source-module mode 8 through a suitable **AC-coupling and bias network**. Check that this added network does not significantly attenuate 200 Hz and that the output remains unclipped. Keep scope grounds at 0 V.
-9. Connect the earphones through the DC-blocking adapter, using a suitable output buffer if needed. A circuit measured into a high-impedance scope load may behave differently when driving approximately 64 Ω. Start at a low listening level. Compare the original and filtered signals: is the whine reduced, and does the melody remain clear?
+Save the tool's response plots and complete the table in your lab book. The aim is to demonstrate that a tighter filtering specification generally needs a higher order and a more complex circuit with more op-amp stages.
 
-| Frequency (Hz) | Input p-p (V) | Output p-p (V) | Gain (dB) | Attenuation relative to nominal passband gain (dB) |
-| --- | --- | --- | --- | --- |
-| 200 | | | | |
-| 500 | | | | |
-| 1000 | | | | |
-| 2000 | | | | |
-| 4000 | | | | |
-| 8000 | | | | |
-
-Add readings at predicted passband peaks and dips; the few points in this table alone cannot prove that the whole passband meets the specification.
-
-- [ ] Present your chosen response, order, circuit and actual component values.
-- [ ] Compare simulated and measured results with the specification.
-- [ ] Explain why the sharper transition requires a more complex circuit than the first-order filter, and describe the listening result.
+- [ ] Compare the four tool designs and explain the relationship between specification, order, roll-off and circuit complexity.
 
 [Return to Section 1: Amplification, Supply Rails and Biasing](Section1.md).
