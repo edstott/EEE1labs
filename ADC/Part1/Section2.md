@@ -3,9 +3,13 @@
 
 ## Section 2: Reactive Components and First-Order Filters
 
-Complete the main investigations first, then attempt the tasks labelled **Challenge**. All circuit designs are included; the challenge tasks apply the same principles to similar circuits. In [Section 1](Section1.md), you measured an unknown impedance by comparing its voltage with the voltage across a known resistor. You will now use that method to investigate two capacitors and two inductors, explain the different regions of their impedance curves, and estimate one unknown inductance from a few readings.
+Complete the main investigations first, then attempt the tasks labelled **Challenge**. All circuit designs are included; the challenge tasks apply the same principles to similar circuits.
 
-You will then use these frequency-dependent impedances to build filters, including a filter whose gain approaches different non-zero values at low and high frequency. You will study capacitors and inductors in lectures this week; if you have not covered them yet, do not worry—the basic equations you need for this experiment are provided below.
+In [Section 1](Section1.md), you measured an unknown impedance by comparing its voltage with the voltage across a known resistor. You will now use that method to investigate two capacitors and two inductors, explain the different regions of their impedance curves, and estimate one unknown inductance from a few readings.
+
+You will then use these frequency-dependent impedances to build filters, including a filter whose gain approaches different non-zero values at low and high frequency.
+
+You will study capacitors and inductors in lectures this week; if you have not covered them yet, do not worry—the basic equations you need for this experiment are provided below.
 
 ### Impedance and reactance
 
@@ -285,6 +289,19 @@ The transfer function is complex. Its magnitude gives the output-to-input amplit
 
 Unlike the impedance measurement, a filter measurement usually needs no math-channel subtraction: connect CH1 to the input and CH2 to the output, both relative to the same common ground. Place the component across which you measure the output at the grounded end of the divider. Rewire the circuit when changing the output component; do not move a probe ground clip to a non-ground node.
 
+### Which first-order filters should your group build?
+
+There are four first-order configurations illustrated below: RL low-pass, RL high-pass, RC low-pass and RC high-pass. **Each group builds only one RL configuration as the main task, followed by one matching RC configuration if attempting the challenge.**
+
+Use the numerical part of your group identifier to decide. For example, A01 and B03 are odd; A02 and B04 are even.
+
+| Group number | Main first-order task | Matching RC challenge |
+| --- | --- | --- |
+| Odd | RL low-pass | RC low-pass |
+| Even | RL high-pass | RC high-pass |
+
+Both sets of circuit diagrams remain in the handout so that you can understand and compare the two responses. You are not required to build all four circuits. The gain-floor investigation and its RC design challenge are separate tasks, described later.
+
 ### Measuring a Bode plot
 
 A Bode plot shows magnitude in decibels and phase in degrees against logarithmic frequency:
@@ -307,7 +324,24 @@ $$
 
 An output that occurs later than the input has a positive delay and a negative phase. An output that leads the input has a positive phase.
 
-Use the following starting frequencies for a **full filter sweep from 10 Hz to 40 kHz**. Make one copy of this table for each RL configuration and for the inductive gain-floor circuit. The denser points between 1 kHz and 5 kHz help resolve the transitions in these circuits.
+#### Measuring phase by counting divisions
+
+You can also measure phase directly from the oscilloscope grid. Display both sine waves at the same frequency and use corresponding points, such as their rising zero-crossings measured relative to each waveform's own centre line.
+
+1. Count the horizontal divisions between two successive rising zero-crossings of the **input**. This is one complete period.
+2. Count the horizontal divisions between corresponding rising zero-crossings of the input and output. Estimate fractions of a division where necessary.
+3. Divide the separation by the divisions in one period and multiply by 360°:
+
+$$
+|\phi|=\frac{\text{horizontal separation in divisions}}{\text{divisions in one period}}\times360^\circ.
+$$
+
+For example, a separation of one division when a period occupies eight divisions gives a phase difference of 45°. If the output occurs to the **right** of the corresponding input crossing, it lags: record **−45°**. If it occurs to the **left**, it leads: record **+45°**. Use crossings belonging to the same cycle rather than adding an extra complete period.
+
+Use horizontal separation, not vertical separation. Both measurements use the same timebase, so the seconds-per-division factor cancels. Cursors can give a more precise reading than counting divisions.
+
+
+Use the following starting frequencies for a **full filter sweep from 10 Hz to 40 kHz**. Make one copy of this table for your assigned RL configuration and another for the inductive gain-floor circuit. The denser points between 1 kHz and 5 kHz help resolve the transitions in these circuits.
 
 | Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Phase (°) |
 | --- | --- | --- | --- | --- | --- |
@@ -349,7 +383,7 @@ $$
 
 #### RL high-pass filter
 
-Swap the positions of the resistor and inductor, so that the inductor connects from the output to ground.
+For the high-pass configuration, connect the resistor between the input and output, and the inductor from the output to ground. Even-numbered groups build this configuration directly; they do not need to build the low-pass circuit first.
 
 <p align="center">
   <img src="graphics/rl_highpass.png" alt="rl highpass" width="700">
@@ -377,12 +411,21 @@ Far into the stopband, the low-pass magnitude falls by approximately 20 dB per d
 
 A real inductor has winding resistance. The low-pass gain at low frequency may therefore be less than one, while the high-pass output may approach a non-zero low-frequency floor. Use the series resistance estimated earlier to explain these effects. The ideal transfer functions above do not include winding resistance.
 
-- [ ] Build both RL configurations and plot their magnitude and phase responses.
-- [ ] Compare the responses with the ideal predictions and explain the effect of the inductor's resistance.
+#### Instructions for your assigned RL filter
+
+1. Select the low-pass circuit if your group number is odd, or the high-pass circuit if it is even.
+2. With the generator output off, build that circuit using the stated component values.
+3. Connect CH1 to the input and CH2 to the output. Connect both probe ground clips to common ground and disable the impedance-measurement math trace.
+4. Turn the output on. Check the sine-wave input, then use the full filter-frequency table above to record input voltage, output voltage, gain and phase.
+5. Plot magnitude and phase, identify the transition and compare with the prediction for your assigned circuit.
+6. If possible, compare plots with a group assigned the other response. Each group should keep its own measurements identified.
+
+- [ ] Build your assigned RL configuration and plot its magnitude and phase response.
+- [ ] Compare with the ideal prediction and explain the effect of the inductor's resistance.
 
 ### Challenge: reproduce the RL responses with RC filters
 
-**Challenge task:** build the RC low-pass and high-pass circuits below and compare them with the RL filters. The same ideal low-pass and high-pass transfer functions can be obtained using a resistor and capacitor. Because capacitive impedance decreases with frequency, the output component is different from that in the corresponding RL circuit.
+**Challenge task:** build only the RC circuit matching your assigned RL response: low-pass for odd-numbered groups and high-pass for even-numbered groups. Compare it with your own RL measurements. The same ideal low-pass and high-pass transfer functions can be obtained using a resistor and capacitor. Because capacitive impedance decreases with frequency, the output component is different from that in the corresponding RL circuit.
 
 Use **$R=10\,\mathrm{k}\Omega$ and $C=10\,\mathrm{nF}$**, giving:
 
@@ -412,7 +455,11 @@ $$
 
 At low frequency, the capacitor approaches an open circuit; at high frequency its impedance becomes small. Use these limiting cases to explain each response before taking measurements.
 
-Test each RC configuration at **100 Hz, 1 kHz, 1.6 kHz, 3 kHz and 10 kHz**. These points cover frequencies below, near and above the nominal corner. Use the table below for each circuit and add the measurements to the matching RL plots. Take extra readings only where they help explain a discrepancy.
+1. Choose the matching RC diagram using the group-allocation table above.
+2. Turn the generator output off, replace the RL network with that RC circuit, and check the ground connections.
+3. Connect CH1 to the input and CH2 to the output, then restore the sine-wave signal.
+4. Measure at **100 Hz, 1 kHz, 1.6 kHz, 3 kHz and 10 kHz**, using the table below. These points cover frequencies below, near and above the nominal corner.
+5. Add your RC measurements to the matching RL magnitude and phase plots. Take extra readings only where they help explain a discrepancy.
 
 | Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Phase (°) |
 | --- | --- | --- | --- | --- | --- |
@@ -423,14 +470,14 @@ Test each RC configuration at **100 Hz, 1 kHz, 1.6 kHz, 3 kHz and 10 kHz**. Thes
 | 10000 | | | | | |
 
 
-- [ ] Build the RC low-pass and high-pass circuits and compare selected magnitude and phase measurements with the matching RL responses.
+- [ ] Build your matching RC configuration and compare its selected magnitude and phase measurements with your assigned RL response.
 - [ ] Explain why the ideal responses match and why the real circuits may differ.
 
 ### A filter with a gain floor
 
 An ordinary low-pass filter's gain tends towards zero at high frequency. Sometimes we want the gain to approach a fixed, non-zero value instead. This is a **shelving response**: the magnitude moves between two plateaus.
 
-Use the following circuit from Adam's work:
+All groups investigate the following gain-floor circuit:
 
 - $L_1=100\,\mathrm{mH}$ in parallel with $R_1=3\,\mathrm{k}\Omega$ forms the first part of the upper divider arm.
 - $R_3=1\,\mathrm{k}\Omega$ connects this parallel combination to the output.
@@ -489,6 +536,14 @@ The phase is negative through the transition and approaches zero at both frequen
 </p>
 
 - [ ] Derive the transfer function from the parallel-impedance and potential-divider equations, and check the limiting gains.
+Before measuring:
+
+1. Turn off the generator output and build the circuit shown, checking the parallel connection of $R_1$ and $L_1$.
+2. Connect CH1 to the input and CH2 to the junction of $R_3$ and $R_2$. Both probe ground clips go to common ground.
+3. Restore the sine wave and check that neither channel clips.
+4. Use a fresh copy of the full filter table above and take readings at its listed frequencies.
+5. Plot gain and phase and compare the low- and high-frequency plateaus with the predictions.
+
 - [ ] Build the circuit and measure its magnitude and phase response from 10 Hz to 40 kHz.
 - [ ] Compare the results with the ideal prediction. Explain how winding resistance can change the low-frequency plateau.
 
