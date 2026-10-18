@@ -3,8 +3,8 @@
 This repository contains documentation and downloads for Year 1 labs in Electrical and Electronic Engineering at Imperial College London.
 
 ## General information
-The lab pairs and seating plan can be viewed on Teams.
-You can post questions about the lab on Edstem ([ADC and skills](https://edstem.org/us/courses/30206/discussion/), DECA)
+The lab pairs and seating plan can be viewed on [Canvas](https://canvas.imperial.ac.uk/courses/9593/modules).
+You can post questions about the lab on Ed Discussion ([ADC](https://edstem.org/us/courses/105555/discussion), [DECA](https://edstem.org/us/courses/107150/discussion/8374043))
 
 ### Oscilloscopes
 Remind yourself about using the Rohde and Schwarz oscilloscope with [this video](https://imperial.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=9507f2f9-77a8-4b19-80d2-aada00cc383d).
@@ -23,13 +23,13 @@ If you want to catch up on lab work at home, you can borrow a Picoscope (USB osc
   - [Section 7: Control](skills/control.md)
 
 ## Analysis and Design of Circuits
-- Part 1 (Autumn Term Weeks 4–6)
+- Part 1 - Passive Components (Autumn Term Weeks 4–6) 
   - [Section 1: Measuring Impedance](ADC/Part1/Section1.md)
-  - [Section 2: Reactive Components](ADC/Part1/Section2.md)
-  - [Section 3: Resonance and Filters](ADC/Part1/Section3.md)
-- Part 2 (Autumn Term Weeks 8–10)
-  - [Section 1: Biasing and amplification](ADC/Part2/Section1.md)
-  - [Section 2: Bandwidth and Filtering](ADC/Part2/Section2.md)
+  - [Section 2: Reactive Components and First-Order Filters](ADC/Part1/Section2.md)
+  - [Section 3: Resonance and Second-Order Filters](ADC/Part1/Section3.md)
+- Part 2 - Op-Amp Circuits (Autumn Term Weeks 8–10)
+  - [Section 1: Amplification, Supply Rails and Biasing](ADC/Part2/Section1.md)
+  - [Section 2: Gain–Bandwidth Product and Active Filtering](ADC/Part2/Section2.md)
 - Part 3 (Spring Term Weeks 3-5)
   - [Section 1: Characterising a BJT](ADC/Part3/Section1.md)
   - [Section 2: Common Emitter Amplifiers](ADC/Part3/Section2.md)
