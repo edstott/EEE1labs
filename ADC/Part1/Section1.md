@@ -163,13 +163,13 @@ The screenshots illustrate the measurement behaviour; their timebase and other s
 
 - [ ] Display $v_R$ using the math channel and compare it with $v_Z$.
 - [ ] Confirm that $v_R\approx v_Z$ when the two resistors are equal.
-- [ ] Use the measured voltage ratio and the known resistance to calculate the resistance of the component in the position labelled $Z$.
+- [ ] Check that both traces are stable before proceeding to the resistance calculation in Activity 2.
 
 Small differences are expected because real resistors have tolerances and voltage measurements have finite accuracy.
 
 ### Activity 2: measure the voltage ratio and calculate resistance
 
-When the two components are different, measure the amplitudes of both $v_Z$ and $v_R$ and calculate:
+For this activity, keep the two 1 kΩ resistors connected. Measure the amplitudes of both $v_Z$ and $v_R$ and calculate the resistance in the position labelled $Z$. The same voltage-ratio method also applies when the components have different values:
 
 $$
 |Z|=R\frac{|V_Z|}{|V_R|}.
