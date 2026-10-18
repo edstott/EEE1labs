@@ -7,6 +7,15 @@ In Section 1, you will learn how to measure impedance using a known resistor and
 
 ## Section 1: Measuring Impedance
 
+### What you will do
+
+1. Build a two-resistor divider and display the required voltages.
+2. Measure the voltage ratio and calculate the resistance of the second resistor.
+3. Compare cursor and automatic measurements.
+4. Interpret two examples of unreliable measurements and decide how to improve them.
+
+Complete these activities using the instructions below. Keep the measurements, calculations and short explanations in your laboratory record. The final source-resistance experiment is a challenge task.
+
 ### The measurement principle
 
 For a resistor, Ohm’s law relates the voltage across it to the current through it. Impedance extends this idea to components such as capacitors and inductors when we analyse sinusoidal signals.
@@ -120,7 +129,7 @@ For each measurement:
 
 Matching the physical probe settings to the oscilloscope settings is essential for correct voltage readings.
 
-### Checking the method with two resistors
+### Activity 1: build and check the measurement circuit
 
 Begin with two equal resistors so that you can check the measurement method before using a capacitor or inductor.
 
@@ -150,7 +159,9 @@ Since the two resistors are equal, the input voltage should divide equally betwe
   <img src="graphics/PN-math.png" alt="Oscilloscope display showing the math-channel measurement" width="650">
 </p>
 
-Identify the traces by their channel labels rather than relying only on their colours.
+In this screenshot, the blue/cyan trace is **CH2**, showing $v_Z$, and the red trace is **MATH**, showing $v_R$. Both use 500 mV/div and have similar amplitudes. The traces have been shifted vertically to make them easier to compare; their different screen positions do not imply different DC voltages. Their peaks occur at approximately the same times, showing that they are in phase.
+
+The screenshots illustrate the measurement behaviour; their timebase and other settings need not match the starting settings above. Identify traces by their channel labels as well as their colours.
 
 - [ ] Display $v_R$ using the math channel and compare it with $v_Z$.
 - [ ] Confirm that $v_R\approx v_Z$ when the two resistors are equal.
@@ -158,7 +169,7 @@ Identify the traces by their channel labels rather than relying only on their co
 
 Small differences are expected because real resistors have tolerances and voltage measurements have finite accuracy.
 
-### Measuring voltage amplitudes
+### Activity 2: measure the voltage ratio and calculate resistance
 
 When the two components are different, measure the amplitudes of both $v_Z$ and $v_R$ and calculate:
 
@@ -185,6 +196,19 @@ $$
 
 Do not divide a peak-to-peak reading for one waveform by an RMS reading for the other.
 
+1. Measure the actual value of the test resistor $R$ with the circuit unpowered and the resistor isolated from other current paths. Reconnect it afterwards.
+2. Restore the 100 Hz sine wave and check the connections and math-channel setting.
+3. Use voltage cursors to measure the peak-to-peak voltage on CH2 and on MATH.
+4. Enter the readings in the table and calculate $|Z|=R V_{Z,\mathrm{pp}}/V_{R,\mathrm{pp}}$.
+5. Compare your calculated resistance with the nominal 1 kΩ value. Explain any small difference using resistor tolerance and measurement uncertainty.
+
+| Frequency (Hz) | Measured test resistance $R$ (Ω) | CH2: $V_{Z,\mathrm{pp}}$ (V) | MATH: $V_{R,\mathrm{pp}}$ (V) | Calculated resistance $|Z|$ (Ω) |
+| --- | --- | --- | --- | --- |
+| 100 | | | | |
+
+- [ ] Record both voltage readings and show the resistance calculation.
+
+
 #### Using cursors
 
 Peak-to-peak measurements are convenient with cursors because the waveform’s maximum and minimum are easier to identify than its exact centre.
@@ -193,7 +217,7 @@ Place one voltage cursor at the positive peak and the other at the negative peak
 
 Measure $v_Z$ on CH2 and $v_R$ on the math channel.
 
-#### Using automatic measurements
+### Activity 3: compare measurement methods
 
 Using cursors repeatedly can be laborious, so the oscilloscope also provides automatic measurement functions.
 
@@ -211,17 +235,32 @@ The peak-to-peak function uses the waveform’s extreme values and can be affect
 
 RMS measurements may include a DC component, depending on the selected function. For the zero-offset sine waves used here, compare the readings with the sine-wave relationship above.
 
+Keep the same circuit and generator settings. Record the measurements below; enter all voltage readings in volts. For the RMS prediction, divide the cursor peak-to-peak value by $2\sqrt{2}$.
+
+| Measurement method | CH2: voltage across $Z$ (V) | MATH: voltage across $R$ (V) |
+| --- | --- | --- |
+| Cursor peak-to-peak | | |
+| Automatic “Amplitude” | | |
+| Automatic “Peak-peak” | | |
+| Predicted RMS from cursor reading | | |
+| Automatic RMS | | |
+| Multimeter AC reading, where within specification | | |
+
+Connect the multimeter directly across each resistor in turn using its voltage inputs. Its reading is an independent check; the oscilloscope ground-clip restrictions still apply to the oscilloscope probes.
+
 - [ ] Compare the automatic amplitude and peak-to-peak readings with your cursor measurements.
 - [ ] Check whether the RMS readings are consistent with those expected for a sine wave.
 - [ ] Compare with an AC voltage measurement from the multimeter, ensuring that the signal frequency is within its specified measurement range.
 
-### Recognising unreliable measurements and choosing R
+### Activity 4: interpret unreliable measurements and choose R
 
 The impedance magnitude is calculated from:
 
 $$
 |Z|=R\frac{|V_Z|}{|V_R|}.
 $$
+
+For this activity, **study the two screenshots below; you do not need to reproduce the faults**. For each, identify the unreliable voltage measurement, explain the problem and decide whether to increase or decrease $R$.
 
 The accuracy of this result depends on the accuracy of the known resistance and both voltage measurements. Component tolerances, electrical noise, oscilloscope resolution and probe loading can all introduce errors.
 
@@ -237,7 +276,7 @@ The CH2 signal may then become comparable with electrical noise or the smallest 
 
 **Decrease R** to increase the proportion of the input voltage appearing across $Z$ and make it easier to measure.
 
-*The voltage across Z is small and noisy, even at a sensitive vertical-scale setting. Decreasing R can improve this measurement.*
+*Blue/cyan is CH2 ($v_Z$), at 10 mV/div. Red is MATH ($v_R$), at 500 mV/div. The small, noisy CH2 waveform is the unreliable measurement. Decrease R to increase the voltage across Z. The two traces have different scales: compare voltage readings, not just their heights on screen.*
 
 <p align="center">
   <img src="graphics/PN-noisy.png" alt="Small and noisy voltage signal across the unknown impedance" width="650">
@@ -259,7 +298,7 @@ The resulting math trace may look noisy or blocky, and its amplitude may be unre
 
 **Increase R** to increase the voltage across it and produce a better-resolved math-channel signal.
 
-*The math-channel waveform is blocky because the small difference between the two measured signals is poorly resolved. Increasing R makes this difference larger.*
+*Blue/cyan is CH2 ($v_Z$), at 500 mV/div. Red is MATH ($v_R$), at 20 mV/div. The red math trace is blocky and unstable even though it looks large on screen: it has been displayed at a much more sensitive scale. Increase R to make the voltage across it larger relative to the acquisition errors. Enlarging the math trace alone does not improve the underlying measurement.*
 
 <p align="center">
   <img src="graphics/PN-mathnoise.png" alt="Poorly resolved and quantised math-channel waveform" width="650">
@@ -275,7 +314,9 @@ Start with $R=1\,\mathrm{k}\Omega$ and examine both CH2 and the math trace.
 - If you have an approximate theoretical value of $|Z|$, choose an available resistor of a similar magnitude.
 - Whenever you change $R$, record its new value and use it in the impedance calculation.
 
-As practical starting points, if the voltage across $Z$ is below about **5 mV RMS** and cannot be resolved clearly, try a smaller resistor. If the math-channel waveform is less than about **one vertical division peak-to-peak**, check the input-channel scaling and try a larger resistor.
+As a practical starting point, if the voltage across $Z$ is below about **5 mV RMS** and cannot be resolved clearly, try a smaller resistor. If the math trace is blocky, unstable or dominated by noise, check the scaling of CH1 and CH2 and try a larger resistor.
+
+**A trace filling the screen is not proof of a good measurement.** Changing the math display scale can magnify a poorly resolved signal without improving the data from which it was calculated. Check the waveform's smoothness and stability as well as its amplitude, and read each trace's own volts-per-division setting.
 
 These are guides rather than guarantees of accuracy. Always inspect the waveforms. Change the resistance in sensible steps; a factor of ten is often useful. For this experiment, do not reduce the test resistance below **10 Ω**.
 
@@ -316,7 +357,14 @@ A reduction in input amplitude alone does not invalidate the voltage-ratio metho
 
 **Measurement consistency:** use the same amplitude convention for both voltages. Check automatic measurements against the displayed waveforms, especially when a signal is small or noisy.
 
-- [ ] Check that both the voltage across Z and the math-channel voltage across R are clearly resolved.
+Record your interpretation of the screenshots:
+
+| Screenshot | Unreliable trace | Evidence from the waveform and scale | Increase or decrease $R$? | Why will this help? |
+| --- | --- | --- | --- | --- |
+| Small, noisy component voltage | | | | |
+| Blocky math-channel voltage | | | | |
+
+- [ ] Check that both the voltage across Z and the math-channel voltage across R are clearly resolved in your own circuit.
 - [ ] Explain whether R should be increased or decreased if either measurement becomes unreliable.
 - [ ] Record any changes to R and any limitations affecting your measurements.
 
@@ -351,6 +399,13 @@ You will determine $R_\mathrm{source}$ from two output-voltage measurements.
 3. Replace it with a $200\,\Omega$ load and measure the output-voltage amplitude again.
 4. Use the same amplitude measurement convention for both readings and check that the output remains sinusoidal.
 5. Write the potential-divider equation for each load and solve the two simultaneous equations for the source-voltage amplitude and $R_\mathrm{source}$.
+
+Use the same **100 Hz sine wave**, 0 V offset and initially 1 V peak setting. Measure the actual load resistance if possible and record peak-to-peak output voltages:
+
+| Nominal load resistance (Ω) | Actual load resistance used in calculation (Ω) | Output peak-to-peak voltage (V) |
+| --- | --- | --- |
+| 10 000 | | |
+| 200 | | |
 
 The internal source voltage is the same in both equations because the generator settings remain unchanged and the generator is operating within its linear range. The measured output voltage changes because the load changes.
 
