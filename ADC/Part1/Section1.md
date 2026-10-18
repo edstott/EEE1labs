@@ -1,9 +1,7 @@
 # Analysis and Design of Circuits Lab
 # Part 1: Autumn Term weeks 4–6
 
-This laboratory explores passive components: resistors, capacitors and inductors, and how they can be combined to make frequency-dependent circuits.
-
-In Section 1, you will learn how to measure impedance using a known resistor and an oscilloscope. [Section 2](Section2.md) explores reactive components and first-order filters. [Section 3](Section3.md) investigates resonance and second-order filters.
+This laboratory explores passive components: resistors, capacitors and inductors, and how they can be combined to make frequency-dependent circuits. In Section 1, you will learn how to measure impedance using a known resistor and an oscilloscope. [Section 2](Section2.md) explores reactive components and first-order filters. [Section 3](Section3.md) investigates resonance and second-order filters.
 
 ## Section 1: Measuring Impedance
 
@@ -14,7 +12,7 @@ In Section 1, you will learn how to measure impedance using a known resistor and
 3. Compare cursor and automatic measurements.
 4. Interpret two examples of unreliable measurements and decide how to improve them.
 
-Complete these activities using the instructions below. Keep the measurements, calculations and short explanations in your laboratory record. The final source-resistance experiment is a challenge task.
+Complete these activities using the instructions below. Keep the measurements, calculations and short explanations in your lab book. The final source-resistance experiment is a challenge task.
 
 ### The measurement principle
 
