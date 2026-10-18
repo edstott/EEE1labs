@@ -25,7 +25,9 @@ We will first explain this principle, then show how to connect the oscilloscope 
 
 Place the known resistor $R$ in series with the unknown impedance $Z$:
 
-![Potential divider with unknown impedance](graphics/Zdiv.png)
+<p align="center">
+  <img src="graphics/Zdiv.png" alt="Potential divider with unknown impedance" width="360">
+</p>
 
 The lowercase voltage labels in this diagram represent the sinusoidal signals that we observe on the oscilloscope. We use uppercase symbols when expressing those same signals as phasors in the equations below.
 
@@ -75,7 +77,9 @@ Connect the probes as follows:
 
 The channels are also referred to as CHA and CHB in the instructions and figures: CHA corresponds to CH1, and CHB to CH2.
 
-![Correct oscilloscope connections for measuring impedance](graphics/Zdivscope.png)
+<p align="center">
+  <img src="graphics/Zdivscope.png" alt="Correct oscilloscope connections for measuring impedance" width="700">
+</p>
 
 Each channel now measures a voltage relative to the same reference node. From Kirchhoff’s voltage law:
 
@@ -99,7 +103,9 @@ It may seem natural to measure $v_R$ by connecting a probe tip to the top of $R$
 
 However, the ground clip is already connected internally to the signal generator’s ground. Connecting it to the junction creates a conducting path from the junction to the bottom of $Z$. This **short-circuits $Z$** and changes the circuit being measured.
 
-![Incorrect oscilloscope ground connection short-circuiting Z](graphics/Zdivscope_wrong.png)
+<p align="center">
+  <img src="graphics/Zdivscope_wrong.png" alt="Incorrect oscilloscope ground connection short-circuiting Z" width="700">
+</p>
 
 The probe ground clip cannot be treated as an independent negative measurement terminal. Keep both ground clips at the common ground and use the math channel to calculate the voltage across $R$.
 
@@ -126,7 +132,9 @@ Begin with two equal resistors so that you can check the measurement method befo
 
 We use a sine wave because sinusoidal measurements will also allow us to characterise capacitors and inductors.
 
-![Potential divider built on a breadboard](graphics/PN-breadboard.jpg)
+<p align="center">
+  <img src="graphics/PN-breadboard.jpg" alt="Potential divider built on a breadboard" width="650">
+</p>
 
 Press `MATH` and select `CH1`, `SUB` and `CH2` to display:
 
@@ -138,7 +146,9 @@ You can hide CH1 by pressing its channel button twice. It will still be used to 
 
 Since the two resistors are equal, the input voltage should divide equally between them. The $v_R$ and $v_Z$ waveforms should therefore have approximately equal amplitudes and be in phase.
 
-![Oscilloscope display showing the math-channel measurement](graphics/PN-math.png)
+<p align="center">
+  <img src="graphics/PN-math.png" alt="Oscilloscope display showing the math-channel measurement" width="650">
+</p>
 
 Identify the traces by their channel labels rather than relying only on their colours.
 
@@ -229,7 +239,9 @@ The CH2 signal may then become comparable with electrical noise or the smallest 
 
 *The voltage across Z is small and noisy, even at a sensitive vertical-scale setting. Decreasing R can improve this measurement.*
 
-![Small and noisy voltage signal across the unknown impedance](graphics/PN-noisy.png)
+<p align="center">
+  <img src="graphics/PN-noisy.png" alt="Small and noisy voltage signal across the unknown impedance" width="650">
+</p>
 
 #### When R is too small
 
@@ -249,7 +261,9 @@ The resulting math trace may look noisy or blocky, and its amplitude may be unre
 
 *The math-channel waveform is blocky because the small difference between the two measured signals is poorly resolved. Increasing R makes this difference larger.*
 
-![Poorly resolved and quantised math-channel waveform](graphics/PN-mathnoise.png)
+<p align="center">
+  <img src="graphics/PN-mathnoise.png" alt="Poorly resolved and quantised math-channel waveform" width="650">
+</p>
 
 #### Choosing a practical resistance
 
@@ -310,13 +324,17 @@ A reduction in input amplitude alone does not invalidate the voltage-ratio metho
 
 A real signal generator does not behave as an ideal voltage source. Its output can be represented by a **Thévenin equivalent circuit**: an ideal voltage source in series with a source resistance $R_\mathrm{source}$.
 
-![Signal generator represented by an ideal internal voltage source and its series source resistance](graphics/sigeneq.png)
+<p align="center">
+  <img src="graphics/sigeneq.png" alt="Signal generator represented by an ideal internal voltage source and its series source resistance" width="650">
+</p>
 
 When a load resistance is connected, current flows through both the source resistance and the load. Some of the source voltage is dropped across $R_\mathrm{source}$, so the voltage at the output terminals decreases.
 
 This is the loading effect discussed above. In this challenge, we model the source impedance as a resistance at the chosen test frequency.
 
-![Signal generator source resistance and an external load forming a potential divider](graphics/sigenloadeq.png)
+<p align="center">
+  <img src="graphics/sigenloadeq.png" alt="Signal generator source resistance and an external load forming a potential divider" width="650">
+</p>
 
 The two resistances form a potential divider:
 
