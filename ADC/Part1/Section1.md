@@ -99,7 +99,7 @@ It may seem natural to measure $v_R$ by connecting a probe tip to the top of $R$
 
 However, the ground clip is already connected internally to the signal generator’s ground. Connecting it to the junction creates a conducting path from the junction to the bottom of $Z$. This **short-circuits $Z$** and changes the circuit being measured.
 
-<!-- Add the redrawn incorrect-connection diagram here. Show the probe ground clip connected to the R–Z junction and highlight the resulting short-circuit path across Z. -->
+![Incorrect oscilloscope ground connection short-circuiting Z](graphics/Zdivscope_wrong.png)
 
 The probe ground clip cannot be treated as an independent negative measurement terminal. Keep both ground clips at the common ground and use the math channel to calculate the voltage across $R$.
 
@@ -310,13 +310,13 @@ A reduction in input amplitude alone does not invalidate the voltage-ratio metho
 
 A real signal generator does not behave as an ideal voltage source. Its output can be represented by a **Thévenin equivalent circuit**: an ideal voltage source in series with a source resistance $R_\mathrm{source}$.
 
-![Signal generator represented by an ideal internal voltage source and its series source resistance](graphics/signal_generator_source.svg)
+![Signal generator represented by an ideal internal voltage source and its series source resistance](graphics/sigeneq.png)
 
 When a load resistance is connected, current flows through both the source resistance and the load. Some of the source voltage is dropped across $R_\mathrm{source}$, so the voltage at the output terminals decreases.
 
 This is the loading effect discussed above. In this challenge, we model the source impedance as a resistance at the chosen test frequency.
 
-![Signal generator source resistance and an external load forming a potential divider](graphics/signal_generator_loaded.svg)
+![Signal generator source resistance and an external load forming a potential divider](graphics/sigenloadeq.png)
 
 The two resistances form a potential divider:
 
