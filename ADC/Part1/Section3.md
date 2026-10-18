@@ -1,24 +1,272 @@
 # Analysis and Design of Circuits Lab
-# Part 1: Autumn Term weeks 4--6
+# Part 1: Autumn Term weeks 4–6
 
-## Section 3: Resonance and Filters
+## Section 3: Resonance and Second-Order Filters
 
-Capacitors and inductors exhibit resonance when they are connected together — at a certain frequency their impedances are equal and opposite resulting in an overall impedance that is (theoretically) either zero or infinity.
-In practice, impedance never reaches zero or infinity due to parasitic resistance.
-In this section you will measure the impedance of resonant networks and make filter circuits that use complex impedance to block certain frequencies.
-		
-## Before the lab
-A resistor, capacitor and inductor can be combined to make a *second-order RLC filter*, meaning that the transfer function $T(f)=V_\text{out}(f)/V_\text{in}$ has a relationship $T\propto f^2$ or $T\propto 1/f^2$ for low or high frequencies.
-			
-![RLC low-pass filter](graphics/RLClow.png)
-			
-![RLC high-pass filter](graphics/RLChigh.png)
-			
-Use your lecture notes to design a RLC filter to achieve the shape and corner frequency listed for your pair in the table at the end of this page.
-Choose a value of $R$ that will make your system critically-damped ( $\zeta=1$ ).
-Pick component values from the list of available parts below to get a corner frequency within 10\% of the specification.
-			
-Use LT SPICE to produce the magnitude and phase responses of your filter (do this after LT SPICE has been introduced in problem classes)
+In Section 2, you investigated individual capacitors and inductors and used them to build first-order filters. You will now connect an inductor and capacitor together and investigate **series and parallel resonance**. The final challenges extend the filter work to second-order circuits, including a two-stage RC low-pass filter and a Twin-T notch filter.
+
+Complete the resonance measurements first. The tasks labelled **Challenge** extend the main investigation. Keep your measurements and analysis together: do not repeat a complete sweep simply to produce a second plot.
+
+### Before the lab
+
+1. Revise the capacitor and inductor impedance equations from Section 2.
+2. Calculate the ideal resonant frequency for $L=100\,\mathrm{mH}$ and $C=100\,\mathrm{nF}$ using the equation below.
+3. Sketch the expected series and parallel impedance trends and identify which should have a minimum and which should have a maximum.
+4. Prepare the measurement table below in your spreadsheet.
+5. If attempting a filter challenge, calculate its expected response before building it. Use LTspice once it has been introduced in the problem classes.
+
+### What is resonance?
+
+An ideal inductor has impedance $j\omega L$, while an ideal capacitor has impedance $-j/(\omega C)$. Their reactances have opposite signs. At a particular frequency their magnitudes are equal:
+
+$$
+\omega_0L=\frac{1}{\omega_0C}.
+$$
+
+Therefore:
+
+$$
+\omega_0=\frac{1}{\sqrt{LC}},
+\qquad
+f_0=\frac{1}{2\pi\sqrt{LC}}.
+$$
+
+Remember that $\omega_0$ is in radians per second and $f_0$ is in hertz. For 100 mH and 100 nF, the ideal prediction is approximately **1.59 kHz**.
+
+In an ideal series connection the impedances cancel, giving zero impedance at resonance. In an ideal parallel connection the branch admittances cancel, giving an unbounded impedance magnitude. Real components have losses, so the measured minimum is not zero and the maximum is not infinite.
+
+This resonance comes from connecting the separate capacitor and inductor together. It is different from an individual inductor's **self-resonance**, which involves its unwanted inter-winding capacitance.
+
+<!-- Qualitative figure to redraw: series impedance minimum and parallel impedance maximum, using the same symbolic resonant-frequency guide and consistent graph style. -->
+
+### Series LC network
+
+Connect a **100 nF capacitor and 100 mH inductor in series**. Together, they replace $Z$ in the impedance-measurement divider from Sections 1 and 2. The external test resistor $R$ remains in series with this network.
+
+<p align="center">
+  <img src="graphics/LCdiv.png" alt="Measuring the impedance of a series LC network" width="700">
+</p>
+
+For ideal components:
+
+$$
+Z_\mathrm{series}=j\omega L+\frac{1}{j\omega C}=j\left(\omega L-\frac{1}{\omega C}\right).
+$$
+
+Below resonance, the capacitive reactance is larger in magnitude, so the network behaves predominantly capacitively. Above resonance, inductive reactance dominates. At resonance the imaginary terms cancel.
+
+If the total component series resistance is $R_s$, a more realistic model is:
+
+$$
+Z_\mathrm{series}=R_s+j\left(\omega L-\frac{1}{\omega C}\right).
+$$
+
+The impedance magnitude reaches a minimum close to $R_s$. This gives a physical explanation for the non-zero minimum: reactance can cancel, but the resistance of the wire and component losses remain.
+
+#### Measuring the series network
+
+1. Build the circuit with the generator output off. Begin with a 1 kΩ test resistor.
+2. Connect CH1 to the input, CH2 across the complete LC network, and both ground clips to the common ground. Set MATH to CH1 − CH2.
+3. Use ×10 probes, DC coupling and a sine wave with 0 V offset. Initially use the 1 V peak generator setting from Section 1 and check the actual input waveform.
+4. Take readings at the frequencies in the table below. Measure both voltages peak-to-peak and calculate $|Z|=R V_{Z,\mathrm{pp}}/V_{R,\mathrm{pp}}$.
+5. Plot each point immediately. Near resonance, the LC voltage may become small; adapt $R$ using the guidance in Section 1. Check for heavy loading or distortion before reducing it further.
+6. Add closely spaced frequencies around the minimum until its position and shape are clear. Do not assume that the nominal 1.59 kHz prediction is the exact measured resonant frequency.
+
+### Recording the resonance measurements
+
+Make one copy of this table for the series network and one for the parallel network. Use the **same inductor and capacitor** for both.
+
+| Frequency (Hz) | Test resistance $R$ (Ω) | Network voltage $V_{Z,\mathrm{pp}}$ (V) | Resistor voltage $V_{R,\mathrm{pp}}$ (V) | Impedance magnitude (Ω) |
+| --- | --- | --- | --- | --- |
+| 100 | | | | |
+| 300 | | | | |
+| 600 | | | | |
+| 1000 | | | | |
+| 1300 | | | | |
+| 1500 | | | | |
+| 1600 | | | | |
+| 1700 | | | | |
+| 2000 | | | | |
+| 3000 | | | | |
+| 6000 | | | | |
+| 10000 | | | | |
+| 40000 | | | | |
+
+Add rows for the extra frequencies chosen around the minimum or maximum. Record any change in test resistance and do not use readings that are dominated by noise.
+
+- [ ] Plot the series-network impedance magnitude against frequency on logarithmic axes and compare it with theory.
+- [ ] Identify the minimum, estimate its frequency and explain why its impedance is not zero.
+- [ ] Explain the predominantly capacitive and inductive regions on either side.
+
+### Parallel LC network
+
+Reconnect the **same 100 nF capacitor and 100 mH inductor in parallel**, so that the complete parallel combination now forms $Z$ in the measurement circuit.
+
+<p align="center">
+  <img src="graphics/LCdivpar.png" alt="Measuring the impedance of a parallel LC network" width="700">
+</p>
+
+Using the equation for impedances in parallel:
+
+$$
+Z_\mathrm{parallel}=\frac{Z_LZ_C}{Z_L+Z_C}.
+$$
+
+For ideal components this becomes:
+
+$$
+Z_\mathrm{parallel}=\frac{j\omega L}{1-\omega^2LC}.
+$$
+
+As frequency approaches the ideal resonant frequency, the denominator approaches zero and the **impedance magnitude** grows without bound. The complex impedance itself does not tend to a positive real infinity; its reactive sign changes across resonance.
+
+Another way to understand this is to add the branch admittances. At resonance the ideal capacitive and inductive branch currents are equal and opposite, so their sum at the input is zero, even though current can circulate between the two branches.
+
+Real losses prevent complete cancellation of the input current, limiting the impedance peak. Probe loading can also lower the measured peak. The frequency of the real peak may differ slightly from the ideal prediction and from the series-network minimum.
+
+Below resonance, the ideal parallel network is predominantly inductive. Above resonance, it is predominantly capacitive—the opposite ordering to the series network.
+
+#### Measuring the parallel network
+
+1. Turn the generator output off and rewire the components in parallel.
+2. Retain the input, network-voltage and math-channel measurements used above, with both probe grounds at common ground.
+3. Use the same starting frequencies and a fresh copy of the recording table.
+4. Near the impedance peak, the voltage across the test resistor may become small. Increase $R$ if necessary to obtain a reliable math-channel signal.
+5. Add readings around the maximum to locate it and resolve its shape.
+6. Overlay the parallel-network measurements on the series-network plot and compare both with the ideal predictions.
+
+- [ ] Identify the maximum impedance magnitude and explain why it is finite.
+- [ ] Compare the measured resonant frequencies with each other and the ideal prediction.
+- [ ] Explain why one connection gives an impedance minimum while the other gives a maximum.
+
+### From resonance to second-order filters
+
+A transfer function relates output voltage to input voltage:
+
+$$
+T(j\omega)=\frac{V_\mathrm{out}}{V_\mathrm{in}}.
+$$
+
+Its magnitude is the voltage-amplitude ratio and its phase is the output phase relative to the input. Measure CH1 at the input and CH2 at the output, both relative to common ground. For these filter measurements, the math-channel impedance calculation is no longer needed.
+
+The first-order filter explanations and experiments are in Section 2. The following challenges extend those ideas. A second-order low-pass or high-pass response can have a stopband slope of 40 dB per decade, compared with 20 dB per decade for a first-order response. A second-order low-pass phase can approach −180°.
+
+A circuit containing two reactive components does not automatically have the same response as every other second-order circuit. Their connection and damping determine the shape.
+
+### Challenge: second-order RC low-pass filter
+
+Build the two-stage RC ladder investigated in Adam's measurements, using:
+
+$$
+R_1=R_2=1\,\mathrm{k}\Omega,
+\qquad
+C_1=C_2=100\,\mathrm{nF}.
+$$
+
+These are the corrected resistor values in the measurement report. The earlier repository diagram shows 10 kΩ; we will redraw it with **1 kΩ**.
+
+Connect $R_1$ from the input to the first node and $C_1$ from that node to ground. Connect $R_2$ from the first node to the output, and $C_2$ from the output to ground.
+
+<!-- New figure: second_order_rc_lowpass.png, using 1 kΩ resistors and 100 nF capacitors. Match Section 1 style. -->
+
+At low frequency, both capacitors have large impedances, little current flows through the resistors, and the output approaches the input. At high frequency, the capacitors increasingly shunt the signal to ground and the output falls.
+
+The second stage loads the first. Therefore the complete transfer function is **not** simply the product of two isolated identical RC responses. For equal resistors and capacitors, with a negligible additional output load:
+
+$$
+T(s)=\frac{1}{1+3sRC+s^2R^2C^2},
+\qquad s=j\omega.
+$$
+
+The component time constant gives $1/(2\pi RC)\approx1.59\,\mathrm{kHz}$, but this is **not the −3 dB frequency of the loaded ladder**. Its −3 dB point is approximately 0.374 times this value, about 596 Hz.
+
+<!-- Qualitative magnitude/phase graph: second-order RC response compared with first-order trend; no original numerical values. -->
+
+1. Predict the response in LTspice using the complete connected circuit.
+2. Build the ladder and connect CH1 to its input and CH2 to its output.
+3. Measure at the frequencies in the filter table below, adding points around the measured transition if needed.
+4. Plot magnitude in dB and phase against logarithmic frequency, following Section 2's measurement method.
+5. Compare with the simulation and explain the loading effect. At high frequency, mark readings that approach the noise floor rather than assuming their phase is reliable.
+
+### Filter measurement table
+
+Use this table for the RC ladder. It can also be adapted for the RLC and notch challenges. There is no separate time-delay column; record the calculated phase directly.
+
+| Frequency (Hz) | Input peak-to-peak voltage (V) | Output peak-to-peak voltage (V) | Magnitude ratio | Gain (dB) | Phase (°) |
+| --- | --- | --- | --- | --- | --- |
+| 10 | | | | | |
+| 100 | | | | | |
+| 300 | | | | | |
+| 600 | | | | | |
+| 1000 | | | | | |
+| 1600 | | | | | |
+| 3000 | | | | | |
+| 6000 | | | | | |
+| 10000 | | | | | |
+| 20000 | | | | | |
+| 40000 | | | | | |
+
+- [ ] Compare the second-order roll-off with the first-order filters from Section 2.
+- [ ] Explain why cascading unbuffered stages changes the response compared with two isolated stages.
+
+### Challenge: design and test a second-order RLC filter
+
+A resistor, capacitor and inductor can form a second-order low-pass or high-pass filter. In the appropriate stopband, their transfer-function magnitudes vary as $1/f^2$ or $f^2$, respectively.
+
+<p align="center">
+  <img src="graphics/RLClow.png" alt="Second-order RLC low-pass filter" width="650">
+</p>
+
+<p align="center">
+  <img src="graphics/RLChigh.png" alt="Second-order RLC high-pass filter" width="650">
+</p>
+
+This retains the existing RLC design challenge. Use the type and target frequency listed for your pair at the end of this handout. Choose components from the available-parts tables and use the lecture notes to select resistance for critical damping, $\zeta=1$. Include winding resistance in your assessment of the real damping.
+
+Be clear which frequency your design calculation describes. The natural frequency $f_n=1/(2\pi\sqrt{LC})$ is not generally the −3 dB frequency. For an ideal critically damped low-pass, $f_{-3\mathrm{dB}}\approx0.644f_n$; for its high-pass counterpart, $f_{-3\mathrm{dB}}\approx1.554f_n$. For this challenge, interpret the table's target $f_c$ as the **−3 dB corner frequency**.
+
+1. Select the circuit topology and calculate values that place the −3 dB corner within 10% of your assigned target.
+2. Simulate the complete circuit in LTspice and check both magnitude and phase.
+3. Build it and measure selected frequencies below, near and above the target, within 10 Hz–40 kHz. Choose extra points where needed to identify its roll-off.
+4. Plot the measurements with the simulation and explain discrepancies, including component tolerances, winding resistance and measurement limits.
+
+- [ ] Present your circuit, component choices, predicted response and measured comparison.
+
+### Challenge: build a Twin-T notch filter
+
+A notch, or band-stop, filter rejects a band around a particular frequency while passing lower and higher frequencies. It is useful for suppressing an unwanted tone. This differs from a band-pass filter, which passes frequencies around its centre and attenuates those away from it.
+
+Use the **Twin-T topology from Adam's work**: two T networks connected in parallel between input and output. One T has two series resistors and a midpoint capacitor to ground; the other has two series capacitors and a midpoint resistor to ground.
+
+<!-- New figure: twin_t_notch.png. Show topology with R, R, R/2 and C, C, 2C so students choose values. Match Section 1 style. -->
+
+For the balanced ideal circuit:
+
+$$
+R_1=R_2=R,\quad R_3=R/2,\qquad C_1=C_2=C,\quad C_3=2C,
+$$
+
+and:
+
+$$
+f_0=\frac{1}{2\pi RC}.
+$$
+
+Design for a notch frequency of approximately **1.6 kHz**, choosing components from the available-parts list. The two paths cancel at the ideal notch frequency. Component mismatch, source and load effects, and measurement noise limit the depth of a real notch.
+
+<!-- Qualitative notch magnitude/phase figure: symbolic notch frequency and finite measured-style minimum; no original measured values. -->
+
+1. Choose $R$ and $C$ and obtain the balancing values $R/2$ and $2C$. Use series or parallel combinations where they improve the match.
+2. Calculate the predicted notch frequency and simulate the circuit.
+3. Build it and connect CH1 to the input and CH2 to the output, with both grounds at common ground.
+4. Begin at **100, 300, 600, 1000, 1200, 1400, 1600, 1800, 2000, 2400, 3000, 6000, 10000 and 40000 Hz**. Use the filter table columns above.
+5. Add finer frequency steps near the minimum to find its location and depth. A very small output makes the phase unreliable; at an ideal zero-output notch, output phase is undefined.
+6. Compare the measured response with the simulation and explain any difference in notch frequency or depth.
+
+- [ ] Show your selected component values and the measured notch response.
+- [ ] Explain how cancellation produces the notch and why the measured output does not reach exactly zero.
+
+### Available components
 
 **Resistors ( $\times10^0\Omega$ to $\times10^6\Omega$ )**
 
@@ -47,81 +295,12 @@ Use LT SPICE to produce the magnitude and phase responses of your filter (do thi
 | 4.7mH | 10mH | 22mH |
 | 33mH | 47mH | 100mH |
 
-## Resonant networks
 
-### Series LC network
-
-Use the same method as Section 1 and 2 to measure the combined impedance of a 100nF capacitor and 100mH inductor in series.
-The series combination of the inductor and capacitor forms $Z$, the impedance to be tested.
-		
-![Measuring impedance of an LC series network](graphics/LCdiv.png)
-		
-Resonance occurs at the frequency, $\omega_0$, when the magnitudes of the reactances of the capacitor and inductor are equal, i.e. $\omega_0 L = \frac{1}{\omega_0 C} $. Rearranging gives $\omega_0=\sqrt{\frac{1}{LC}}$
-		
-For an ideal capacitor and ideal inductor in series, $Z(\omega)=Z_L(\omega)+Z_C(\omega)=j\omega L+\frac{1}{j\omega C}$
-		
-At resonance, $Z(\omega) = j\omega_0 L + \frac{1}{j\omega_0 C} = 0$
-		
-Plot your impedance measurements to find $\omega_0$, the frequency where impedance is at a minimum.
-You will need to take extra measurements around the resonant frequency to see the characteristic in enough detail, so plot your measurements as you take them to see where you need to try intermediate frequencies.
-Compare the results to theory and also try to explain the exact value of $Z(\omega_0)$, which isn't zero as predicted by theory.
-		
-- [ ] Plot the impedance of the series LC network as it varies with frequency and compare the measurements to theory.
-
-### Parallel LC network
-A parallel LC network also exhibits resonance.
-		
-![Measuring impedance of an LC parallel network](graphics/LCdivpar.png)
-		
-Using the equation for impedances in parallel, $Z(\omega)=\frac{Z_L(\omega)Z_C(\omega)}{Z_L(\omega)+Z_C(\omega)}$
-		
-Since $Z_L(\omega_0)=-Z_C(\omega_0)$
-		
-$Z(\omega_0)=\frac{Z_L(\omega_0)Z_C(\omega_0)}{0}$, which tends to positive infinity as $\omega \longrightarrow \omega_0$.
-		
-Repeat the process of measuring impedance, once again with extra measurements to add detail around $\omega_0$.
-Use the same values for $L$ and $C$.
-Find the maximum magnitude of the impedance and explain why that is the maximum.
-		
-- [ ] Plot the impedance of the parallel LC network as it varies with frequency and compare the measurements to theory. Overlay the plot with your results of the series LC network.
-
-## First-order filter
-
-A filter is a circuit that transforms a signal by amplifying or attenuating certain constituents, and a *linear* filter selects those constituents according to frequency.
-The most common type of linear filter made from passive components is a resistor-capacitor (RC) filter, which can be either low-pass (attenuates high frequencies) or high-pass (attenuates low frequencies).
-In an audio system, the subwoofer would be driven by the output of a low-pass filter while the tweeter would use a high-pass.
-		
-![A low-pass RC filter](graphics/RClow.png)
-
-![A high-pass RC filter](graphics/RChi.png)
-
-A filter is characterised by its *transfer function* $T(\omega)$, which is the the relationship between the input and output signals and its dependency on frequency: $T(\omega)=V_\text{out}(\omega)/V_\text{in}$.
-To measure it,  you'll need to record the ratio of output voltage to input voltage over the range of frequencies you are interested in.
-That means, compared to the earlier exercises where you measured impedance, you can discard the math channel measurement and just measure $V_\text{in}$ with oscillscope CHA and $V_\text{out}$ with CHB.
-		
-Note that the transfer function is complex: it has a magnitude and a phase.
-The magnitude is the ratio of the voltage amplitudes and the phase is the difference in phase angle between the output and input sine waves.
-The phase response of an RC filter was used to make the phase shifter in the lab skills experiment.
-Use the oscilloscope cursors to measure the phase difference between input and outpu.
-
-Measure and plot the transfer functions of RC high-pass and low-pass filters made from a 1μF capacitor and 1kΩ resistor.
-Frequency and $|T(f)|$ should be plotted on logarithmic axes and $\arg(T(f))$ should be plotted on a linear axis.
-Measure the transfer function at the same frequency points that you used to measure impedance.
-		
-- [ ] Plot the magnitude and argument of transfer function of the high-pass and low-pass filters.
-
-## Challenge: test your second-order filter
-
-- [ ] Build the filter you designed in the preparation activity.
-Measure the magnitude and phase responses between 1Hz and 100kHz.
-Produce a plot comparing the magnitude and phase responses with the results of your simulation.
-Explain any discrepancies.
-
-## Specifications for RLC filters ##
+## Specifications for the RLC design challenge
 
 Each lab pair has a specified filter type and corner frequency for their RLC filter.
 
-| Pair | Type | $f_c$ |
+| Pair | Type | $f_c$ (Hz) |
 | -- | -- | -- |    			
 A01|	LP|	1900
 A02|	HP|	8700
