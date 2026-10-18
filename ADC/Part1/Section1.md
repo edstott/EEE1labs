@@ -13,9 +13,21 @@ For a resistor, Ohm’s law relates the voltage across it to the current through
 
 To determine a component’s impedance, we need to know the voltage across it and the current through it. However, an oscilloscope probe measures voltage rather than current.
 
-We can determine the current indirectly by placing a known resistor $R$ in series with the unknown impedance $Z$:
+**We can determine an unknown impedance by measuring the ratio of two voltages and multiplying that ratio by a known impedance.** Connect a known impedance and the unknown impedance in series, so that the same current flows through both. Their voltage ratio is then equal to their impedance ratio:
+
+$$
+Z_\mathrm{unknown}=Z_\mathrm{known}\frac{V_\mathrm{unknown}}{V_\mathrm{known}}.
+$$
+
+Here, the voltages are phasors, so the ratio includes both amplitude and phase. In this experiment, we use a known **resistor** as the reference impedance. This makes the measurement particularly straightforward: multiply the ratio of the measured voltage amplitudes by the known resistance to obtain the unknown impedance magnitude.
+
+We will first explain this principle, then show how to connect the oscilloscope correctly to measure the two voltages.
+
+Place the known resistor $R$ in series with the unknown impedance $Z$:
 
 ![Potential divider with unknown impedance](graphics/Zdiv.png)
+
+The lowercase voltage labels in this diagram represent the sinusoidal signals that we observe on the oscilloscope. We use uppercase symbols when expressing those same signals as phasors in the equations below.
 
 The same current flows through both components. If the instantaneous voltage across the known resistor is $v_R$, then:
 
@@ -298,22 +310,18 @@ A reduction in input amplitude alone does not invalidate the voltage-ratio metho
 
 A real signal generator does not behave as an ideal voltage source. Its output can be represented by a **Thévenin equivalent circuit**: an ideal voltage source in series with a source resistance $R_\mathrm{source}$.
 
-![Equivalent circuit of a signal generator](graphics/sigeneq.png)
+![Signal generator represented by an ideal internal voltage source and its series source resistance](graphics/signal_generator_source.svg)
 
 When a load resistance is connected, current flows through both the source resistance and the load. Some of the source voltage is dropped across $R_\mathrm{source}$, so the voltage at the output terminals decreases.
 
 This is the loading effect discussed above. In this challenge, we model the source impedance as a resistance at the chosen test frequency.
 
-![Equivalent circuit of a signal generator connected to a load](graphics/sigenloadeq.png)
+![Signal generator source resistance and an external load forming a potential divider](graphics/signal_generator_loaded.svg)
 
 The two resistances form a potential divider:
 
 $$
-V_\mathrm{out}
-=
-V_\mathrm{source}
-\frac{R_\mathrm{load}}
-{R_\mathrm{load}+R_\mathrm{source}}.
+V_\mathrm{out} = V_\mathrm{source} \frac{R_\mathrm{load}}{R_\mathrm{load}+R_\mathrm{source}}.
 $$
 
 Because this model contains only resistances, the same divider relationship applies to the voltage amplitudes.
