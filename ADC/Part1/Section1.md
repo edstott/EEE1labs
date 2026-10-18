@@ -17,22 +17,22 @@ We can determine the current indirectly by placing a known resistor $R$ in serie
 
 ![Potential divider with unknown impedance](graphics/Zdiv.png)
 
-The same current flows through both components. If the voltage across the known resistor is $v_R$, then:
+The same current flows through both components. If the instantaneous voltage across the known resistor is $v_R$, then:
 
 $$
 i=\frac{v_R}{R}.
 $$
 
-For the initial experiment, both components are resistors, so their voltages and current are in phase. The unknown resistance can therefore be calculated from:
+In the initial experiment, both components are resistors, so their voltages and current are in phase. The unknown resistance can therefore be calculated from the ratio of their voltage amplitudes.
+
+For capacitors and inductors, voltage and current may have different phases. We describe these sinusoidal quantities using complex voltages and currents, or **phasors**. Uppercase $V$ and $I$ denote phasors; lowercase $v$ and $i$ denote instantaneous signals.
+
+Using phasors:
 
 $$
-Z=\frac{v_Z}{i}=R\frac{v_Z}{v_R}.
-$$
-
-For capacitors and inductors, the voltage and current may have different phases. The corresponding relationship uses complex voltages, or phasors:
-
-$$
-Z=R\frac{V_Z}{V_R}.
+I=\frac{V_R}{R},
+\qquad
+Z=\frac{V_Z}{I}=R\frac{V_Z}{V_R}.
 $$
 
 If we measure only the amplitudes of the two voltages, we obtain the **magnitude of the impedance**:
@@ -41,7 +41,13 @@ $$
 |Z|=R\frac{|V_Z|}{|V_R|}.
 $$
 
-The phase difference between these voltages provides the phase of the impedance. We will return to reactive components in Section 2.
+The phase difference between these voltages provides the phase of the impedance:
+
+$$
+\arg(Z)=\arg(V_Z)-\arg(V_R).
+$$
+
+This works because the voltage across a resistor is in phase with the current through it. We will return to reactive components in Section 2.
 
 ### Connecting the oscilloscope correctly
 
@@ -91,7 +97,7 @@ For each measurement:
 
 - Check that the circuit and both probe ground clips share the same common ground.
 - Set both probe switches to **×10** and configure both oscilloscope channels for **×10 probes**.
-- Use **DC coupling** initially so that the displayed waveforms include any DC offset.
+- Use **DC coupling** so that the channels measure the complete signals without introducing additional low-frequency attenuation and phase shifts.
 - Adjust the vertical scales so that both measured waveforms occupy a useful portion of the display without clipping.
 
 Matching the physical probe settings to the oscilloscope settings is essential for correct voltage readings.
@@ -138,7 +144,7 @@ $$
 |Z|=R\frac{|V_Z|}{|V_R|}.
 $$
 
-You can use peak, peak-to-peak or RMS values in this ratio, provided you use the **same measurement convention for both signals**.
+You can use peak, peak-to-peak or RMS values in this ratio, provided you use the **same measurement convention for both sinusoidal signals**.
 
 For a sine wave with zero DC offset:
 
@@ -187,13 +193,106 @@ RMS measurements may include a DC component, depending on the selected function.
 - [ ] Check whether the RMS readings are consistent with those expected for a sine wave.
 - [ ] Compare with an AC voltage measurement from the multimeter, ensuring that the signal frequency is within its specified measurement range.
 
-### Recognising unreliable measurements
+### Recognising unreliable measurements and choosing R
 
-The math channel calculates the difference between two measured waveforms. If those waveforms are almost identical, their difference may be small compared with the noise or resolution of either measurement.
+The impedance magnitude is calculated from:
 
-Similarly, if the voltage across $Z$ is very small, it may be difficult to measure accurately.
+$$
+|Z|=R\frac{|V_Z|}{|V_R|}.
+$$
 
-Before accepting a result, check that both $v_Z$ and $v_R$ are clearly resolved and that their amplitudes are stable. Section 2 explains how changing the test resistor $R$ can improve the measurement when the unknown impedance varies with frequency.
+The accuracy of this result depends on the accuracy of the known resistance and both voltage measurements. Component tolerances, electrical noise, oscilloscope resolution and probe loading can all introduce errors.
+
+The choice of test resistor $R$ is particularly important. Aim to make $R$ similar in magnitude to the unknown impedance $|Z|$, so that both voltage signals can be measured clearly. They do not need to be exactly equal, but a very large difference makes one of the measurements difficult.
+
+For a capacitor or inductor, $|Z|$ changes with frequency. A test resistor that works well at one frequency may therefore be unsuitable at another.
+
+#### When R is too large
+
+If $R$ is much larger than $|Z|$, most of the input voltage appears across $R$, leaving only a small voltage across $Z$.
+
+The CH2 signal may then become comparable with electrical noise or the smallest voltage changes the oscilloscope can resolve. Even a small absolute error becomes a large percentage error in this small voltage.
+
+**Decrease R** to increase the proportion of the input voltage appearing across $Z$ and make it easier to measure.
+
+*The voltage across Z is small and noisy, even at a sensitive vertical-scale setting. Decreasing R can improve this measurement.*
+
+![Small and noisy voltage signal across the unknown impedance](graphics/PN-noisy.png)
+
+#### When R is too small
+
+If $R$ is much smaller than $|Z|$, most of the input voltage appears across $Z$. CH1 and CH2 then display nearly identical waveforms.
+
+The math channel calculates:
+
+$$
+v_R=v_\mathrm{in}-v_Z.
+$$
+
+In this case, it is subtracting two relatively large, nearly equal signals to obtain a small difference. Noise, limited resolution and small differences between the channel or probe responses can become significant compared with that difference.
+
+The resulting math trace may look noisy or blocky, and its amplitude may be unreliable. Enlarging the math trace on the display does not recover detail that was missing from the original channel measurements.
+
+**Increase R** to increase the voltage across it and produce a better-resolved math-channel signal.
+
+*The math-channel waveform is blocky because the small difference between the two measured signals is poorly resolved. Increasing R makes this difference larger.*
+
+![Poorly resolved and quantised math-channel waveform](graphics/PN-mathnoise.png)
+
+#### Choosing a practical resistance
+
+Start with $R=1\,\mathrm{k}\Omega$ and examine both CH2 and the math trace.
+
+- If the voltage across $Z$ is too small or noisy, **decrease R**.
+- If the math-channel voltage across $R$ is too small or poorly resolved, **increase R**.
+- Adjust the vertical scales of both input channels so that the waveforms occupy a useful portion of the display without clipping.
+- If you have an approximate theoretical value of $|Z|$, choose an available resistor of a similar magnitude.
+- Whenever you change $R$, record its new value and use it in the impedance calculation.
+
+As practical starting points, if the voltage across $Z$ is below about **5 mV RMS** and cannot be resolved clearly, try a smaller resistor. If the math-channel waveform is less than about **one vertical division peak-to-peak**, check the input-channel scaling and try a larger resistor.
+
+These are guides rather than guarantees of accuracy. Always inspect the waveforms. Change the resistance in sensible steps; a factor of ten is often useful. For this experiment, do not reduce the test resistance below **10 Ω**.
+
+#### When both R and Z are small
+
+Choosing $R$ similar to $|Z|$ helps balance the two voltage measurements, but it does not solve every measurement problem.
+
+If both are small, the circuit presents a low impedance to the signal generator. Maintaining the same input voltage would require a larger current:
+
+$$
+I=\frac{V_\mathrm{in}}{R+Z},
+$$
+
+where the quantities in this expression are phasors.
+
+A real signal generator has an internal source resistance and a limited output-current capability. Under heavy loading, its terminal voltage can fall. If its output stage approaches its current limit, the waveform may also become distorted. Small measured voltages can additionally make noise more prominent.
+
+Consequently, reducing $R$ may increase the proportion of voltage across $Z$ while also increasing the load on the generator.
+
+Check the actual input waveform on CH1 whenever you use small impedances:
+
+- Confirm that it remains a clean sine wave.
+- Measure the actual input rather than assuming it equals the generator’s displayed setting.
+- If the waveform becomes distorted, reduce the generator amplitude or increase $R$, then check that both measured voltages are still large enough to resolve.
+- If you cannot obtain clean, measurable signals, ask a demonstrator for help.
+
+A reduction in input amplitude alone does not invalidate the voltage-ratio method, provided both voltages are measured accurately and the circuit remains linear. Distortion is more problematic: a distorted waveform contains several frequencies, so its amplitude ratio cannot generally be interpreted as the impedance magnitude at one frequency.
+
+#### Other sources of error
+
+**Resistor tolerance:** the actual test resistance may differ from its labelled value. Measure it with a multimeter while the circuit is unpowered and the resistor is isolated from other current paths. Use the measured value in your calculation.
+
+**Probe and channel mismatch:** both probes must have the same attenuation setting, with matching settings on the oscilloscope. Check probe compensation. Differences in gain or phase between the channels can introduce errors when their signals are subtracted.
+
+**Probe loading:** a probe has a finite input resistance and capacitance, so connecting it changes the circuit slightly. This becomes more important when measuring large impedances or working at higher frequencies. The ×10 setting reduces this loading compared with ×1 operation.
+
+**Noise and connections:** loose contacts, long leads and poor grounding can produce unstable or noisy readings. Keep connections short and secure, and connect both probe ground clips to the circuit’s common ground.
+
+**Measurement consistency:** use the same amplitude convention for both voltages. Check automatic measurements against the displayed waveforms, especially when a signal is small or noisy.
+
+- [ ] Check that both the voltage across Z and the math-channel voltage across R are clearly resolved.
+- [ ] Explain whether R should be increased or decreased if either measurement becomes unreliable.
+- [ ] Record any changes to R and any limitations affecting your measurements.
 
 ## Challenge: source impedance of the signal generator
 
@@ -203,27 +302,31 @@ A real signal generator does not behave as an ideal voltage source. Its output c
 
 When a load resistance is connected, current flows through both the source resistance and the load. Some of the source voltage is dropped across $R_\mathrm{source}$, so the voltage at the output terminals decreases.
 
+This is the loading effect discussed above. In this challenge, we model the source impedance as a resistance at the chosen test frequency.
+
 ![Equivalent circuit of a signal generator connected to a load](graphics/sigenloadeq.png)
 
 The two resistances form a potential divider:
 
 $$
-v_\mathrm{out}
+V_\mathrm{out}
 =
-v_\mathrm{source}
+V_\mathrm{source}
 \frac{R_\mathrm{load}}
 {R_\mathrm{load}+R_\mathrm{source}}.
 $$
+
+Because this model contains only resistances, the same divider relationship applies to the voltage amplitudes.
 
 You will determine $R_\mathrm{source}$ from two output-voltage measurements.
 
 1. Keep the signal generator’s frequency, amplitude, DC offset and load-display setting unchanged throughout the experiment.
 2. Connect a $10\,\mathrm{k}\Omega$ load across the output and measure the output-voltage amplitude.
 3. Replace it with a $200\,\Omega$ load and measure the output-voltage amplitude again.
-4. Use the same amplitude measurement convention for both readings.
-5. Write the potential-divider equation for each load and solve the two simultaneous equations for $v_\mathrm{source}$ and $R_\mathrm{source}$.
+4. Use the same amplitude measurement convention for both readings and check that the output remains sinusoidal.
+5. Write the potential-divider equation for each load and solve the two simultaneous equations for the source-voltage amplitude and $R_\mathrm{source}$.
 
-The internal source voltage $v_\mathrm{source}$ is the same in both equations because the generator settings remain unchanged. The measured output voltage changes because the load changes.
+The internal source voltage is the same in both equations because the generator settings remain unchanged and the generator is operating within its linear range. The measured output voltage changes because the load changes.
 
 - [ ] Determine the source resistance of the signal generator using the two loads.
 - [ ] Explain which load gives the lower output voltage and why.
