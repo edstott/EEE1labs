@@ -161,7 +161,9 @@ $$
 v_\mathrm{out}(t)\approx V_\mathrm{ref}-\frac{R_\mathrm{fb}}{R_\mathrm{in}}v_\mathrm{in,AC}(t).
 $$
 
-The signal now swings above and below **2.5 V**, rather than above and below ground. It must still stay within the op-amp's output limits.
+The signal now swings above and below **2.5 V**, rather than above and below ground. It must still stay within the op-amp's output limits. For example, a 1 V peak-to-peak sine wave centred at 2.5 V swings between 2.0 V and 3.0 V. The distance from the operating point to an output limit is called **headroom**; increasing the signal amplitude too far uses up this headroom and causes clipping.
+
+After switching on or changing connections, allow the coupling capacitors to charge and the DC voltages to settle before recording measurements. A brief transient is different from persistent clipping.
 
 The input capacitor and resistance form a high-pass response. Ignoring source resistance, $f_c=1/(2\pi R_\mathrm{in}C)\approx106\,\mathrm{Hz}$. The source module's own output impedance can alter the complete response.
 
@@ -194,7 +196,7 @@ $$
 A_\mathrm{AC}=1+\frac{15\,\mathrm{k}\Omega}{33\,\mathrm{k}\Omega}\approx1.45.
 $$
 
-The 470 nF capacitor therefore lets the circuit amplify the changing signal while leaving the DC operating point near 2.5 V. Without it, a 2.5 V DC level at the non-inverting input would also be multiplied by approximately 1.45, shifting the output towards 3.64 V and reducing symmetrical signal headroom.
+The 470 nF capacitor therefore lets the circuit amplify the changing signal while leaving the DC operating point near 2.5 V. If the 470 nF capacitor were replaced by a wire, a 2.5 V DC level at the non-inverting input would also be multiplied by approximately 1.45, shifting the output towards 3.64 V and reducing symmetrical signal headroom.
 
 The input divider also loads the source: its two 10 kΩ resistors give approximately **5 kΩ AC input resistance** when the supply is treated as AC ground. With the 1 µF coupling capacitor and an ideal source, that gives an input high-pass corner near 32 Hz. The feedback branch has its own frequency-dependent transition; it is not a separate input coupling filter.
 
@@ -216,7 +218,7 @@ It tends to one at DC and about 1.45 at frequencies where $C_g$ behaves approxim
 
 <p align="center"><img src="graphics/opamp-cct3.png" alt="opamp cct3" width="800"></p>
 
-Use two source modules, one in mode 2 and one in mode 3, both powered from +5 V and ground. Connect their SYN pins as shown. Each source feeds the inverting summing node through its own 1 µF coupling capacitor and adjustable input resistance. A 4.7 kΩ feedback resistor and a 2.5 V reference give a biased summing amplifier.
+Use two source modules: **source A in mode 2 (melody)** and **source B in mode 3 (bass)**, both powered from +5 V and ground. Connect their SYN pins as shown. Each source feeds the inverting summing node through its own 1 µF coupling capacitor and adjustable input resistance. A 4.7 kΩ feedback resistor and a 2.5 V reference give a biased summing amplifier.
 
 For frequencies well above the input coupling corners:
 
@@ -224,9 +226,19 @@ $$
 v_\mathrm{out}\approx V_\mathrm{ref}-\frac{R_\mathrm{fb}}{R_A}v_{A,\mathrm{AC}}-\frac{R_\mathrm{fb}}{R_B}v_{B,\mathrm{AC}}.
 $$
 
-1. Start with large input resistances and check the DC output near 2.5 V.
-2. Adjust the two gains independently, measuring one input at a time before combining them. Avoid setting an input resistance near zero.
-3. Aim for an overall output of about **1 V peak-to-peak**, centred near 2.5 V, without clipping. The two signals can add, so checking them individually is not sufficient.
-4. Listen through the adapter and explain how the resistor ratios set the mix.
+1. Start with both adjustable input resistances set to large values and the earphones out of your ears. Check that the DC output is near 2.5 V. Do not set either input resistance near zero.
+2. Check each source separately, then combine them. Aim for an overall output of about **1 V peak-to-peak**, centred near 2.5 V, without clipping. The two signals can add, so checking them individually is not sufficient. Begin listening with a smaller output if needed for a comfortable level.
+3. Connect the earphones through the DC-blocking adapter. **Put the earphones in your ears at a low, comfortable listening level.** Begin with both sounds audible.
+4. Keep $R_B$ fixed and slowly decrease $R_A$. Listen for source A becoming more dominant. Increase $R_A$ again and listen for source A becoming quieter relative to source B.
+5. Keep $R_A$ fixed and repeat with $R_B$. Find one setting where the melody dominates, one where the bass dominates, and one where both are clearly audible. Monitor the output on the oscilloscope and keep it unclipped and comfortable to hear.
+6. Record the approximate resistance settings and your listening observations in the table below. Explain why a smaller input resistance generally gives that source a larger contribution: its gain magnitude is approximately $R_\mathrm{fb}/R_\mathrm{input}$. Changing either resistor changes its contribution to the **shared output**; the circuit mixes both signals into the same earphone signal.
+
+| Listening balance | $R_A$ (kΩ) | $R_B$ (kΩ) | Output peak-to-peak (V) | Listening observation |
+| --- | --- | --- | --- | --- |
+| Melody dominant | | | | |
+| Bass dominant | | | | |
+| Both clearly audible | | | | |
+
+The two source modules need not produce equal amplitudes, so equal resistor settings do not necessarily sound equally loud. If the sound becomes distorted, inspect the output for clipping and increase the input resistances. Explain your observations using both the measured waveform and the resistor ratios.
 
 [Continue to Section 2: Bandwidth and Filtering](Section2.md).
