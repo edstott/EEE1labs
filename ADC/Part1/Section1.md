@@ -202,7 +202,7 @@ Do not divide a peak-to-peak reading for one waveform by an RMS reading for the 
 4. Enter the readings in the table and calculate $|Z|=R V_{Z,\mathrm{pp}}/V_{R,\mathrm{pp}}$.
 5. Compare your calculated resistance with the nominal 1 kΩ value. Explain any small difference using resistor tolerance and measurement uncertainty.
 
-| Frequency (Hz) | Measured test resistance $R$ (Ω) | CH2: $V_{Z,\mathrm{pp}}$ (V) | MATH: $V_{R,\mathrm{pp}}$ (V) | Calculated resistance $|Z|$ (Ω) |
+| Frequency (Hz) | Test resistance (Ω) | CH2 peak-to-peak voltage (V) | MATH peak-to-peak voltage (V) | Calculated resistance (Ω) |
 | --- | --- | --- | --- | --- |
 | 100 | | | | |
 
