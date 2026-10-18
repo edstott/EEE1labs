@@ -243,8 +243,6 @@ This simulation is **compulsory**. Use the same component values as the second-o
 5. Overlay or compare the measured second-order response with the ideal prediction. Compare attenuation at 8 kHz and explain differences, considering tolerances, source impedance and real op-amp behaviour.
 6. Replace the ideal model with **LT1366**, including its +5 V/0 V supplies, and repeat the operating-point and AC analyses. Compare the ideal, realistic-model and measured results. High-frequency departures from the ideal filter can arise from finite op-amp gain and bandwidth.
 
-A [companion ideal SPICE file](Part2_Section2_Ideal_Filters.cir) provides an ideal SPICE reference for both filter orders. Open it in LTspice, run it, and add traces `dB(V(out1)/V(in))` and `dB(V(out2)/V(in))` for the magnitude comparison. The ideal models deliberately omit supply clipping and output-current limits; they represent the ideal mathematical baseline, not a complete hardware model.
-
 **AC analysis uses linearisation about the DC operating point.** Its 1 V AC setting is a normalisation, not a physical 1 V sine wave applied in a transient test. For transient analysis, use a small sine wave with the correct DC offset. Scope measurements use physical amplitudes and must remain unclipped.
 
 - [ ] Present the ideal second-order curve, the LT1366-model curve and measured points, with an explanation of their differences.
