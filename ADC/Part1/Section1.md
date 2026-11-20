@@ -135,7 +135,7 @@ Begin with two equal resistors so that you can check the measurement method befo
 2. Connect CH1 to measure $v_A=v_\mathrm{in}$ and CH2 to measure $v_Z$, following the grounding instructions above.
 3. Set the signal generator to a **100 Hz sine wave**, with **1 V peak amplitude** (2 V peak-to-peak) and **0 V DC offset**. Check the actual input voltage on CH1; the generator’s displayed amplitude may depend on its load setting.
 4. Set the oscilloscope timebase to **5 ms/div**.
-5. Select **CH1 as the trigger source**, use **Auto trigger mode**, and place the trigger level near the centre of the CH1 waveform.
+5. Select **CH1 as the trigger source**, use **Auto trigger mode** (selected by default), and place the trigger level near the centre of the CH1 waveform.
 
 We use a sine wave because sinusoidal measurements will also allow us to characterise capacitors and inductors.
 
